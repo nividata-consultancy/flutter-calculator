@@ -57,8 +57,16 @@ class _HomeWidget extends State<HomeWidget> {
 
   back() {
     setState(() {
-      exp = "0";
-      result = "0";
+      if (exp != "0") {
+        if (exp.replaceRange(exp.length - 1, exp.length, "").isEmpty) {
+          exp = "0";
+        }else{
+          exp=exp.replaceRange(exp.length - 1, exp.length, "");
+        }
+      } else {
+        exp = "0";
+      }
+      result = Process.getResult(exp).toString();
     });
   }
 
@@ -245,7 +253,7 @@ class _HomeWidget extends State<HomeWidget> {
   _onButtonClick({String buttonText}) {
     if (Process.isDigit(exp.split('').last) ||
         exp.split('').last != buttonText) {
-      if (!Process.isDigit(exp.split('').last) &&
+      if (buttonText != Calculations.BACK && !Process.isDigit(exp.split('').last) &&
           !Process.isDigit(buttonText)) {
         exp = exp.replaceRange(exp.length - 1, exp.length, "");
       }
