@@ -1,3 +1,4 @@
+import 'package:calculator/src/blocs/CalcBloc.dart';
 import 'package:calculator/src/utility/Calculations.dart';
 import 'package:calculator/src/utility/Process.dart';
 import 'package:calculator/src/ui/displayExp.dart';
@@ -35,6 +36,152 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidget extends State<HomeWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final double size = (MediaQuery.of(context).size.width / 4) - 12;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Calculator"),
+        centerTitle: true,
+        elevation: 0,
+      ),
+      backgroundColor: Colors.white,
+      body: Container(
+        margin: EdgeInsets.all(5),
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
+              padding: EdgeInsets.all(5),
+              constraints: BoxConstraints.tightForFinite(
+                  height: 1.4 * size, width: double.maxFinite),
+              decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  // BoxShape.circle or BoxShape.retangle
+                  color: Color(0xFFEFEFEF),
+                  border: Border(
+                    left: BorderSide(
+                      color: Color(0xFFb6b6b8),
+                      width: 4.0,
+                    ),
+                    top: BorderSide(
+                      color: Color(0xFFb6b6b8),
+                      width: 3.0,
+                    ),
+                    bottom: BorderSide(
+                      color: Color(0xfffefefe),
+                      width: 2.0,
+                    ),
+                    right: BorderSide(
+                      color: Color(0xfffefefe),
+                      width: 1.0,
+                    ),
+                  )),
+              child: Column(
+                children: <Widget>[
+                  StreamBuilder<String>(
+                      stream: bloc.exp,
+                      initialData: "0",
+                      builder: (context, snapshot) {
+                        return DisplayExp(exp: snapshot.data, size: size);
+                      }),
+                  StreamBuilder<String>(
+                      stream: bloc.total,
+                      initialData: "0",
+                      builder: (context, snapshot) {
+                        return ResultValue(result: snapshot.data);
+                      }),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: Container(
+                  color: Colors.white,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            ButtonView(text: "%", size: size),
+                            ButtonView(text: "CE", size: size),
+                            ButtonViewForNumber(
+                                text: Calculations.SEVEN, size: size),
+                            ButtonViewForNumber(
+                                text: Calculations.FOUR, size: size),
+                            ButtonViewForNumber(
+                                text: Calculations.ONE, size: size),
+                            ButtonView(text: "+-", size: size),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            ButtonView(
+                                text: Calculations.OPEN_BRACKET, size: size),
+                            ButtonView(text: Calculations.CLEAR, size: size),
+                            ButtonViewForNumber(
+                                text: Calculations.EIGHT, size: size),
+                            ButtonViewForNumber(
+                                text: Calculations.FIVE, size: size),
+                            ButtonViewForNumber(
+                                text: Calculations.TWO, size: size),
+                            ButtonViewForNumber(
+                                text: Calculations.ZERO, size: size),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            ButtonView(
+                                text: Calculations.CLOSE_BRACKET, size: size),
+                            ButtonView(text: Calculations.BACK, size: size),
+                            ButtonViewForNumber(
+                                text: Calculations.NINE, size: size),
+                            ButtonViewForNumber(
+                                text: Calculations.SIX, size: size),
+                            ButtonViewForNumber(
+                                text: Calculations.THREE, size: size),
+                            ButtonView(text: Calculations.PERIOD, size: size),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            ButtonView(text: Calculations.DIVIDE, size: size),
+                            ButtonView(text: Calculations.MULTIPLY, size: size),
+                            ButtonView(text: Calculations.SUBTRACT, size: size),
+                            ButtonView(text: Calculations.ADD, size: size),
+                            ButtonViewForPlus(
+                                text: Calculations.EQUAL, size: size),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _HomeWidget1 extends State<HomeWidget> {
   String exp = "0";
   String result = "0";
   int openParenthesis = 0;
@@ -90,7 +237,6 @@ class _HomeWidget extends State<HomeWidget> {
                   height: 1.4 * size, width: double.maxFinite),
               decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  // BoxShape.circle or BoxShape.retangle
                   color: Color(0xFFEFEFEF),
                   border: Border(
                     left: BorderSide(
@@ -129,24 +275,15 @@ class _HomeWidget extends State<HomeWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            ButtonView(
-                                text: "%", size: size, onTap: _onButtonClick),
-                            ButtonView(
-                                text: "CE", size: size, onTap: _onButtonClick),
+                            ButtonView(text: "%", size: size),
+                            ButtonView(text: "CE", size: size),
                             ButtonViewForNumber(
-                                text: Calculations.SEVEN,
-                                size: size,
-                                onTap: _onButtonClick),
+                                text: Calculations.SEVEN, size: size),
                             ButtonViewForNumber(
-                                text: Calculations.FOUR,
-                                size: size,
-                                onTap: _onButtonClick),
+                                text: Calculations.FOUR, size: size),
                             ButtonViewForNumber(
-                                text: Calculations.ONE,
-                                size: size,
-                                onTap: _onButtonClick),
-                            ButtonView(
-                                text: "+-", size: size, onTap: _onButtonClick),
+                                text: Calculations.ONE, size: size),
+                            ButtonView(text: "+-", size: size),
                           ],
                         ),
                       ),
@@ -156,29 +293,16 @@ class _HomeWidget extends State<HomeWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             ButtonView(
-                                text: Calculations.OPEN_BRACKET,
-                                size: size,
-                                onTap: _onButtonClick),
-                            ButtonView(
-                                text: Calculations.CLEAR,
-                                size: size,
-                                onTap: _onButtonClick),
+                                text: Calculations.OPEN_BRACKET, size: size),
+                            ButtonView(text: Calculations.CLEAR, size: size),
                             ButtonViewForNumber(
-                                text: Calculations.EIGHT,
-                                size: size,
-                                onTap: _onButtonClick),
+                                text: Calculations.EIGHT, size: size),
                             ButtonViewForNumber(
-                                text: Calculations.FIVE,
-                                size: size,
-                                onTap: _onButtonClick),
+                                text: Calculations.FIVE, size: size),
                             ButtonViewForNumber(
-                                text: Calculations.TWO,
-                                size: size,
-                                onTap: _onButtonClick),
+                                text: Calculations.TWO, size: size),
                             ButtonViewForNumber(
-                                text: Calculations.ZERO,
-                                size: size,
-                                onTap: _onButtonClick),
+                                text: Calculations.ZERO, size: size),
                           ],
                         ),
                       ),
@@ -188,29 +312,15 @@ class _HomeWidget extends State<HomeWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             ButtonView(
-                                text: Calculations.CLOSE_BRACKET,
-                                size: size,
-                                onTap: _onButtonClick),
-                            ButtonView(
-                                text: Calculations.BACK,
-                                size: size,
-                                onTap: _onButtonClick),
+                                text: Calculations.CLOSE_BRACKET, size: size),
+                            ButtonView(text: Calculations.BACK, size: size),
                             ButtonViewForNumber(
-                                text: Calculations.NINE,
-                                size: size,
-                                onTap: _onButtonClick),
+                                text: Calculations.NINE, size: size),
                             ButtonViewForNumber(
-                                text: Calculations.SIX,
-                                size: size,
-                                onTap: _onButtonClick),
+                                text: Calculations.SIX, size: size),
                             ButtonViewForNumber(
-                                text: Calculations.THREE,
-                                size: size,
-                                onTap: _onButtonClick),
-                            ButtonView(
-                                text: Calculations.PERIOD,
-                                size: size,
-                                onTap: _onButtonClick),
+                                text: Calculations.THREE, size: size),
+                            ButtonView(text: Calculations.PERIOD, size: size),
                           ],
                         ),
                       ),
@@ -219,26 +329,12 @@ class _HomeWidget extends State<HomeWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            ButtonView(
-                                text: Calculations.DIVIDE,
-                                size: size,
-                                onTap: _onButtonClick),
-                            ButtonView(
-                                text: Calculations.MULTIPLY,
-                                size: size,
-                                onTap: _onButtonClick),
-                            ButtonView(
-                                text: Calculations.SUBTRACT,
-                                size: size,
-                                onTap: _onButtonClick),
-                            ButtonView(
-                                text: Calculations.ADD,
-                                size: size,
-                                onTap: _onButtonClick),
+                            ButtonView(text: Calculations.DIVIDE, size: size),
+                            ButtonView(text: Calculations.MULTIPLY, size: size),
+                            ButtonView(text: Calculations.SUBTRACT, size: size),
+                            ButtonView(text: Calculations.ADD, size: size),
                             ButtonViewForPlus(
-                                text: Calculations.EQUAL,
-                                size: size,
-                                onTap: _onButtonClick),
+                                text: Calculations.EQUAL, size: size),
                           ],
                         ),
                       )
@@ -290,13 +386,8 @@ class ButtonViewForNumber extends StatelessWidget {
   final String text;
   final double size;
   final Key key;
-  final CalculatorButtonTapCallback onTap;
 
-  ButtonViewForNumber(
-      {this.key,
-      @required this.text,
-      @required this.size,
-      @required this.onTap})
+  ButtonViewForNumber({this.key, @required this.text, @required this.size})
       : super(key: key);
 
   @override
@@ -309,7 +400,7 @@ class ButtonViewForNumber extends StatelessWidget {
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
       child: InkWell(
         onTap: () {
-          onTap(buttonText: text);
+          bloc.buttonText.add(text);
         },
         child: Container(
           constraints:
@@ -325,13 +416,8 @@ class ButtonViewForPlus extends StatelessWidget {
   final String text;
   final double size;
   final Key key;
-  final CalculatorButtonTapCallback onTap;
 
-  ButtonViewForPlus(
-      {this.key,
-      @required this.text,
-      @required this.size,
-      @required this.onTap})
+  ButtonViewForPlus({this.key, @required this.text, @required this.size})
       : super(key: key);
 
   @override
@@ -344,7 +430,7 @@ class ButtonViewForPlus extends StatelessWidget {
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
       child: InkWell(
         onTap: () {
-          onTap(buttonText: text);
+          bloc.buttonText.add(text);
         },
         child: Container(
           constraints: BoxConstraints.tightForFinite(
@@ -360,13 +446,8 @@ class ButtonView extends StatelessWidget {
   final String text;
   final double size;
   final Key key;
-  final CalculatorButtonTapCallback onTap;
 
-  ButtonView(
-      {this.key,
-      @required this.text,
-      @required this.size,
-      @required this.onTap})
+  ButtonView({this.key, @required this.text, @required this.size})
       : super(key: key);
 
   @override
@@ -379,7 +460,7 @@ class ButtonView extends StatelessWidget {
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
       child: InkWell(
         onTap: () {
-          onTap(buttonText: text);
+          bloc.buttonText.add(text);
         },
         child: Container(
           constraints:
