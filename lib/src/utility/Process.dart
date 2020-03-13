@@ -1,4 +1,4 @@
-import 'package:calculator/stack.dart';
+import 'package:calculator/src/utility/stack.dart';
 
 class Process {
   static int precedence(String ch) {
@@ -40,13 +40,15 @@ class Process {
       return evaluate(exp);
     } else {
       int j = exp.length - 1;
-      for (j; !Process.isValidExp(exp.substring(0, j)); j--);
+      for (j; (0 < j && !Process.isValidExp(exp.substring(0, j))); j--);
       return Process.evaluate(exp.substring(0, j));
-    }
+  }
   }
 
   static double evaluate(String exp) {
     clear();
+    if (exp.isEmpty) return 0;
+
     for (i = 0; i < exp.length; i++) {
       if (exp[i] == '') {
         continue;
@@ -92,9 +94,7 @@ class Process {
     Stack<String> ops = Stack<String>();
 
     for (i = 0; i < exp.length; i++) {
-      if (exp[i] == '') {
-        continue;
-      } else if (exp[i] == "(") {
+      if (exp[i] == "(") {
         ops.push(exp[i]);
       } else if (isDigit(exp[i])) {
         double val = double.parse(exp[i]);

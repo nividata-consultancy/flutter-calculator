@@ -18,6 +18,8 @@ class Calculations {
   static const CLEAR = 'C';
   static const BACK = '<=';
   static const EQUAL = '=';
+  static const OPEN_BRACKET = '()';
+  static const CLOSE_BRACKET = ')';
   static const OPERATIONS = [
     Calculations.ADD,
     Calculations.MULTIPLY,
