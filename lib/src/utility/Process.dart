@@ -22,7 +22,7 @@ class Process {
     }
   }
 
-  static bool isDigit(String ch) => double.tryParse(ch) != null;
+  static bool isDigit(String ch) =>["0","1","2","3","4","5","6","7","8","9"].contains(ch);
 
   static bool isOperand(String ch) => ["+", "-", "*", "/"].contains(ch);
 
@@ -101,6 +101,18 @@ class Process {
           val = (val * 10) + double.parse(exp[++i]);
         }
         digit.push(val);
+      } else if (exp[i] == ".") {
+        String val = "0.";
+        while (i + 1 < exp.length && Process.isDigit(exp[i + 1])) {
+          val = val + exp[i + 1];
+          i++;
+        }
+        if (digit.peek() != 0) {
+          digit.push(double.tryParse(val) * digit.pop());
+        } else {
+          digit.pop();
+          digit.push(double.tryParse(val));
+        }
       } else if (exp[i] == ")") {
         while (!ops.isEmpty && ops.peek() != "(") {
           double val2 = digit.pop();

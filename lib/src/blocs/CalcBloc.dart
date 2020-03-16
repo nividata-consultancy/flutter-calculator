@@ -14,6 +14,7 @@ class CalcBloc {
   final _backController = StreamController<String>();
   final _equalController = StreamController<String>();
   final _bracketController = StreamController<String>();
+  final _periodController = StreamController<String>();
   final _totalSubject = BehaviorSubject<String>();
   final _expSubject = BehaviorSubject<String>();
 
@@ -30,6 +31,8 @@ class CalcBloc {
   Sink<String> get equal => _equalController.sink;
 
   Sink<String> get bracket => _bracketController.sink;
+
+  Sink<String> get period => _periodController.sink;
 
   Stream<String> get exp => _expSubject.stream;
 
@@ -53,6 +56,10 @@ class CalcBloc {
     }).listen(_calculate);
 
     operandStream.listen(_calculate);
+
+    _periodController.stream
+        .where((buttonText) => Process.isDigit(expTemp[expTemp.length - 1]))
+        .listen(_period);
 
     _clearController.stream.listen(_clear);
 
@@ -130,6 +137,12 @@ class CalcBloc {
     _totalSubject.add(Process.getResult(expTemp).toString());
   }
 
+  void _period(String buttonText) {
+    expTemp = expTemp + buttonText;
+    _expSubject.add(expTemp);
+    _totalSubject.add(Process.getResult(expTemp).toString());
+  }
+
   void _clear(String buttonText) {
     expTemp = "0";
     _expSubject.add(expTemp);
@@ -181,6 +194,9 @@ class CalcBloc {
       case TextType.BRACKET:
         bracket.add(buttonText);
         break;
+      case TextType.PERIOD:
+        period.add(buttonText);
+        break;
     }
   }
 
@@ -194,6 +210,7 @@ class CalcBloc {
     _backController.close();
     _equalController.close();
     _bracketController.close();
+    _periodController.close();
   }
 }
 

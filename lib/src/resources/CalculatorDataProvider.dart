@@ -56,9 +56,6 @@ class CalculatorDataProvider {
       case ZERO:
         return Calculator(ZERO, TextType.OPERAND);
         break;
-      case PERIOD:
-        return Calculator(PERIOD, TextType.OPERAND);
-        break;
 
       case ADD:
         return Calculator(ADD, TextType.OPERATOR);
@@ -87,6 +84,9 @@ class CalculatorDataProvider {
         break;
       case CLOSE_BRACKET:
         return Calculator(CLOSE_BRACKET, TextType.BRACKET);
+        break;
+      case PERIOD:
+        return Calculator(PERIOD, TextType.PERIOD);
         break;
     }
   }
