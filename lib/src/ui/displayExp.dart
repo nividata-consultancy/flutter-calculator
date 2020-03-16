@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class DisplayExp extends StatelessWidget {
   final String exp;
@@ -16,8 +17,11 @@ class DisplayExp extends StatelessWidget {
         padding: EdgeInsets.all(5),
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFFEFEFEF), Color(0xfff1f1f1)]),
             shape: BoxShape.rectangle,
-            color: Color(0xFFEFEFEF),
             border: Border(
               left: BorderSide(
                 color: Color(0xFFb6b6b8),
@@ -28,11 +32,11 @@ class DisplayExp extends StatelessWidget {
                 width: 3.0,
               ),
               bottom: BorderSide(
-                color: Color(0xfffefefe),
+                color: Color(0xfffafafa),
                 width: 2.0,
               ),
               right: BorderSide(
-                color: Color(0xfffefefe),
+                color: Color(0xfffafafa),
                 width: 1.0,
               ),
             )),

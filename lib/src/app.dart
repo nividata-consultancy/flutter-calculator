@@ -47,9 +47,13 @@ class _HomeWidget extends State<HomeWidget> {
         centerTitle: true,
         elevation: 0,
       ),
-      backgroundColor: Colors.white,
       body: Container(
-        margin: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFFEFEFEF), Colors.white])),
+        padding: EdgeInsets.all(5),
         child: Column(
           children: <Widget>[
             Container(
@@ -58,8 +62,10 @@ class _HomeWidget extends State<HomeWidget> {
               constraints: BoxConstraints.expand(height: displayHeight),
               decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  // BoxShape.circle or BoxShape.retangle
-                  color: Color(0xFFEFEFEF),
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Color(0xFFEFEFEF), Color(0xfff4f4f4)]),
                   border: Border(
                     left: BorderSide(
                       color: Color(0xFFb6b6b8),
@@ -70,11 +76,11 @@ class _HomeWidget extends State<HomeWidget> {
                       width: 3.0,
                     ),
                     bottom: BorderSide(
-                      color: Color(0xfffefefe),
+                      color: Color(0xfffafafa),
                       width: 2.0,
                     ),
                     right: BorderSide(
-                      color: Color(0xfffefefe),
+                      color: Color(0xfffafafa),
                       width: 1.0,
                     ),
                   )),
@@ -99,7 +105,6 @@ class _HomeWidget extends State<HomeWidget> {
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
                 child: Container(
-                  color: Colors.white,
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -128,7 +133,9 @@ class _HomeWidget extends State<HomeWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            ButtonView(text: "CE", size: buttonSize),
+                            ButtonView(
+                                text: CalculatorDataProvider.CLEAR,
+                                size: buttonSize),
                             ButtonViewForNumber(
                                 text: CalculatorDataProvider.EIGHT,
                                 size: buttonSize),

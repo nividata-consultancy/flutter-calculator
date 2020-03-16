@@ -18,7 +18,7 @@ class CalculatorDataProvider {
   static const MULTIPLY = '*';
   static const DIVIDE = '/';
 
-  static const CLEAR = 'C';
+  static const CLEAR = 'CA';
   static const BACK = '<=';
   static const EQUAL = '=';
   static const OPEN_BRACKET = '()';
