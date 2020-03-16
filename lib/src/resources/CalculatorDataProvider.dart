@@ -83,10 +83,10 @@ class CalculatorDataProvider {
         return Calculator(EQUAL, TextType.EQUAL);
         break;
       case OPEN_BRACKET:
-        return Calculator(OPEN_BRACKET, TextType.OTHER);
+        return Calculator(OPEN_BRACKET, TextType.BRACKET);
         break;
       case CLOSE_BRACKET:
-        return Calculator(CLOSE_BRACKET, TextType.OTHER);
+        return Calculator(CLOSE_BRACKET, TextType.BRACKET);
         break;
     }
   }

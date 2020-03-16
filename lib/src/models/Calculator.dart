@@ -8,4 +8,4 @@ class Calculator {
   }
 }
 
-enum TextType { OPERATOR, OPERAND, BACK, EQUAL, CLEAR, OTHER, UTIL }
+enum TextType { OPERATOR, OPERAND, BACK, EQUAL, CLEAR, BRACKET }

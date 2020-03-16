@@ -24,10 +24,19 @@ class Process {
 
   static bool isDigit(String ch) => double.tryParse(ch) != null;
 
+  static bool isOperand(String ch) => ["+", "-", "*", "/"].contains(ch);
+
+  static bool isParentheses(String ch) => ["(", ")"].contains(ch);
+
+  static bool isOpenParentheses(String ch) => ch == "(";
+
+  static bool isCloseParentheses(String ch) => ch == ")";
+
   static int i;
   static double result = 0;
   static Stack<double> digit = Stack<double>();
   static Stack<String> ops = Stack<String>();
+  static Stack<String> parentheses = Stack<String>();
 
   static clear() {
     i = 0;
@@ -42,7 +51,39 @@ class Process {
       int j = exp.length - 1;
       for (j; (0 < j && !Process.isValidExp(exp.substring(0, j))); j--);
       return Process.evaluate(exp.substring(0, j));
+    }
   }
+
+  static String infixToPostfix(String exp) {
+    String result = "";
+    for (int i = 0; i < exp.length; ++i) {
+      String x = exp[i];
+      if (isDigit(x)) {
+        result += x;
+      } else if (x == "(") {
+        parentheses.push(x);
+      } else if (x == ")") {
+        while (!parentheses.isEmpty && parentheses.peek() != "(") {
+          result += parentheses.pop();
+        }
+        if (!parentheses.isEmpty && parentheses.peek() != "(")
+          return "null";
+        else
+          parentheses.pop();
+      } else {
+        while (!parentheses.isEmpty &&
+            precedence(x) <= precedence(parentheses.peek())) {
+          if (parentheses.peek() == "(") return "null1";
+          result += parentheses.pop();
+        }
+        parentheses.push(x);
+      }
+    }
+    while (!parentheses.isEmpty) {
+      if (parentheses.peek() == "(") return "null3";
+      result += parentheses.pop();
+    }
+    return result;
   }
 
   static double evaluate(String exp) {
@@ -83,7 +124,7 @@ class Process {
       double val1 = digit.pop();
       String ch = ops.pop();
       digit.push(applyOp(val1, val2, ch));
-      print("$val2 $val1 $ch");
+      print("exp $val2 $val1 $ch");
     }
     return digit.pop();
   }
@@ -115,5 +156,9 @@ class Process {
       }
     }
     return digit.size > ops.size;
+  }
+
+  static void addParentheses() {
+    parentheses.push("(");
   }
 }
