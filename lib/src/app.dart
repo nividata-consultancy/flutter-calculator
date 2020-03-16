@@ -36,6 +36,12 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidget extends State<HomeWidget> {
   @override
+  void initState() {
+    bloc.clear.add(CalculatorDataProvider.CLEAR);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
     final double buttonSize = (screen.width / 4) - 12;
@@ -206,6 +212,12 @@ class _HomeWidget extends State<HomeWidget> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
   }
 }
 
