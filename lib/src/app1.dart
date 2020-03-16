@@ -1,4 +1,4 @@
-import 'package:calculator/src/utility/Calculations.dart';
+import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/utility/Process.dart';
 import 'package:calculator/src/ui/displayExp.dart';
 import 'package:calculator/src/ui/resultValue.dart';
@@ -134,15 +134,15 @@ class _HomeWidget extends State<HomeWidget> {
                             ButtonView(
                                 text: "CE", size: size, onTap: _onButtonClick),
                             ButtonViewForNumber(
-                                text: Calculations.SEVEN,
+                                text: CalculatorDataProvider.SEVEN,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonViewForNumber(
-                                text: Calculations.FOUR,
+                                text: CalculatorDataProvider.FOUR,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonViewForNumber(
-                                text: Calculations.ONE,
+                                text: CalculatorDataProvider.ONE,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonView(
@@ -156,27 +156,27 @@ class _HomeWidget extends State<HomeWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             ButtonView(
-                                text: Calculations.OPEN_BRACKET,
+                                text: CalculatorDataProvider.OPEN_BRACKET,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonView(
-                                text: Calculations.CLEAR,
+                                text: CalculatorDataProvider.CLEAR,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonViewForNumber(
-                                text: Calculations.EIGHT,
+                                text: CalculatorDataProvider.EIGHT,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonViewForNumber(
-                                text: Calculations.FIVE,
+                                text: CalculatorDataProvider.FIVE,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonViewForNumber(
-                                text: Calculations.TWO,
+                                text: CalculatorDataProvider.TWO,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonViewForNumber(
-                                text: Calculations.ZERO,
+                                text: CalculatorDataProvider.ZERO,
                                 size: size,
                                 onTap: _onButtonClick),
                           ],
@@ -188,27 +188,27 @@ class _HomeWidget extends State<HomeWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             ButtonView(
-                                text: Calculations.CLOSE_BRACKET,
+                                text: CalculatorDataProvider.CLOSE_BRACKET,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonView(
-                                text: Calculations.BACK,
+                                text: CalculatorDataProvider.BACK,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonViewForNumber(
-                                text: Calculations.NINE,
+                                text: CalculatorDataProvider.NINE,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonViewForNumber(
-                                text: Calculations.SIX,
+                                text: CalculatorDataProvider.SIX,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonViewForNumber(
-                                text: Calculations.THREE,
+                                text: CalculatorDataProvider.THREE,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonView(
-                                text: Calculations.PERIOD,
+                                text: CalculatorDataProvider.PERIOD,
                                 size: size,
                                 onTap: _onButtonClick),
                           ],
@@ -220,23 +220,23 @@ class _HomeWidget extends State<HomeWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             ButtonView(
-                                text: Calculations.DIVIDE,
+                                text: CalculatorDataProvider.DIVIDE,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonView(
-                                text: Calculations.MULTIPLY,
+                                text: CalculatorDataProvider.MULTIPLY,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonView(
-                                text: Calculations.SUBTRACT,
+                                text: CalculatorDataProvider.SUBTRACT,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonView(
-                                text: Calculations.ADD,
+                                text: CalculatorDataProvider.ADD,
                                 size: size,
                                 onTap: _onButtonClick),
                             ButtonViewForPlus(
-                                text: Calculations.EQUAL,
+                                text: CalculatorDataProvider.EQUAL,
                                 size: size,
                                 onTap: _onButtonClick),
                           ],
@@ -254,20 +254,20 @@ class _HomeWidget extends State<HomeWidget> {
   }
 
   _onButtonClick({String buttonText}) {
-    if (buttonText == Calculations.OPEN_BRACKET) {
+    if (buttonText == CalculatorDataProvider.OPEN_BRACKET) {
       addParenthesis(buttonText: buttonText);
     } else if (Process.isDigit(exp.split('').last) ||
         exp.split('').last != buttonText) {
-      if (buttonText != Calculations.BACK &&
+      if (buttonText != CalculatorDataProvider.BACK &&
           !Process.isDigit(exp.split('').last) &&
           !Process.isDigit(buttonText)) {
         exp = exp.replaceRange(exp.length - 1, exp.length, "");
       }
-      if (buttonText == Calculations.CLEAR)
+      if (buttonText == CalculatorDataProvider.CLEAR)
         clear();
-      else if (buttonText == Calculations.BACK)
+      else if (buttonText == CalculatorDataProvider.BACK)
         back();
-      else if (buttonText == Calculations.EQUAL) {
+      else if (buttonText == CalculatorDataProvider.EQUAL) {
       } else
         changeExp(buttonText);
     }
