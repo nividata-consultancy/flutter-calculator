@@ -62,37 +62,52 @@ class CalcBloc {
       return buttonText.isNotEmpty && buttonText != "0";
     }).listen(_equal);
 
+    /// exp    0
+    /// input  ()
+    /// output (
+    /// result 0
     bracketStream.where((expNew) => expNew == "0").listen((expNew) {
       expTemp = "(";
       _expSubject.add(expTemp);
       _totalSubject.add("0");
     });
+
+    /// exp    8*((
+    /// input  ()
+    /// output 8*(((
+    /// result 8
     bracketStream
         .where((expNew) => expNew != "0")
         .map((expNew) {
           return expNew[expNew.length - 1];
         })
-        .where((lastText) => Process.isCloseParentheses(lastText))
+        .where((lastText) => Process.isOpenParentheses(lastText))
         .listen((lastText) {
           expTemp += "(";
           _expSubject.add(expTemp);
           _totalSubject.add(Process.getResult(expTemp).toString());
         });
 
+    /// exp    123*
+    /// input  ()
+    /// output 123*(
+    /// result 123
     bracketStream
         .where((expNew) => expNew != "0")
         .map((expNew) {
           return expNew[expNew.length - 1];
         })
-        .where((lastText) =>
-            Process.isOperand(lastText) &&
-            !Process.isCloseParentheses(lastText))
+        .where((lastText) => Process.isOperand(lastText))
         .listen((lastText) {
           expTemp += "(";
           _expSubject.add(expTemp);
           _totalSubject.add(Process.getResult(expTemp).toString());
         });
 
+    /// exp    (8*8       ((8*8)    (8*8)
+    /// input  ()         ()        ()
+    /// output (8*8)      ((8*8))   (8*8)
+    /// result 64         64        64
     bracketStream
         .where((expNew) => expNew != "0")
         .map((expNew) {
