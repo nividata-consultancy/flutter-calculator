@@ -22,7 +22,10 @@ class Process {
     }
   }
 
-  static bool isDigit(String ch) =>["0","1","2","3","4","5","6","7","8","9"].contains(ch);
+  static bool isDigit(String ch) =>
+      ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].contains(ch);
+
+  static bool isFiniteDouble(double ch) => ch % 1 == 0;
 
   static bool isOperand(String ch) => ["+", "-", "*", "/"].contains(ch);
 
@@ -44,13 +47,21 @@ class Process {
     ops.clear();
   }
 
-  static double getResult(String exp) {
+  static String getResult(String exp) {
     if (isValidExp(exp)) {
-      return evaluate(exp);
+      double x = evaluate(exp);
+      if (isFiniteDouble(x))
+        return x.toInt().toString();
+      else
+        return x.toString();
     } else {
       int j = exp.length - 1;
       for (j; (0 < j && !Process.isValidExp(exp.substring(0, j))); j--);
-      return Process.evaluate(exp.substring(0, j));
+      double x = Process.evaluate(exp.substring(0, j));
+      if (isFiniteDouble(x))
+        return x.toInt().toString();
+      else
+        return x.toString();
     }
   }
 
@@ -136,7 +147,6 @@ class Process {
       double val1 = digit.pop();
       String ch = ops.pop();
       digit.push(applyOp(val1, val2, ch));
-      print("exp $val2 $val1 $ch");
     }
     return digit.pop();
   }

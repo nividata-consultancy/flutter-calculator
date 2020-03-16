@@ -47,7 +47,7 @@ class CalcBloc {
     var bracketStream =
         _bracketController.stream.map((buttonText) => expTemp).share();
 
-    operatorStream.map((buttonText) {
+    operatorStream.where((buttonText) => expTemp != "0").map((buttonText) {
       if (!Process.isDigit(expTemp.split('').last) &&
           expTemp.split('').last != ")") {
         expTemp = expTemp.replaceRange(expTemp.length - 1, expTemp.length, "");
@@ -92,7 +92,7 @@ class CalcBloc {
         .listen((lastText) {
           expTemp += "(";
           _expSubject.add(expTemp);
-          _totalSubject.add(Process.getResult(expTemp).toString());
+          _totalSubject.add(Process.getResult(expTemp));
         });
 
     /// exp    123*
@@ -108,7 +108,7 @@ class CalcBloc {
         .listen((lastText) {
           expTemp += "(";
           _expSubject.add(expTemp);
-          _totalSubject.add(Process.getResult(expTemp).toString());
+          _totalSubject.add(Process.getResult(expTemp));
         });
 
     /// exp    (8*8       ((8*8)    (8*8)
@@ -127,20 +127,20 @@ class CalcBloc {
         .listen((lastText) {
           expTemp += ")";
           _expSubject.add(expTemp);
-          _totalSubject.add(Process.getResult(expTemp).toString());
+          _totalSubject.add(Process.getResult(expTemp));
         });
   }
 
   void _calculate(String buttonText) {
     expTemp = (expTemp == "0") ? buttonText : (expTemp + buttonText);
     _expSubject.add(expTemp);
-    _totalSubject.add(Process.getResult(expTemp).toString());
+    _totalSubject.add(Process.getResult(expTemp));
   }
 
   void _period(String buttonText) {
     expTemp = expTemp + buttonText;
     _expSubject.add(expTemp);
-    _totalSubject.add(Process.getResult(expTemp).toString());
+    _totalSubject.add(Process.getResult(expTemp));
   }
 
   void _clear(String buttonText) {
@@ -151,7 +151,7 @@ class CalcBloc {
   }
 
   void _equal(String buttonText) {
-    expTemp = Process.getResult(expTemp).toString();
+    expTemp = Process.getResult(expTemp);
     print("equal $expTemp");
     _expSubject.add(expTemp);
     _totalSubject.add(expTemp);
@@ -171,7 +171,7 @@ class CalcBloc {
       expTemp = "0";
     }
     _expSubject.add(expTemp);
-    _totalSubject.add(Process.getResult(expTemp).toString());
+    _totalSubject.add(Process.getResult(expTemp));
   }
 
   _processButtonText({String buttonText}) {

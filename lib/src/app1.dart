@@ -42,7 +42,7 @@ class _HomeWidget extends State<HomeWidget> {
   changeExp(String buttonText) {
     setState(() {
       exp = (exp == "0") ? buttonText : (exp + buttonText);
-      result = Process.getResult(exp).toString();
+      result = Process.getResult(exp);
     });
   }
 
@@ -65,7 +65,7 @@ class _HomeWidget extends State<HomeWidget> {
       } else {
         exp = "0";
       }
-      result = Process.getResult(exp).toString();
+      result = Process.getResult(exp);
     });
   }
 
