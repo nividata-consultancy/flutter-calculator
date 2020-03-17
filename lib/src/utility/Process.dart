@@ -1,19 +1,16 @@
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/utility/stack.dart';
 import 'package:expression_language/expression_language.dart';
-import 'package:math_expressions/math_expressions.dart';
 
 void main() {
-  String exp = "((5+";
-//  var x = Process.isValid2(exp);
-
-//  var x = Parser().parse(exp).evaluate(EvaluationType.REAL, ContextModel());
-
+  String exp = "(((";
+  var x = Process.isValid2(exp);
 //  ExpressionGrammarParser({})
 //      .build()
 //      .parse(exp).failure("fail",5);
 //  print("${x}");
 //  print("${Process.isValidExp(exp)}");
+  print("${x}");
   print("${Process.getResult(exp)}");
 }
 
@@ -42,11 +39,14 @@ class Process {
         }
       }
     }
-    double x = ExpressionGrammarParser({}).build().parse(exp).value;
-    if (isFiniteDouble(x))
-      return x.toInt().toString();
-    else
-      return x.toString();
+    return (ExpressionGrammarParser({}).build().parse(tempExp).value
+            as Expression)
+        .evaluate()
+        .toString();
+//    if (isFiniteDouble(x))
+//      return x.toInt().toString();
+//    else
+//      return x.toString();
 //    double x = evaluate(tempExp);
     /* if (isValidExp(exp)) {
       double x = evaluate(exp);
@@ -64,6 +64,15 @@ class Process {
       else
         return x.toString();
     }*/
+  }
+
+  static bool isValid2(String exp) {
+    try {
+      ExpressionGrammarParser({}).build().parse(exp);
+      return true;
+    } catch (e, s) {
+      return false;
+    }
   }
 
   static double evaluate(String exp) {
@@ -147,15 +156,6 @@ class Process {
       }
     }
     return digit.size > ops.size;
-  }
-
-  static bool isValid2(String exp) {
-    try {
-      ExpressionGrammarParser({}).build().parse(exp).value;
-      return true;
-    } catch (e, s) {
-      return false;
-    }
   }
 
   static clear() {
