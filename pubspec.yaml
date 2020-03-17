@@ -24,6 +24,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   rxdart: ^0.23.1
+  expression_language: ^0.2.1
+  math_expressions: ^2.0.0
+  test: any
+
 
 dev_dependencies:
   flutter_test:

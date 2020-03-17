@@ -1,57 +1,54 @@
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/utility/stack.dart';
+import 'package:expression_language/expression_language.dart';
+import 'package:math_expressions/math_expressions.dart';
+
+void main() {
+  String exp = "((5+";
+//  var x = Process.isValid2(exp);
+
+//  var x = Parser().parse(exp).evaluate(EvaluationType.REAL, ContextModel());
+
+//  ExpressionGrammarParser({})
+//      .build()
+//      .parse(exp).failure("fail",5);
+//  print("${x}");
+//  print("${Process.isValidExp(exp)}");
+  print("${Process.getResult(exp)}");
+}
 
 class Process {
-  static int precedence(String ch) {
-    if (ch == "+" || ch == "-")
-      return 1;
-    else if (ch == "*" || ch == "/")
-      return 2;
-    else
-      return 0;
-  }
-
-  static double applyOp(double a, double b, String ch) {
-    if (ch == CalculatorDataProvider.ADD) {
-      return a + b;
-    } else if (ch == CalculatorDataProvider.SUBTRACT) {
-      return a - b;
-    } else if (ch == CalculatorDataProvider.DIVIDE) {
-      return a / b;
-    } else if (ch == CalculatorDataProvider.MULTIPLY) {
-      return a * b;
-    } else if (ch == CalculatorDataProvider.PERCENTAGE) {
-      return a * b * 0.01;
-    }
-  }
-
-  static bool isDigit(String ch) =>
-      ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].contains(ch);
-
-  static bool isFiniteDouble(double ch) => ch % 1 == 0;
-
-  static bool isOperand(String ch) => ["+", "-", "*", "/"].contains(ch);
-
-  static bool isParentheses(String ch) => ["(", ")"].contains(ch);
-
-  static bool isOpenParentheses(String ch) => ch == "(";
-
-  static bool isCloseParentheses(String ch) => ch == ")";
-
   static int i;
   static double result = 0;
   static Stack<double> digit = Stack<double>();
   static Stack<String> ops = Stack<String>();
   static Stack<String> parentheses = Stack<String>();
 
-  static clear() {
-    i = 0;
-    digit.clear();
-    ops.clear();
-  }
-
   static String getResult(String exp) {
-    if (isValidExp(exp)) {
+    String tempExp = exp;
+    int j = exp.length;
+
+    if (tempExp.contains("(")) {
+      while ("(".allMatches(tempExp).length > ")".allMatches(tempExp).length) {
+        tempExp += ")";
+      }
+    }
+    while (!Process.isValid2(tempExp)) {
+      tempExp = exp.substring(0, --j);
+      if (tempExp.contains("(")) {
+        while (
+            "(".allMatches(tempExp).length > ")".allMatches(tempExp).length) {
+          tempExp += ")";
+        }
+      }
+    }
+    double x = ExpressionGrammarParser({}).build().parse(exp).value;
+    if (isFiniteDouble(x))
+      return x.toInt().toString();
+    else
+      return x.toString();
+//    double x = evaluate(tempExp);
+    /* if (isValidExp(exp)) {
       double x = evaluate(exp);
       if (isFiniteDouble(x))
         return x.toInt().toString();
@@ -61,43 +58,12 @@ class Process {
       int j = exp.length - 1;
       for (j; (0 < j && !Process.isValidExp(exp.substring(0, j))); j--);
       double x = Process.evaluate(exp.substring(0, j));
+
       if (isFiniteDouble(x))
         return x.toInt().toString();
       else
         return x.toString();
-    }
-  }
-
-  static String infixToPostfix(String exp) {
-    String result = "";
-    for (int i = 0; i < exp.length; ++i) {
-      String x = exp[i];
-      if (isDigit(x)) {
-        result += x;
-      } else if (x == "(") {
-        parentheses.push(x);
-      } else if (x == ")") {
-        while (!parentheses.isEmpty && parentheses.peek() != "(") {
-          result += parentheses.pop();
-        }
-        if (!parentheses.isEmpty && parentheses.peek() != "(")
-          return "null";
-        else
-          parentheses.pop();
-      } else {
-        while (!parentheses.isEmpty &&
-            precedence(x) <= precedence(parentheses.peek())) {
-          if (parentheses.peek() == "(") return "null1";
-          result += parentheses.pop();
-        }
-        parentheses.push(x);
-      }
-    }
-    while (!parentheses.isEmpty) {
-      if (parentheses.peek() == "(") return "null3";
-      result += parentheses.pop();
-    }
-    return result;
+    }*/
   }
 
   static double evaluate(String exp) {
@@ -168,7 +134,7 @@ class Process {
           val = (val * 10) + double.parse(exp[++i]);
         }
         digit.push(val);
-      } else if (exp[i] == ")") {
+      } else if (exp[i] == ")" && digit.hasAtLestTwoElements()) {
         while (!ops.isEmpty && ops.peek() != "(") {
           double val2 = digit.pop();
           double val1 = digit.pop();
@@ -181,6 +147,89 @@ class Process {
       }
     }
     return digit.size > ops.size;
+  }
+
+  static bool isValid2(String exp) {
+    try {
+      ExpressionGrammarParser({}).build().parse(exp).value;
+      return true;
+    } catch (e, s) {
+      return false;
+    }
+  }
+
+  static clear() {
+    i = 0;
+    digit.clear();
+    ops.clear();
+  }
+
+  static int precedence(String ch) {
+    if (ch == "+" || ch == "-")
+      return 1;
+    else if (ch == "*" || ch == "/")
+      return 2;
+    else
+      return 0;
+  }
+
+  static double applyOp(double a, double b, String ch) {
+    if (ch == CalculatorDataProvider.ADD) {
+      return a + b;
+    } else if (ch == CalculatorDataProvider.SUBTRACT) {
+      return a - b;
+    } else if (ch == CalculatorDataProvider.DIVIDE) {
+      return a / b;
+    } else if (ch == CalculatorDataProvider.MULTIPLY) {
+      return a * b;
+    } else if (ch == CalculatorDataProvider.PERCENTAGE) {
+      return a * b * 0.01;
+    }
+  }
+
+  static bool isDigit(String ch) =>
+      ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].contains(ch);
+
+  static bool isFiniteDouble(double ch) => ch % 1 == 0;
+
+  static bool isOperand(String ch) => ["+", "-", "*", "/"].contains(ch);
+
+  static bool isParentheses(String ch) => ["(", ")"].contains(ch);
+
+  static bool isOpenParentheses(String ch) => ch == "(";
+
+  static bool isCloseParentheses(String ch) => ch == ")";
+
+  static String infixToPostfix(String exp) {
+    String result = "";
+    for (int i = 0; i < exp.length; ++i) {
+      String x = exp[i];
+      if (isDigit(x)) {
+        result += x;
+      } else if (x == "(") {
+        parentheses.push(x);
+      } else if (x == ")") {
+        while (!parentheses.isEmpty && parentheses.peek() != "(") {
+          result += parentheses.pop();
+        }
+        if (!parentheses.isEmpty && parentheses.peek() != "(")
+          return "null";
+        else
+          parentheses.pop();
+      } else {
+        while (!parentheses.isEmpty &&
+            precedence(x) <= precedence(parentheses.peek())) {
+          if (parentheses.peek() == "(") return "null1";
+          result += parentheses.pop();
+        }
+        parentheses.push(x);
+      }
+    }
+    while (!parentheses.isEmpty) {
+      if (parentheses.peek() == "(") return "null3";
+      result += parentheses.pop();
+    }
+    return result;
   }
 
   static void addParentheses() {
