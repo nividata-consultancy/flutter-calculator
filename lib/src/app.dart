@@ -118,7 +118,9 @@ class _HomeWidget extends State<HomeWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            ButtonView(text: "%", size: buttonSize),
+                            ButtonView(
+                                text: CalculatorDataProvider.PERCENTAGE,
+                                size: buttonSize),
                             ButtonViewForNumber(
                                 text: CalculatorDataProvider.SEVEN,
                                 size: buttonSize),

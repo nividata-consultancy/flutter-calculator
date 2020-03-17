@@ -1,3 +1,4 @@
+import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/utility/stack.dart';
 
 class Process {
@@ -11,14 +12,16 @@ class Process {
   }
 
   static double applyOp(double a, double b, String ch) {
-    if (ch == "+") {
+    if (ch == CalculatorDataProvider.ADD) {
       return a + b;
-    } else if (ch == "-") {
+    } else if (ch == CalculatorDataProvider.SUBTRACT) {
       return a - b;
-    } else if (ch == "/") {
+    } else if (ch == CalculatorDataProvider.DIVIDE) {
       return a / b;
-    } else if (ch == "*") {
+    } else if (ch == CalculatorDataProvider.MULTIPLY) {
       return a * b;
+    } else if (ch == CalculatorDataProvider.PERCENTAGE) {
+      return a * b * 0.01;
     }
   }
 

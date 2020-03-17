@@ -2,7 +2,7 @@ import 'package:calculator/src/models/Calculator.dart';
 
 class CalculatorDataProvider {
   static const ONE = '1';
-  static const TWO = '3';
+  static const TWO = '2';
   static const THREE = '3';
   static const FOUR = '4';
   static const FIVE = '5';
@@ -17,6 +17,7 @@ class CalculatorDataProvider {
   static const SUBTRACT = '-';
   static const MULTIPLY = '*';
   static const DIVIDE = '/';
+  static const PERCENTAGE = '%';
 
   static const CLEAR = 'CA';
   static const BACK = '<=';
@@ -68,6 +69,9 @@ class CalculatorDataProvider {
         break;
       case DIVIDE:
         return Calculator(DIVIDE, TextType.OPERATOR);
+        break;
+      case PERCENTAGE:
+        return Calculator(PERCENTAGE, TextType.OPERATOR);
         break;
 
       case CLEAR:
