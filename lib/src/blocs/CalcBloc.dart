@@ -47,13 +47,17 @@ class CalcBloc {
     var bracketStream =
         _bracketController.stream.map((buttonText) => expTemp).share();
 
-    operatorStream.where((buttonText) => expTemp != "0").map((buttonText) {
+    operatorStream
+        .where((buttonText) =>
+            expTemp != "0" &&
+            !Process.isOpenParentheses(expTemp.split('').last))
+        .map((buttonText) {
       if (!Process.isDigit(expTemp.split('').last) &&
-          expTemp.split('').last != ")") {
+          !Process.isCloseParentheses(expTemp.split('').last)) {
         expTemp = expTemp.replaceRange(expTemp.length - 1, expTemp.length, "");
       }
       return buttonText;
-    }).listen(_calculate);
+    }).listen(_operator);
 
     operandStream.listen(_calculate);
 
@@ -131,6 +135,11 @@ class CalcBloc {
         });
   }
 
+  void _operator(String buttonText) {
+    expTemp = expTemp + buttonText;
+    _expSubject.add(expTemp);
+  }
+
   void _calculate(String buttonText) {
     expTemp = (expTemp == "0") ? buttonText : (expTemp + buttonText);
     _expSubject.add(expTemp);
@@ -152,7 +161,6 @@ class CalcBloc {
 
   void _equal(String buttonText) {
     expTemp = Process.getResult(expTemp);
-    print("equal $expTemp");
     _expSubject.add(expTemp);
     _totalSubject.add(expTemp);
     Process.clear();

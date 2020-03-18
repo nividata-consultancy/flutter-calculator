@@ -3,14 +3,16 @@ import 'package:calculator/src/utility/stack.dart';
 import 'package:expression_language/expression_language.dart';
 
 void main() {
-  String exp = "(((";
-  var x = Process.isValid2(exp);
-//  ExpressionGrammarParser({})
-//      .build()
-//      .parse(exp).failure("fail",5);
-//  print("${x}");
+  String exp = "(5+5)%5)";
+//  var x = Process.isValid2(exp);
+//  var x = (ExpressionGrammarParser({}).build().parse(exp).value as Expression);
+
+//  var x = Test.Parser()
+//      .parse(exp)
+//      .evaluate(Test.EvaluationType.REAL, Test.ContextModel());
+//  print("${x}");`
 //  print("${Process.isValidExp(exp)}");
-  print("${x}");
+//  print("${x.evaluate()}");
   print("${Process.getResult(exp)}");
 }
 
@@ -39,10 +41,15 @@ class Process {
         }
       }
     }
-    return (ExpressionGrammarParser({}).build().parse(tempExp).value
+    double x = Process.evaluate(tempExp);
+    if (isFiniteDouble(x))
+      return x.toInt().toString();
+    else
+      return x.toString();
+    /*   return (ExpressionGrammarParser({}).build().parse(tempExp).value
             as Expression)
         .evaluate()
-        .toString();
+        .toString();*/
 //    if (isFiniteDouble(x))
 //      return x.toInt().toString();
 //    else
@@ -120,7 +127,7 @@ class Process {
         ops.push(exp[i]);
       }
     }
-    while (!ops.isEmpty && digit.hasAtLestTwoElements()) {
+    while (!ops.isEmpty) {
       double val2 = digit.pop();
       double val1 = digit.pop();
       String ch = ops.pop();
@@ -169,6 +176,8 @@ class Process {
       return 1;
     else if (ch == "*" || ch == "/")
       return 2;
+    else if (ch == "%")
+      return 3;
     else
       return 0;
   }
@@ -230,9 +239,5 @@ class Process {
       result += parentheses.pop();
     }
     return result;
-  }
-
-  static void addParentheses() {
-    parentheses.push("(");
   }
 }
