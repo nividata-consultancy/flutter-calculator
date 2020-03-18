@@ -1,9 +1,9 @@
+import 'package:calculator/src/expressionLanguage/expression_language.dart';
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/utility/stack.dart';
-import 'package:expression_language/expression_language.dart';
 
 void main() {
-  String exp = "(5+5)%5)";
+  String exp = "(101%10)";
 //  var x = Process.isValid2(exp);
 //  var x = (ExpressionGrammarParser({}).build().parse(exp).value as Expression);
 
@@ -41,15 +41,15 @@ class Process {
         }
       }
     }
-    double x = Process.evaluate(tempExp);
+    /*double x = Process.evaluate(tempExp);
     if (isFiniteDouble(x))
       return x.toInt().toString();
     else
-      return x.toString();
-    /*   return (ExpressionGrammarParser({}).build().parse(tempExp).value
+      return x.toString();*/
+       return (ExpressionGrammarParser({}).build().parse(tempExp).value
             as Expression)
         .evaluate()
-        .toString();*/
+        .toString();
 //    if (isFiniteDouble(x))
 //      return x.toInt().toString();
 //    else
