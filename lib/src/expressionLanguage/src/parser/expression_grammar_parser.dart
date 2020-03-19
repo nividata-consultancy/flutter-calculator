@@ -1,4 +1,4 @@
-
+import 'package:calculator/src/expressionLanguage/src/expressions/modulo2_expression.dart';
 import 'package:petitparser/petitparser.dart';
 
 import '../../expression_language.dart';
@@ -86,6 +86,7 @@ class ExpressionGrammarParser extends ExpressionGrammarDefinition {
             left = IntegerDivisionNumberExpression(left, right);
             continue;
           }
+
           if (item[0].value == '*') {
             if (left is Expression<Number> && right is Expression<Number>) {
               left = MultiplyNumberExpression(left, right);
@@ -105,11 +106,6 @@ class ExpressionGrammarParser extends ExpressionGrammarDefinition {
               left = DivisionDurationExpression(left, right);
               continue;
             }
-
-            continue;
-          }
-          if (item[0].value == '%') {
-            left = ModuloExpression(left, right);
             continue;
           }
           throw UnknownExpressionTypeException(
@@ -135,6 +131,24 @@ class ExpressionGrammarParser extends ExpressionGrammarDefinition {
           } else if (c[0].value == '!') {
             if (c[1] is Expression<bool>) {
               return NegateBoolExpression(c[1]);
+            }
+          }
+        }
+        return c;
+      });
+
+  @override
+  Parser modExpression() => super.modExpression().map((c) {
+        if (c is List && c[2] == null) {
+          if (c[1].value == '%') {
+            if (c[0] is Expression<Number>) {
+              return ModuloExpression(c[0]);
+            }
+          }
+        } else if (c is List && c[2] != null) {
+          if (c[1].value == '%') {
+            if (c[0] is Expression<Number>) {
+              return Modulo2Expression(c[0], c[2]);
             }
           }
         }

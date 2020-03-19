@@ -1,4 +1,6 @@
 import 'dart:collection';
+import 'package:calculator/src/expressionLanguage/src/expressions/modulo2_expression.dart';
+
 import '../../expression_language.dart';
 
 class CloneExpressionVisitor extends ExpressionVisitor {
@@ -224,12 +226,18 @@ class CloneExpressionVisitor extends ExpressionVisitor {
   }
 
   @override
-  void visitModulo(ModuloExpression expression) {
+  void visitModulo2(Modulo2Expression expression) {
     expression.left.accept(this);
     expression.right.accept(this);
     var right = pop();
     var left = pop();
-    push(ModuloExpression(left, right));
+    push(Modulo2Expression(left, right));
+  }
+
+  @override
+  void visitModulo(ModuloExpression expression) {
+    expression.value.accept(this);
+    push(ModuloExpression(pop()));
   }
 
   @override

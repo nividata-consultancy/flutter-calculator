@@ -3,7 +3,8 @@ import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/utility/stack.dart';
 
 void main() {
-  String exp = "(101%10)";
+  String exp = " 10%10";
+//  String exp = "105%";
 //  var x = Process.isValid2(exp);
 //  var x = (ExpressionGrammarParser({}).build().parse(exp).value as Expression);
 
@@ -11,7 +12,7 @@ void main() {
 //      .parse(exp)
 //      .evaluate(Test.EvaluationType.REAL, Test.ContextModel());
 //  print("${x}");`
-//  print("${Process.isValidExp(exp)}");
+//  print("${Process.isValid2(exp)}");
 //  print("${x.evaluate()}");
   print("${Process.getResult(exp)}");
 }
@@ -24,14 +25,24 @@ class Process {
   static Stack<String> parentheses = Stack<String>();
 
   static String getResult(String exp) {
+    exp = exp
+        .split('')
+        .map((text) {
+          if (text == "%")
+            return text + "*";
+          else
+            return text;
+        })
+        .toList()
+        .join("");
     String tempExp = exp;
     int j = exp.length;
-
     if (tempExp.contains("(")) {
       while ("(".allMatches(tempExp).length > ")".allMatches(tempExp).length) {
         tempExp += ")";
       }
     }
+
     while (!Process.isValid2(tempExp)) {
       tempExp = exp.substring(0, --j);
       if (tempExp.contains("(")) {
@@ -46,7 +57,7 @@ class Process {
       return x.toInt().toString();
     else
       return x.toString();*/
-       return (ExpressionGrammarParser({}).build().parse(tempExp).value
+    return (ExpressionGrammarParser({}).build().parse(tempExp).value
             as Expression)
         .evaluate()
         .toString();

@@ -1,3 +1,5 @@
+import 'package:calculator/src/expressionLanguage/src/expressions/modulo2_expression.dart';
+
 import '../../expression_language.dart';
 import '../expressions/expressions.dart';
 
@@ -132,9 +134,14 @@ abstract class TraversalExpressionsVisitor extends ExpressionVisitor {
   }
 
   @override
-  void visitModulo(ModuloExpression expression) {
+  void visitModulo2(Modulo2Expression expression) {
     expression.left.accept(this);
     expression.right.accept(this);
+  }
+
+  @override
+  void visitModulo(ModuloExpression expression) {
+    expression.value.accept(this);
   }
 
   @override

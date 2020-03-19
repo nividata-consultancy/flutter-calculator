@@ -137,6 +137,7 @@ class CalcBloc {
 
   void _operator(String buttonText) {
     expTemp = expTemp + buttonText;
+    _totalSubject.add(Process.getResult(expTemp));
     _expSubject.add(expTemp);
   }
 

@@ -1,15 +1,28 @@
+import 'package:calculator/src/expressionLanguage/src/expressions/expression_base.dart';
 import 'package:petitparser/petitparser.dart';
+
+void main() {
+  var x = (ExpressionGrammarDefinition().build().parse("51%").value);
+  var x2 = (ExpressionGrammarDefinition().build().parse("51%1").value);
+  print("${x.toString()}");
+  print("${x2.toString()}");
+}
 
 class ExpressionGrammarDefinition extends GrammarDefinition {
   @override
   Parser start() => (ref(expression).end()).or(ref(failureState));
 
   Parser FALSE() => ref(token, 'false');
+
   Parser TRUE() => ref(token, 'true');
+
   Parser LETTER() => letter();
+
   Parser DIGIT() => digit();
+
   Parser failureState() =>
       (ref(expression).trim() & ref(fail).trim()) | ref(fail).trim();
+
   Parser fail() => any();
 
   Parser decimalNumber() =>
@@ -18,10 +31,14 @@ class ExpressionGrammarDefinition extends GrammarDefinition {
       char('.') &
       ref(DIGIT) &
       ref(DIGIT).star();
+
   Parser integerNumber() => ref(DIGIT) & ref(DIGIT).star();
+
   Parser singleLineString() =>
       char('"') & ref(stringContent).star() & char('"');
+
   Parser stringContent() => pattern('^"');
+
   Parser literal() => ref(
       token,
       ref(decimalNumber) |
@@ -29,6 +46,7 @@ class ExpressionGrammarDefinition extends GrammarDefinition {
           ref(TRUE) |
           ref(FALSE) |
           ref(singleLineString));
+
   Parser identifier() => ref(LETTER) & (ref(LETTER) | ref(DIGIT)).star();
 
   Parser function() =>
@@ -36,29 +54,33 @@ class ExpressionGrammarDefinition extends GrammarDefinition {
       ref(token, '(') &
       ref(functionParameters).optional() &
       ref(token, ')');
+
   Parser functionParameters() =>
       (ref(expression) & ref(token, ',')).star() & ref(expression);
 
   Parser additiveOperator() => ref(token, '+') | ref(token, '-');
+
   Parser relationalOperator() =>
       ref(token, '>=') | ref(token, '>') | ref(token, '<=') | ref(token, '<');
 
   Parser equalityOperator() => ref(token, '==') | ref(token, '!=');
+
   Parser multiplicativeOperator() =>
-      ref(token, '*') |
-      ref(token, '/') |
-      ref(token, '~') & ref(token, '/') |
-      ref(token, '%');
+      ref(token, '*') | ref(token, '/') | ref(token, '~') & ref(token, '/');
 
   Parser unaryNegateOperator() => ref(token, '-') | ref(token, '!');
+
+  Parser modOperator() => ref(token, '%');
 
   Parser additiveExpression() =>
       ref(multiplicativeExpression) &
       (ref(additiveOperator) & ref(multiplicativeExpression)).star();
 
   Parser multiplicativeExpression() =>
-      ref(unaryExpression) &
-      (ref(multiplicativeOperator) & ref(unaryExpression)).star();
+      (ref(modExpression) | ref(unaryExpression)) &
+      (ref(multiplicativeOperator) &
+              (ref(modExpression) | ref(unaryExpression)))
+          .star();
 
   Parser unaryExpression() =>
       ref(literal) |
@@ -66,6 +88,9 @@ class ExpressionGrammarDefinition extends GrammarDefinition {
       ref(function) |
       ref(reference) |
       ref(unaryNegateOperator) & ref(unaryExpression);
+
+  Parser modExpression() =>
+      ref(unaryExpression) & ref(modOperator) & ref(unaryExpression).optional();
 
   Parser expressionInParentheses() =>
       ref(token, '(') & ref(expression) & ref(token, ')');

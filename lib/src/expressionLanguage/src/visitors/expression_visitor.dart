@@ -1,4 +1,6 @@
 
+import 'package:calculator/src/expressionLanguage/src/expressions/modulo2_expression.dart';
+
 import '../expressions/expressions.dart';
 
 abstract class ExpressionVisitor {
@@ -23,6 +25,7 @@ abstract class ExpressionVisitor {
   void visitIntegerDivisionNumber(IntegerDivisionNumberExpression expression);
   void visitDivision(DivisionNumberExpression expression);
   void visitModulo(ModuloExpression expression);
+  void visitModulo2(Modulo2Expression expression);
   void visitDateTimePlusDuration(DateTimePlusDurationExpression expression);
   void visitDateTimeMinusDuration(DateTimeMinusDurationExpression expression);
   void visitPlusDuration(PlusDurationExpression expression);
