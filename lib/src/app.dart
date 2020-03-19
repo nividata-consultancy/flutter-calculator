@@ -4,8 +4,10 @@ import 'package:calculator/src/ui/displayExp.dart';
 import 'package:calculator/src/ui/resultValue.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 typedef void CalculatorButtonTapCallback({String buttonText});
 
@@ -21,7 +23,9 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          primaryColor: Color(0xffebebee), brightness: Brightness.light),
+          primaryColor: Color(0xffebebee),
+          brightness: Brightness.light,
+          fontFamily: 'Montserrat'),
       home: HomeWidget(),
     );
   }
@@ -119,7 +123,7 @@ class _HomeWidget extends State<HomeWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             ButtonView(
-                                text: CalculatorDataProvider.PERCENTAGE,
+                                text: CalculatorDataProvider.CLEAR,
                                 size: buttonSize),
                             ButtonViewForNumber(
                                 text: CalculatorDataProvider.SEVEN,
@@ -141,8 +145,8 @@ class _HomeWidget extends State<HomeWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            ButtonView(
-                                text: CalculatorDataProvider.CLEAR,
+                            ButtonBackView(
+                                text: CalculatorDataProvider.BACK,
                                 size: buttonSize),
                             ButtonViewForNumber(
                                 text: CalculatorDataProvider.EIGHT,
@@ -165,7 +169,7 @@ class _HomeWidget extends State<HomeWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             ButtonView(
-                                text: CalculatorDataProvider.BACK,
+                                text: CalculatorDataProvider.PERCENTAGE,
                                 size: buttonSize),
                             ButtonViewForNumber(
                                 text: CalculatorDataProvider.NINE,
@@ -303,10 +307,42 @@ class ButtonView extends StatelessWidget {
         onTap: () {
           bloc.buttonText.add(text);
         },
+        highlightColor: Colors.red,
         child: Container(
           constraints:
               BoxConstraints.tightForFinite(width: size, height: size * .75),
           child: Center(child: Text(text, style: TextStyle(fontSize: 25))),
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonBackView extends StatelessWidget {
+  final String text;
+  final double size;
+  final Key key;
+
+  ButtonBackView({this.key, @required this.text, @required this.size})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(6),
+      color: Color(0xffe8e9eb),
+      elevation: 4,
+      shape:
+          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
+      child: InkWell(
+        onTap: () {
+          bloc.buttonText.add(text);
+        },
+        child: Container(
+          padding: EdgeInsets.all(19),
+          constraints:
+              BoxConstraints.tightForFinite(width: size, height: size * .75),
+          child: SvgPicture.asset("assets/backspace.svg"),
         ),
       ),
     );

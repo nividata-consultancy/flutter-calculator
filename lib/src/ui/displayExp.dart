@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class DisplayExp extends StatelessWidget {
@@ -41,12 +42,14 @@ class DisplayExp extends StatelessWidget {
               ),
             )),
         child: Align(
-          alignment: Alignment.bottomRight,
-          child: Text(
-            exp,
-            maxLines: 3,
-            textAlign: TextAlign.end,
-            style: TextStyle(fontSize: 28),
+          alignment: Alignment.centerRight,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Text(
+              exp,
+              textAlign: TextAlign.end,
+              style: TextStyle(fontSize: 36),
+            ),
           ),
         ),
       ),
