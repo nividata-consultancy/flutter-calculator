@@ -188,10 +188,6 @@ class _HomeWidget extends State<HomeWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             ButtonView(
-                                text: CalculatorDataProvider.CLOSE_BRACKET,
-                                size: size,
-                                onTap: _onButtonClick),
-                            ButtonView(
                                 text: CalculatorDataProvider.BACK,
                                 size: size,
                                 onTap: _onButtonClick),

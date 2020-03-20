@@ -23,74 +23,70 @@ class CalculatorDataProvider {
   static const BACK = '<=';
   static const EQUAL = '=';
   static const OPEN_BRACKET = '()';
-  static const CLOSE_BRACKET = ')';
 
   static Calculator getButtonData(String text) {
     switch (text) {
       case ONE:
-        return Calculator(ONE, TextType.OPERAND);
+        return Calculator(ONE, ONE, TextType.OPERAND);
         break;
       case TWO:
-        return Calculator(TWO, TextType.OPERAND);
+        return Calculator(TWO, TWO, TextType.OPERAND);
         break;
       case THREE:
-        return Calculator(THREE, TextType.OPERAND);
+        return Calculator(THREE, THREE, TextType.OPERAND);
         break;
       case FOUR:
-        return Calculator(FOUR, TextType.OPERAND);
+        return Calculator(FOUR, FOUR, TextType.OPERAND);
         break;
       case FIVE:
-        return Calculator(FIVE, TextType.OPERAND);
+        return Calculator(FIVE, FIVE, TextType.OPERAND);
         break;
       case SIX:
-        return Calculator(SIX, TextType.OPERAND);
+        return Calculator(SIX, SIX, TextType.OPERAND);
         break;
       case SEVEN:
-        return Calculator(SEVEN, TextType.OPERAND);
+        return Calculator(SEVEN, SEVEN, TextType.OPERAND);
         break;
       case EIGHT:
-        return Calculator(EIGHT, TextType.OPERAND);
+        return Calculator(EIGHT, EIGHT, TextType.OPERAND);
         break;
       case NINE:
-        return Calculator(NINE, TextType.OPERAND);
+        return Calculator(NINE, NINE, TextType.OPERAND);
         break;
       case ZERO:
-        return Calculator(ZERO, TextType.OPERAND);
+        return Calculator(ZERO, ZERO, TextType.OPERAND);
         break;
 
       case ADD:
-        return Calculator(ADD, TextType.OPERATOR);
+        return Calculator(ADD, "assets/plus.svg", TextType.OPERATOR);
         break;
       case SUBTRACT:
-        return Calculator(SUBTRACT, TextType.OPERATOR);
+        return Calculator(SUBTRACT, "assets/minus.svg", TextType.OPERATOR);
         break;
       case MULTIPLY:
-        return Calculator(MULTIPLY, TextType.OPERATOR);
+        return Calculator(MULTIPLY, MULTIPLY, TextType.OPERATOR);
         break;
       case DIVIDE:
-        return Calculator(DIVIDE, TextType.OPERATOR);
+        return Calculator(DIVIDE, DIVIDE, TextType.OPERATOR);
         break;
       case PERCENTAGE:
-        return Calculator(PERCENTAGE, TextType.OPERATOR);
+        return Calculator(PERCENTAGE, PERCENTAGE, TextType.OPERATOR);
         break;
 
       case CLEAR:
-        return Calculator(CLEAR, TextType.CLEAR);
+        return Calculator(CLEAR, CLEAR, TextType.CLEAR);
         break;
       case BACK:
-        return Calculator(BACK, TextType.BACK);
+        return Calculator(BACK, "assets/backspace.svg", TextType.BACK);
         break;
       case EQUAL:
-        return Calculator(EQUAL, TextType.EQUAL);
+        return Calculator(EQUAL, EQUAL, TextType.EQUAL);
         break;
       case OPEN_BRACKET:
-        return Calculator(OPEN_BRACKET, TextType.BRACKET);
-        break;
-      case CLOSE_BRACKET:
-        return Calculator(CLOSE_BRACKET, TextType.BRACKET);
+        return Calculator(OPEN_BRACKET, "( )", TextType.BRACKET);
         break;
       case PERIOD:
-        return Calculator(PERIOD, TextType.PERIOD);
+        return Calculator(PERIOD, PERIOD, TextType.PERIOD);
         break;
     }
   }

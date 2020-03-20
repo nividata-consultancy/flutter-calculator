@@ -122,7 +122,7 @@ class _HomeWidget extends State<HomeWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            ButtonView(
+                            ButtonViewForClear(
                                 text: CalculatorDataProvider.CLEAR,
                                 size: buttonSize),
                             ButtonViewForNumber(
@@ -197,13 +197,13 @@ class _HomeWidget extends State<HomeWidget> {
                             ButtonView(
                                 text: CalculatorDataProvider.MULTIPLY,
                                 size: buttonSize),
-                            ButtonView(
+                            ButtonBackView(
                                 text: CalculatorDataProvider.SUBTRACT,
                                 size: buttonSize),
-                            ButtonView(
+                            ButtonBackView(
                                 text: CalculatorDataProvider.ADD,
                                 size: buttonSize),
-                            ButtonView(
+                            ButtonViewForIcon(
                                 text: CalculatorDataProvider.EQUAL,
                                 size: buttonSize),
                           ],
@@ -250,19 +250,21 @@ class ButtonViewForNumber extends StatelessWidget {
         child: Container(
           constraints:
               BoxConstraints.tightForFinite(width: size, height: size * .75),
-          child: Center(child: Text(text, style: TextStyle(fontSize: 25))),
+          child: Center(
+              child: Text(CalculatorDataProvider.getButtonData(text).text,
+                  style: TextStyle(fontSize: 25))),
         ),
       ),
     );
   }
 }
 
-class ButtonViewForPlus extends StatelessWidget {
+class ButtonViewForIcon extends StatelessWidget {
   final String text;
   final double size;
   final Key key;
 
-  ButtonViewForPlus({this.key, @required this.text, @required this.size})
+  ButtonViewForIcon({this.key, @required this.text, @required this.size})
       : super(key: key);
 
   @override
@@ -278,9 +280,43 @@ class ButtonViewForPlus extends StatelessWidget {
           bloc.buttonText.add(text);
         },
         child: Container(
-          constraints: BoxConstraints.tightForFinite(
-              width: size, height: (size * 1.5) + 12),
-          child: Center(child: Text(text, style: TextStyle(fontSize: 25))),
+          constraints:
+              BoxConstraints.tightForFinite(width: size, height: size * .75),
+          child: Center(
+              child: Text(CalculatorDataProvider.getButtonData(text).text,
+                  style: TextStyle(fontSize: 28))),
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonViewForClear extends StatelessWidget {
+  final String text;
+  final double size;
+  final Key key;
+
+  ButtonViewForClear({this.key, @required this.text, @required this.size})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(6),
+      color: Color(0xffe8e9eb),
+      elevation: 4,
+      shape:
+          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
+      child: InkWell(
+        onTap: () {
+          bloc.buttonText.add(text);
+        },
+        child: Container(
+          constraints:
+              BoxConstraints.tightForFinite(width: size, height: size * .75),
+          child: Center(
+              child: Text(CalculatorDataProvider.getButtonData(text).text,
+                  style: TextStyle(fontSize: 23))),
         ),
       ),
     );
@@ -311,7 +347,9 @@ class ButtonView extends StatelessWidget {
         child: Container(
           constraints:
               BoxConstraints.tightForFinite(width: size, height: size * .75),
-          child: Center(child: Text(text, style: TextStyle(fontSize: 25))),
+          child: Center(
+              child: Text(CalculatorDataProvider.getButtonData(text).text,
+                  style: TextStyle(fontSize: 25))),
         ),
       ),
     );
@@ -342,7 +380,8 @@ class ButtonBackView extends StatelessWidget {
           padding: EdgeInsets.all(19),
           constraints:
               BoxConstraints.tightForFinite(width: size, height: size * .75),
-          child: SvgPicture.asset("assets/backspace.svg"),
+          child:
+              SvgPicture.asset(CalculatorDataProvider.getButtonData(text).text),
         ),
       ),
     );
