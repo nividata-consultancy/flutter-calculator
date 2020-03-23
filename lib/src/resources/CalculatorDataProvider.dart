@@ -67,10 +67,10 @@ class CalculatorDataProvider {
         return Calculator(MULTIPLY, MULTIPLY, TextType.OPERATOR);
         break;
       case DIVIDE:
-        return Calculator(DIVIDE, DIVIDE, TextType.OPERATOR);
+        return Calculator(DIVIDE, "assets/divide.svg", TextType.OPERATOR);
         break;
       case PERCENTAGE:
-        return Calculator(PERCENTAGE, PERCENTAGE, TextType.OPERATOR);
+        return Calculator(PERCENTAGE, "assets/percent.svg", TextType.OPERATOR);
         break;
 
       case CLEAR:
@@ -80,10 +80,11 @@ class CalculatorDataProvider {
         return Calculator(BACK, "assets/backspace.svg", TextType.BACK);
         break;
       case EQUAL:
-        return Calculator(EQUAL, EQUAL, TextType.EQUAL);
+        return Calculator(EQUAL, "assets/equal.svg", TextType.EQUAL);
         break;
       case OPEN_BRACKET:
-        return Calculator(OPEN_BRACKET, "( )", TextType.BRACKET);
+        return Calculator(
+            OPEN_BRACKET, "assets/parentheses.svg", TextType.BRACKET);
         break;
       case PERIOD:
         return Calculator(PERIOD, PERIOD, TextType.PERIOD);

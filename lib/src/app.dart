@@ -134,7 +134,7 @@ class _HomeWidget extends State<HomeWidget> {
                             ButtonViewForNumber(
                                 text: CalculatorDataProvider.ONE,
                                 size: buttonSize),
-                            ButtonView(
+                            ButtonBackView(
                                 text: CalculatorDataProvider.OPEN_BRACKET,
                                 size: buttonSize),
                           ],
@@ -168,7 +168,7 @@ class _HomeWidget extends State<HomeWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            ButtonView(
+                            ButtonBackView(
                                 text: CalculatorDataProvider.PERCENTAGE,
                                 size: buttonSize),
                             ButtonViewForNumber(
@@ -191,19 +191,19 @@ class _HomeWidget extends State<HomeWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            ButtonView(
+                            ButtonBackView(
                                 text: CalculatorDataProvider.DIVIDE,
                                 size: buttonSize),
-                            ButtonView(
+                            ButtonViewMultiply(
                                 text: CalculatorDataProvider.MULTIPLY,
                                 size: buttonSize),
-                            ButtonBackView  (
+                            ButtonBackView(
                                 text: CalculatorDataProvider.SUBTRACT,
                                 size: buttonSize),
                             ButtonBackView(
                                 text: CalculatorDataProvider.ADD,
                                 size: buttonSize),
-                            ButtonViewForIcon(
+                            ButtonBackView(
                                 text: CalculatorDataProvider.EQUAL,
                                 size: buttonSize),
                           ],
@@ -259,38 +259,6 @@ class ButtonViewForNumber extends StatelessWidget {
   }
 }
 
-class ButtonViewForIcon extends StatelessWidget {
-  final String text;
-  final double size;
-  final Key key;
-
-  ButtonViewForIcon({this.key, @required this.text, @required this.size})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(6),
-      color: Color(0xffe8e9eb),
-      elevation: 4,
-      shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
-      child: InkWell(
-        onTap: () {
-          bloc.buttonText.add(text);
-        },
-        child: Container(
-          constraints:
-              BoxConstraints.tightForFinite(width: size, height: size * .75),
-          child: Center(
-              child: Text(CalculatorDataProvider.getButtonData(text).text,
-                  style: TextStyle(fontSize: 28))),
-        ),
-      ),
-    );
-  }
-}
-
 class ButtonViewForClear extends StatelessWidget {
   final String text;
   final double size;
@@ -317,6 +285,40 @@ class ButtonViewForClear extends StatelessWidget {
           child: Center(
               child: Text(CalculatorDataProvider.getButtonData(text).text,
                   style: TextStyle(fontSize: 23))),
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonViewMultiply extends StatelessWidget {
+  final String text;
+  final double size;
+  final Key key;
+
+  ButtonViewMultiply({this.key, @required this.text, @required this.size})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(6),
+      color: Color(0xffe8e9eb),
+      elevation: 4,
+      shape:
+          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
+      child: InkWell(
+        onTap: () {
+          bloc.buttonText.add(text);
+        },
+        highlightColor: Colors.red,
+        child: Container(
+          constraints:
+              BoxConstraints.tightForFinite(width: size, height: size * .75),
+          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+          child: Center(
+              child: Text(CalculatorDataProvider.getButtonData(text).text,
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 36))),
         ),
       ),
     );
