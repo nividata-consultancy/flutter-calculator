@@ -197,7 +197,7 @@ class _HomeWidget extends State<HomeWidget> {
                             ButtonView(
                                 text: CalculatorDataProvider.MULTIPLY,
                                 size: buttonSize),
-                            ButtonBackView(
+                            ButtonBackView  (
                                 text: CalculatorDataProvider.SUBTRACT,
                                 size: buttonSize),
                             ButtonBackView(

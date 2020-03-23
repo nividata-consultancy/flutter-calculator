@@ -1,8 +1,11 @@
+import 'dart:async';
+
+import 'package:calculator/src/blocs/CalcBloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class DisplayExp extends StatelessWidget {
+class DisplayExp extends StatefulWidget {
   final String exp;
   final double size;
   final Key key;
@@ -11,7 +14,17 @@ class DisplayExp extends StatelessWidget {
       : super(key: key);
 
   @override
+  _DisplayExpState createState() => _DisplayExpState();
+}
+
+class _DisplayExpState extends State<DisplayExp> {
+  ScrollController _controller = ScrollController();
+
+  @override
   Widget build(BuildContext context) {
+    Timer(Duration(milliseconds: 200),
+            () => _controller.jumpTo(_controller.position.maxScrollExtent));
+
     return Flexible(
       flex: 2,
       child: Container(
@@ -44,9 +57,10 @@ class DisplayExp extends StatelessWidget {
         child: Align(
           alignment: Alignment.centerRight,
           child: SingleChildScrollView(
+            controller: _controller,
             scrollDirection: Axis.horizontal,
             child: Text(
-              exp,
+              widget.exp,
               textAlign: TextAlign.end,
               style: TextStyle(fontSize: 36),
             ),

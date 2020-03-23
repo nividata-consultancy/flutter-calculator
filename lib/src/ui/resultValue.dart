@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 
-class ResultValue extends StatelessWidget {
+class ResultValue extends StatefulWidget {
   final String result;
   final double size;
   final Key key;
@@ -9,10 +11,17 @@ class ResultValue extends StatelessWidget {
   ResultValue({this.key, @required this.result, @required this.size})
       : super(key: key);
 
+  @override
+  _ResultValueState createState() => _ResultValueState();
+}
+
+class _ResultValueState extends State<ResultValue> {
   ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    Timer(Duration(milliseconds: 200),
+        () => _controller.jumpTo(_controller.position.maxScrollExtent));
     return Flexible(
       flex: 1,
       child: Container(
@@ -20,9 +29,10 @@ class ResultValue extends StatelessWidget {
         child: Align(
           alignment: Alignment.centerRight,
           child: SingleChildScrollView(
+            controller: _controller,
             scrollDirection: Axis.horizontal,
             child: Text(
-              result,
+              widget.result,
               style: TextStyle(fontSize: 42, fontWeight: FontWeight.w700),
             ),
           ),
