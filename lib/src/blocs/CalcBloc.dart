@@ -53,11 +53,25 @@ class CalcBloc {
             !Process.isOpenParentheses(expTemp.split('').last))
         .map((buttonText) {
       if (!Process.isDigit(expTemp.split('').last) &&
-          !Process.isCloseParentheses(expTemp)) {
+          !Process.isCloseParentheses(expTemp.split('').last)) {
         expTemp = expTemp.replaceRange(expTemp.length - 1, expTemp.length, "");
       }
       return buttonText;
     }).listen(_operator);
+
+    operatorStream
+        .where((buttonText) => buttonText == CalculatorDataProvider.SUBTRACT)
+        .where(
+            (buttonText) => Process.isOpenParentheses(expTemp.split('').last))
+        .listen(_operator);
+
+    operatorStream
+        .where((buttonText) => buttonText == CalculatorDataProvider.SUBTRACT)
+        .where((buttonText) => expTemp == "0")
+        .map((buttonText) {
+      print(buttonText);
+      return buttonText;
+    }).listen(_operatorClear);
 
     operandStream.listen(_calculate);
 
@@ -138,7 +152,12 @@ class CalcBloc {
 
   void _operator(String buttonText) {
     expTemp = expTemp + buttonText;
+    _expSubject.add(expTemp);
     _totalSubject.add(Process.getResult(expTemp));
+  }
+
+  void _operatorClear(String buttonText) {
+    expTemp = buttonText;
     _expSubject.add(expTemp);
   }
 
