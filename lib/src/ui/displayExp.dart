@@ -28,7 +28,7 @@ class _DisplayExpState extends State<DisplayExp> {
     return Flexible(
       flex: 2,
       child: Container(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.fromLTRB(0, 5, 5, 5),
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
             gradient: LinearGradient(

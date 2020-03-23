@@ -67,7 +67,6 @@ class _HomeWidget extends State<HomeWidget> {
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
               padding: EdgeInsets.all(5),
               constraints: BoxConstraints.expand(height: displayHeight),
               decoration: BoxDecoration(
@@ -311,7 +310,6 @@ class ButtonViewMultiply extends StatelessWidget {
         onTap: () {
           bloc.buttonText.add(text);
         },
-        highlightColor: Colors.red,
         child: Container(
           constraints:
               BoxConstraints.tightForFinite(width: size, height: size * .75),
@@ -345,7 +343,7 @@ class ButtonView extends StatelessWidget {
         onTap: () {
           bloc.buttonText.add(text);
         },
-        highlightColor: Colors.red,
+        highlightColor: Colors.black54,
         child: Container(
           constraints:
               BoxConstraints.tightForFinite(width: size, height: size * .75),
