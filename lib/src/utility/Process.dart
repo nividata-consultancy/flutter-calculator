@@ -3,7 +3,8 @@ import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/utility/stack.dart';
 
 void main() {
-  String exp = " 10%10";
+  String exp = "123.2";
+  print(Process.isListDigitContainDot(exp));
 //  String exp = "105%";
 //  var x = Process.isValid2(exp);
 //  var x = (ExpressionGrammarParser({}).build().parse(exp).value as Expression);
@@ -14,7 +15,7 @@ void main() {
 //  print("${x}");`
 //  print("${Process.isValid2(exp)}");
 //  print("${x.evaluate()}");
-  print("${Process.getResult(exp)}");
+//  print("${Process.getResult(exp)}");
 }
 
 class Process {
@@ -219,6 +220,17 @@ class Process {
   static bool isOpenParentheses(String ch) => ch == "(";
 
   static bool isCloseParentheses(String ch) => ch == ")";
+
+  static bool isListDigitContainDot(String exp) {
+    int j = exp.length - 1;
+    while (j >= 0 && !isOperand(exp[j])) {
+      if (exp[j] == ".")
+        return true;
+      else
+        j--;
+    }
+    return false;
+  }
 
   static String infixToPostfix(String exp) {
     String result = "";

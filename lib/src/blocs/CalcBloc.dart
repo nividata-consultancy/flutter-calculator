@@ -53,7 +53,7 @@ class CalcBloc {
             !Process.isOpenParentheses(expTemp.split('').last))
         .map((buttonText) {
       if (!Process.isDigit(expTemp.split('').last) &&
-          !Process.isCloseParentheses(expTemp.split('').last)) {
+          !Process.isCloseParentheses(expTemp)) {
         expTemp = expTemp.replaceRange(expTemp.length - 1, expTemp.length, "");
       }
       return buttonText;
@@ -63,6 +63,7 @@ class CalcBloc {
 
     _periodController.stream
         .where((buttonText) => Process.isDigit(expTemp[expTemp.length - 1]))
+        .where((buttonText) => !Process.isListDigitContainDot(expTemp))
         .listen(_period);
 
     _clearController.stream.listen(_clear);
