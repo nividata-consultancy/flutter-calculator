@@ -3,8 +3,8 @@ import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/utility/stack.dart';
 
 void main() {
-  String exp = "123.2";
-  print(Process.isListDigitContainDot(exp));
+  String exp = "55555555*5";
+//  print(Process.isListDigitContainDot(exp));
 //  String exp = "105%";
 //  var x = Process.isValid2(exp);
 //  var x = (ExpressionGrammarParser({}).build().parse(exp).value as Expression);
@@ -15,7 +15,7 @@ void main() {
 //  print("${x}");`
 //  print("${Process.isValid2(exp)}");
 //  print("${x.evaluate()}");
-//  print("${Process.getResult(exp)}");
+  print("${Process.getResult(exp)}");
 }
 
 class Process {

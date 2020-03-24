@@ -343,7 +343,6 @@ class ButtonView extends StatelessWidget {
         onTap: () {
           bloc.buttonText.add(text);
         },
-        highlightColor: Colors.black54,
         child: Container(
           constraints:
               BoxConstraints.tightForFinite(width: size, height: size * .75),
