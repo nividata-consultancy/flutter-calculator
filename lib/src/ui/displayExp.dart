@@ -23,7 +23,7 @@ class _DisplayExpState extends State<DisplayExp> {
   @override
   Widget build(BuildContext context) {
     Timer(Duration(milliseconds: 200),
-            () => _controller.jumpTo(_controller.position.maxScrollExtent));
+        () => _controller.jumpTo(_controller.position.maxScrollExtent));
 
     return Flexible(
       flex: 2,
