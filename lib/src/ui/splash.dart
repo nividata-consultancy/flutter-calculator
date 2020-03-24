@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../app.dart';
+import 'home.dart';
 
 class Splash extends StatefulWidget {
   @override

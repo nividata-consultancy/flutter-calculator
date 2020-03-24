@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
     id="Layer_1" x="0px" y="0px" viewBox="0 0 505 505" style="enable-background:new 0 0 505 505;"
-    xml:space="preserve" width="512px" height="512px" class=""><g><circle style="fill:#E3E9ED" cx="252.5" cy="252.5" r="252.5" data-original="#FFD05B" class="" data-old_color="#FFD05B"/><g>
-	<path style="fill:#EFEFEF"
+    xml:space="preserve" width="512px" height="512px" class="">
+    <circle style="fill:#E3E9ED" cx="252.5" cy="252.5" r="252.5" data-original="#FFD05B" class=""
+        data-old_color="#FFD05B" />
+    <path style="fill:#EFEFEF"
         d="M237.7,239.7H100c-1.1,0-1.9-0.9-1.9-1.9V100.1c0-1.1,0.9-1.9,1.9-1.9h137.7c1.1,0,1.9,0.9,1.9,1.9   v137.7C239.6,238.9,238.8,239.7,237.7,239.7z"
         data-original="#FFFFFF" class="" data-old_color="#FFFFFF" />
     <path style="fill:#EFEFEF"
@@ -14,12 +16,15 @@
     <path style="fill:#EFEFEF"
         d="M405,406.8H267.3c-1.1,0-1.9-0.9-1.9-1.9V267.2c0-1.1,0.9-1.9,1.9-1.9H405c1.1,0,1.9,0.9,1.9,1.9   v137.7C406.9,406,406.1,406.8,405,406.8z"
         data-original="#FFFFFF" class="" data-old_color="#FFFFFF" />
-</g><path style="fill:#000000"
-    d="M213.3,178.3h-35.1v35.1h-18.4v-35.1h-35.3v-18.5h35.3v-35.3h18.4v35.3h35.1L213.3,178.3L213.3,178.3  z"
-    data-original="#4CDBC4" class="" data-old_color="#4CDBC4" /><path style="fill:#000000"
-    d="M193.7,374l-24.8-24.8L144.1,374l-13-13l24.8-24.8l-25-25l13.1-13.1l25,25l25-25l13,13l-25,25  l24.8,24.8L193.7,374z"
-    data-original="#324A5E" class="" data-old_color="#324A5E" /><path style="fill:#000000"
-    d="M380.6,180h-88.8v-22h88.8L380.6,180L380.6,180z" data-original="#FF7058" class=""
-    data-old_color="#FF7058" /><path style="fill:#000000"
-    d="M380.2,325.9h-88.1v-18.1h88.1V325.9z M380.2,364.3h-88.1v-18h88.1V364.3z"
-    data-original="#54C0EB" class="active-path" data-old_color="#54C0EB" /></g> </svg>
+    <path style="fill:#000000"
+        d="M213.3,178.3h-35.1v35.1h-18.4v-35.1h-35.3v-18.5h35.3v-35.3h18.4v35.3h35.1L213.3,178.3L213.3,178.3  z"
+        data-original="#4CDBC4" class="" data-old_color="#4CDBC4" />
+    <path style="fill:#000000"
+        d="M193.7,374l-24.8-24.8L144.1,374l-13-13l24.8-24.8l-25-25l13.1-13.1l25,25l25-25l13,13l-25,25  l24.8,24.8L193.7,374z"
+        data-original="#324A5E" class="" data-old_color="#324A5E" />
+    <path style="fill:#000000" d="M380.6,180h-88.8v-22h88.8L380.6,180L380.6,180z"
+        data-original="#FF7058" class="" data-old_color="#FF7058" />
+    <path style="fill:#000000"
+        d="M380.2,325.9h-88.1v-18.1h88.1V325.9z M380.2,364.3h-88.1v-18h88.1V364.3z"
+        data-original="#54C0EB" class="active-path" data-old_color="#54C0EB" />
+</svg>
