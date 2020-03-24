@@ -9,16 +9,14 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-typedef void CalculatorButtonTapCallback({String buttonText});
-
-class MyApp extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _MyApp();
+    return _Home();
   }
 }
 
-class _MyApp extends State<MyApp> {
+class _Home extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

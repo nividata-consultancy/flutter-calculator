@@ -56,6 +56,8 @@ flutter:
     - parentheses.svg
     - equal.svg
     - percent.svg
+    - calculator.svg
+    - icon.png
 
   fonts:
     - family: Montserrat
