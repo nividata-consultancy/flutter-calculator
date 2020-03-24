@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ResultValue extends StatefulWidget {
   final String result;
@@ -30,9 +31,11 @@ class _ResultValueState extends State<ResultValue> {
           child: SingleChildScrollView(
             controller: _controller,
             scrollDirection: Axis.horizontal,
-            child: Text(
+            child: SelectableText(
               widget.result,
               style: TextStyle(fontSize: 42, fontWeight: FontWeight.w700),
+              toolbarOptions: ToolbarOptions(selectAll: true, copy: true),
+              showCursor: false,
             ),
           ),
         ),
