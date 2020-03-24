@@ -28,9 +28,7 @@ class ExpressionGrammarDefinition extends GrammarDefinition {
   Parser decimalNumber() =>
       ref(DIGIT) &
       ref(DIGIT).star() &
-      char('.') &
-      ref(DIGIT) &
-      ref(DIGIT).star();
+      (char('.') & ref(DIGIT) & ref(DIGIT).star()).optional();
 
   Parser integerNumber() => ref(DIGIT) & ref(DIGIT).star();
 
@@ -42,7 +40,6 @@ class ExpressionGrammarDefinition extends GrammarDefinition {
   Parser literal() => ref(
       token,
       ref(decimalNumber) |
-          ref(integerNumber) |
           ref(TRUE) |
           ref(FALSE) |
           ref(singleLineString));

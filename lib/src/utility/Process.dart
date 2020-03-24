@@ -3,19 +3,19 @@ import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/utility/stack.dart';
 
 void main() {
-  String exp = "55555555*5";
+  String exp = "55555555555555555555*5";
 //  print(Process.isListDigitContainDot(exp));
 //  String exp = "105%";
 //  var x = Process.isValid2(exp);
-//  var x = (ExpressionGrammarParser({}).build().parse(exp).value as Expression);
+  var x = (ExpressionGrammarParser({}).build().parse(exp).value as Expression);
 
 //  var x = Test.Parser()
 //      .parse(exp)
 //      .evaluate(Test.EvaluationType.REAL, Test.ContextModel());
 //  print("${x}");`
 //  print("${Process.isValid2(exp)}");
-//  print("${x.evaluate()}");
-  print("${Process.getResult(exp)}");
+  print("${x.evaluate()}");
+//  print("${Process.isValid2(exp)}");
 }
 
 class Process {
