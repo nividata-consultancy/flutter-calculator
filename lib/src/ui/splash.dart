@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
+
 import 'home.dart';
 
 class Splash extends StatefulWidget {
