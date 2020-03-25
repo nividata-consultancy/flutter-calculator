@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:calculator/src/utility/SizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,7 @@ class _ResultValueState extends State<ResultValue> {
             scrollDirection: Axis.horizontal,
             child: SelectableText(
               widget.result,
-              style: TextStyle(fontSize: 42, fontWeight: FontWeight.w700),
+              style: TextStyle(fontSize: SizeConfig.pixelRatio * 22, fontWeight: FontWeight.w700),
               toolbarOptions: ToolbarOptions(selectAll: true, copy: true),
               showCursor: false,
             ),

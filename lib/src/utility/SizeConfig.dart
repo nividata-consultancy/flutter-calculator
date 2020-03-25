@@ -13,6 +13,7 @@ class SizeConfig {
   static double safeBlockHorizontal;
   static double safeBlockVertical;
   static double pixelRatio;
+  static double heightWidthFactor;
 
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
@@ -20,6 +21,7 @@ class SizeConfig {
     screenHeight = _mediaQueryData.size.height;
     pixelRatio = _mediaQueryData.devicePixelRatio;
     buttonSize = (screenWidth / 4) - 12;
+    heightWidthFactor = screenHeight / screenWidth ;
     expTextSize = screenHeight - (buttonSize * 5) - (buttonSize);
 
     _safeAreaHorizontal =

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:calculator/src/blocs/CalcBloc.dart';
+import 'package:calculator/src/utility/SizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _DisplayExpState extends State<DisplayExp> {
         () => _controller.jumpTo(_controller.position.maxScrollExtent));
 
     return Flexible(
-      flex: 2,
+      flex: 1,
       child: Container(
         padding: EdgeInsets.fromLTRB(0, 5, 5, 5),
         decoration: BoxDecoration(
@@ -60,7 +61,7 @@ class _DisplayExpState extends State<DisplayExp> {
             child: Text(
               widget.exp,
               textAlign: TextAlign.end,
-              style: TextStyle(fontSize: 36),
+              style: TextStyle(fontSize: SizeConfig.pixelRatio * 22),
             ),
           ),
         ),
