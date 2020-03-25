@@ -50,14 +50,6 @@ class _HomeWidget extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-<<<<<<< HEAD
-=======
-    print(SizeConfig.screenHeight);
-    print(SizeConfig.screenWidth);
-    print(SizeConfig.pixelRatio);
-    print(SizeConfig.heightWidthFactor);
-    print((SizeConfig.heightWidthFactor * 2).toInt());
->>>>>>> aad2cecae52d8d99eddc24f9ad9f59c188f594d6
     return Scaffold(
       appBar: AppBar(
         title: Text("Calculator", style: TextStyle(fontSize: 26)),
