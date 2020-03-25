@@ -1,17 +1,17 @@
 import 'package:calculator/src/blocs/CalcBloc.dart';
+import 'package:calculator/src/models/Calculator.dart';
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/ui/displayExp.dart';
 import 'package:calculator/src/ui/resultValue.dart';
+import 'package:calculator/src/utility/SizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:flutter_svg/svg.dart';
 
 class Home extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return _Home();
@@ -47,21 +47,18 @@ class _HomeWidget extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
-    final double buttonSize = (screen.width / 4) - 12;
-    final double displayHeight =
-        screen.height - (buttonSize * 5) - (buttonSize);
-    return SafeArea(
-      top: false,
-      bottom: true,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Calculator",
-          style: TextStyle(fontSize: 26)),
-          centerTitle: true,
-          elevation: 0,
-        ),
-        body: Container(
+    SizeConfig().init(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Calculator", style: TextStyle(fontSize: 26)),
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: SafeArea(
+        top: false,
+        bottom: true,
+        child: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -70,51 +67,54 @@ class _HomeWidget extends State<HomeWidget> {
           padding: EdgeInsets.all(5),
           child: Column(
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(5),
-                constraints: BoxConstraints.expand(height: displayHeight),
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Color(0xFFEFEFEF), Color(0xfff4f4f4)]),
-                    border: Border(
-                      left: BorderSide(
-                        color: Color(0xFFb6b6b8),
-                        width: 5.0,
-                      ),
-                      top: BorderSide(
-                        color: Color(0xFFb6b6b8),
-                        width: 3.0,
-                      ),
-                      bottom: BorderSide(
-                        color: Color(0xfffafafa),
-                        width: 2.0,
-                      ),
-                      right: BorderSide(
-                        color: Color(0xfffafafa),
-                        width: 1.0,
-                      ),
-                    )),
-                child: Column(
-                  children: <Widget>[
-                    StreamBuilder<String>(
-                        stream: bloc.exp,
-                        initialData: "0",
-                        builder: (context, snapshot) {
-                          return DisplayExp(exp: snapshot.data, size: buttonSize);
-                        }),
-                    StreamBuilder<String>(
-                        stream: bloc.total,
-                        initialData: "0",
-                        builder: (context, snapshot) {
-                          return ResultValue(result: snapshot.data);
-                        }),
-                  ],
+              Expanded(
+                flex: 3,
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Color(0xFFEFEFEF), Color(0xfff4f4f4)]),
+                      border: Border(
+                        left: BorderSide(
+                          color: Color(0xFFb6b6b8),
+                          width: 5.0,
+                        ),
+                        top: BorderSide(
+                          color: Color(0xFFb6b6b8),
+                          width: 3.0,
+                        ),
+                        bottom: BorderSide(
+                          color: Color(0xfffafafa),
+                          width: 2.0,
+                        ),
+                        right: BorderSide(
+                          color: Color(0xfffafafa),
+                          width: 1.0,
+                        ),
+                      )),
+                  child: Column(
+                    children: <Widget>[
+                      StreamBuilder<String>(
+                          stream: bloc.exp,
+                          initialData: "0",
+                          builder: (context, snapshot) {
+                            return DisplayExp(exp: snapshot.data);
+                          }),
+                      StreamBuilder<String>(
+                          stream: bloc.total,
+                          initialData: "0",
+                          builder: (context, snapshot) {
+                            return ResultValue(result: snapshot.data);
+                          }),
+                    ],
+                  ),
                 ),
               ),
               Expanded(
+                flex: 7,
                 child: Align(
                   alignment: FractionalOffset.bottomCenter,
                   child: Container(
@@ -125,67 +125,12 @@ class _HomeWidget extends State<HomeWidget> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
-                              ButtonViewForClear(
-                                  text: CalculatorDataProvider.CLEAR,
-                                  size: buttonSize),
-                              ButtonViewForNumber(
-                                  text: CalculatorDataProvider.SEVEN,
-                                  size: buttonSize),
-                              ButtonViewForNumber(
-                                  text: CalculatorDataProvider.FOUR,
-                                  size: buttonSize),
-                              ButtonViewForNumber(
-                                  text: CalculatorDataProvider.ONE,
-                                  size: buttonSize),
-                              ButtonBackView(
-                                  text: CalculatorDataProvider.OPEN_BRACKET,
-                                  size: buttonSize),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              ButtonBackView(
-                                  text: CalculatorDataProvider.BACK,
-                                  size: buttonSize),
-                              ButtonViewForNumber(
-                                  text: CalculatorDataProvider.EIGHT,
-                                  size: buttonSize),
-                              ButtonViewForNumber(
-                                  text: CalculatorDataProvider.FIVE,
-                                  size: buttonSize),
-                              ButtonViewForNumber(
-                                  text: CalculatorDataProvider.TWO,
-                                  size: buttonSize),
-                              ButtonViewForNumber(
-                                  text: CalculatorDataProvider.ZERO,
-                                  size: buttonSize),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              ButtonBackView(
-                                  text: CalculatorDataProvider.PERCENTAGE,
-                                  size: buttonSize),
-                              ButtonViewForNumber(
-                                  text: CalculatorDataProvider.NINE,
-                                  size: buttonSize),
-                              ButtonViewForNumber(
-                                  text: CalculatorDataProvider.SIX,
-                                  size: buttonSize),
-                              ButtonViewForNumber(
-                                  text: CalculatorDataProvider.THREE,
-                                  size: buttonSize),
+                              ButtonView(text: CalculatorDataProvider.CLEAR),
+                              ButtonView(text: CalculatorDataProvider.SEVEN),
+                              ButtonView(text: CalculatorDataProvider.FOUR),
+                              ButtonView(text: CalculatorDataProvider.ONE),
                               ButtonView(
-                                  text: CalculatorDataProvider.PERIOD,
-                                  size: buttonSize),
+                                  text: CalculatorDataProvider.OPEN_BRACKET),
                             ],
                           ),
                         ),
@@ -194,21 +139,38 @@ class _HomeWidget extends State<HomeWidget> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
-                              ButtonBackView(
-                                  text: CalculatorDataProvider.DIVIDE,
-                                  size: buttonSize),
-                              ButtonViewMultiply(
-                                  text: CalculatorDataProvider.MULTIPLY,
-                                  size: buttonSize),
-                              ButtonBackView(
-                                  text: CalculatorDataProvider.SUBTRACT,
-                                  size: buttonSize),
-                              ButtonBackView(
-                                  text: CalculatorDataProvider.ADD,
-                                  size: buttonSize),
-                              ButtonBackView(
-                                  text: CalculatorDataProvider.EQUAL,
-                                  size: buttonSize),
+                              ButtonView(text: CalculatorDataProvider.BACK),
+                              ButtonView(text: CalculatorDataProvider.EIGHT),
+                              ButtonView(text: CalculatorDataProvider.FIVE),
+                              ButtonView(text: CalculatorDataProvider.TWO),
+                              ButtonView(text: CalculatorDataProvider.ZERO),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              ButtonView(
+                                  text: CalculatorDataProvider.PERCENTAGE),
+                              ButtonView(text: CalculatorDataProvider.NINE),
+                              ButtonView(text: CalculatorDataProvider.SIX),
+                              ButtonView(text: CalculatorDataProvider.THREE),
+                              ButtonView(text: CalculatorDataProvider.PERIOD),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              ButtonView(text: CalculatorDataProvider.DIVIDE),
+                              ButtonView(text: CalculatorDataProvider.MULTIPLY),
+                              ButtonView(text: CalculatorDataProvider.SUBTRACT),
+                              ButtonView(text: CalculatorDataProvider.ADD),
+                              ButtonView(text: CalculatorDataProvider.EQUAL),
                             ],
                           ),
                         )
@@ -231,163 +193,55 @@ class _HomeWidget extends State<HomeWidget> {
   }
 }
 
-class ButtonViewForNumber extends StatelessWidget {
-  final String text;
-  final double size;
-  final Key key;
-
-  ButtonViewForNumber({this.key, @required this.text, @required this.size})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(6),
-      color: Color(0xffe8e9eb),
-      elevation: 4,
-      shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
-      child: InkWell(
-        onTap: () {
-          bloc.buttonText.add(text);
-        },
-        child: Container(
-          constraints:
-              BoxConstraints.tightForFinite(width: size, height: size * .8),
-          child: Center(
-              child: Text(CalculatorDataProvider.getButtonData(text).text,
-                  style: TextStyle(fontSize: 35))),
-        ),
-      ),
-    );
-  }
-}
-
-class ButtonViewForClear extends StatelessWidget {
-  final String text;
-  final double size;
-  final Key key;
-
-  ButtonViewForClear({this.key, @required this.text, @required this.size})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(6),
-      color: Color(0xffe8e9eb),
-      elevation: 4,
-      shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
-      child: InkWell(
-        onTap: () {
-          bloc.buttonText.add(text);
-        },
-        child: Container(
-          constraints:
-              BoxConstraints.tightForFinite(width: size, height: size * .8),
-          child: Center(
-              child: Text(CalculatorDataProvider.getButtonData(text).text,
-                  style: TextStyle(fontSize: 25))),
-        ),
-      ),
-    );
-  }
-}
-
-class ButtonViewMultiply extends StatelessWidget {
-  final String text;
-  final double size;
-  final Key key;
-
-  ButtonViewMultiply({this.key, @required this.text, @required this.size})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(6),
-      color: Color(0xffe8e9eb),
-      elevation: 4,
-      shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
-      child: InkWell(
-        onTap: () {
-          bloc.buttonText.add(text);
-        },
-        child: Container(
-          constraints:
-              BoxConstraints.tightForFinite(width: size, height: size * .8),
-          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-          child: Center(
-              child: Text(CalculatorDataProvider.getButtonData(text).text,
-                  textAlign: TextAlign.center, style: TextStyle(fontSize: 40))),
-        ),
-      ),
-    );
-  }
-}
-
 class ButtonView extends StatelessWidget {
   final String text;
-  final double size;
   final Key key;
 
-  ButtonView({this.key, @required this.text, @required this.size})
-      : super(key: key);
+  ButtonView({this.key, @required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(6),
-      color: Color(0xffe8e9eb),
-      elevation: 4,
-      shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
-      child: InkWell(
-        onTap: () {
-          bloc.buttonText.add(text);
-        },
-        child: Container(
-          constraints:
-              BoxConstraints.tightForFinite(width: size, height: size * .8),
-          child: Center(
-              child: Text(CalculatorDataProvider.getButtonData(text).text,
-                  style: TextStyle(fontSize: 35))),
+    return Expanded(
+      flex: 1,
+      child: Card(
+        margin: EdgeInsets.all(6),
+        color: Color(0xffe8e9eb),
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(6.0)),
+        child: InkWell(
+          onTap: () {
+            bloc.buttonText.add(text);
+          },
+          child: getContainer(text),
         ),
       ),
     );
   }
 }
 
-class ButtonBackView extends StatelessWidget {
-  final String text;
-  final double size;
-  final Key key;
-
-  ButtonBackView({this.key, @required this.text, @required this.size})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(6),
-      color: Color(0xffe8e9eb),
-      elevation: 4,
-      shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
-      child: InkWell(
-        onTap: () {
-          bloc.buttonText.add(text);
-        },
-        child: Container(
-          padding: EdgeInsets.all(25),
-          constraints:
-              BoxConstraints.tightForFinite(width: size, height: size * .8),
-          child:
-              SvgPicture.asset(CalculatorDataProvider.getButtonData(text).text),
-        ),
-      ),
-    );
+Widget getContainer(String text) {
+  Calculator calculator = CalculatorDataProvider.getButtonData(text);
+  switch (calculator.resourceType) {
+    case ResourceType.TEXT:
+      return Container(
+        child: Center(
+            child: Text(calculator.text, style: TextStyle(fontSize: 25))),
+      );
+      break;
+    case ResourceType.IMAGE_SVG:
+      return Container(
+        padding: EdgeInsets.all(25),
+        child: SvgPicture.asset(calculator.text),
+      );
+      break;
+    case ResourceType.MULTIPLY:
+      return Container(
+        padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+        child: Center(
+            child: Text(calculator.text,
+                textAlign: TextAlign.center, style: TextStyle(fontSize: 40))),
+      );
+      break;
   }
 }

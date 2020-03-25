@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 
 class ResultValue extends StatefulWidget {
   final String result;
-  final double size;
   final Key key;
 
-  ResultValue({this.key, @required this.result, @required this.size})
-      : super(key: key);
+  ResultValue({this.key, @required this.result}) : super(key: key);
 
   @override
   _ResultValueState createState() => _ResultValueState();

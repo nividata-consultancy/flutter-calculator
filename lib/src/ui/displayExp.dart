@@ -7,10 +7,9 @@ import 'package:flutter/material.dart';
 
 class DisplayExp extends StatefulWidget {
   final String exp;
-  final double size;
   final Key key;
 
-  DisplayExp({this.key, @required this.exp, @required this.size})
+  DisplayExp({this.key, @required this.exp})
       : super(key: key);
 
   @override
@@ -29,7 +28,6 @@ class _DisplayExpState extends State<DisplayExp> {
       flex: 2,
       child: Container(
         padding: EdgeInsets.fromLTRB(0, 5, 5, 5),
-        constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,

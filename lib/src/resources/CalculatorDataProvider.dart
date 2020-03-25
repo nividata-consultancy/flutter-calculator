@@ -27,67 +27,74 @@ class CalculatorDataProvider {
   static Calculator getButtonData(String text) {
     switch (text) {
       case ONE:
-        return Calculator(ONE, ONE, TextType.OPERAND);
+        return Calculator(ONE, ONE, TextType.OPERAND, ResourceType.TEXT);
         break;
       case TWO:
-        return Calculator(TWO, TWO, TextType.OPERAND);
+        return Calculator(TWO, TWO, TextType.OPERAND, ResourceType.TEXT);
         break;
       case THREE:
-        return Calculator(THREE, THREE, TextType.OPERAND);
+        return Calculator(THREE, THREE, TextType.OPERAND, ResourceType.TEXT);
         break;
       case FOUR:
-        return Calculator(FOUR, FOUR, TextType.OPERAND);
+        return Calculator(FOUR, FOUR, TextType.OPERAND, ResourceType.TEXT);
         break;
       case FIVE:
-        return Calculator(FIVE, FIVE, TextType.OPERAND);
+        return Calculator(FIVE, FIVE, TextType.OPERAND, ResourceType.TEXT);
         break;
       case SIX:
-        return Calculator(SIX, SIX, TextType.OPERAND);
+        return Calculator(SIX, SIX, TextType.OPERAND, ResourceType.TEXT);
         break;
       case SEVEN:
-        return Calculator(SEVEN, SEVEN, TextType.OPERAND);
+        return Calculator(SEVEN, SEVEN, TextType.OPERAND, ResourceType.TEXT);
         break;
       case EIGHT:
-        return Calculator(EIGHT, EIGHT, TextType.OPERAND);
+        return Calculator(EIGHT, EIGHT, TextType.OPERAND, ResourceType.TEXT);
         break;
       case NINE:
-        return Calculator(NINE, NINE, TextType.OPERAND);
+        return Calculator(NINE, NINE, TextType.OPERAND, ResourceType.TEXT);
         break;
       case ZERO:
-        return Calculator(ZERO, ZERO, TextType.OPERAND);
+        return Calculator(ZERO, ZERO, TextType.OPERAND, ResourceType.TEXT);
         break;
 
       case ADD:
-        return Calculator(ADD, "assets/plus.svg", TextType.OPERATOR);
+        return Calculator(
+            ADD, "assets/plus.svg", TextType.OPERATOR, ResourceType.IMAGE_SVG);
         break;
       case SUBTRACT:
-        return Calculator(SUBTRACT, "assets/minus.svg", TextType.OPERATOR);
+        return Calculator(SUBTRACT, "assets/minus.svg", TextType.OPERATOR,
+            ResourceType.IMAGE_SVG);
         break;
       case MULTIPLY:
-        return Calculator(MULTIPLY, MULTIPLY, TextType.OPERATOR);
+        return Calculator(
+            MULTIPLY, MULTIPLY, TextType.OPERATOR, ResourceType.MULTIPLY);
         break;
       case DIVIDE:
-        return Calculator(DIVIDE, "assets/divide.svg", TextType.OPERATOR);
+        return Calculator(DIVIDE, "assets/divide.svg", TextType.OPERATOR,
+            ResourceType.IMAGE_SVG);
         break;
       case PERCENTAGE:
-        return Calculator(PERCENTAGE, "assets/percent.svg", TextType.OPERATOR);
+        return Calculator(PERCENTAGE, "assets/percent.svg", TextType.OPERATOR,
+            ResourceType.IMAGE_SVG);
         break;
 
       case CLEAR:
-        return Calculator(CLEAR, CLEAR, TextType.CLEAR);
+        return Calculator(CLEAR, CLEAR, TextType.CLEAR, ResourceType.TEXT);
         break;
       case BACK:
-        return Calculator(BACK, "assets/backspace.svg", TextType.BACK);
+        return Calculator(BACK, "assets/backspace.svg", TextType.BACK,
+            ResourceType.IMAGE_SVG);
         break;
       case EQUAL:
-        return Calculator(EQUAL, "assets/equal.svg", TextType.EQUAL);
+        return Calculator(
+            EQUAL, "assets/equal.svg", TextType.EQUAL, ResourceType.IMAGE_SVG);
         break;
       case OPEN_BRACKET:
-        return Calculator(
-            OPEN_BRACKET, "assets/parentheses.svg", TextType.BRACKET);
+        return Calculator(OPEN_BRACKET, "assets/parentheses.svg",
+            TextType.BRACKET, ResourceType.IMAGE_SVG);
         break;
       case PERIOD:
-        return Calculator(PERIOD, PERIOD, TextType.PERIOD);
+        return Calculator(PERIOD, PERIOD, TextType.PERIOD, ResourceType.TEXT);
         break;
     }
   }
