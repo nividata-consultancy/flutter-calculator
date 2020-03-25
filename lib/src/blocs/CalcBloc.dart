@@ -73,7 +73,10 @@ class CalcBloc {
       return buttonText;
     }).listen(_operatorClear);
 
-    operandStream.listen(_calculate);
+    operandStream
+        .where(
+            (buttonText) => !Process.isCloseParentheses(expTemp.split('').last))
+        .listen(_calculate);
 
     _periodController.stream
         .where((buttonText) => Process.isDigit(expTemp[expTemp.length - 1]))
