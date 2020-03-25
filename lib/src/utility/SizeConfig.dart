@@ -12,11 +12,13 @@ class SizeConfig {
   static double _safeAreaVertical;
   static double safeBlockHorizontal;
   static double safeBlockVertical;
+  static double pixelRatio;
 
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
     screenWidth = _mediaQueryData.size.width;
     screenHeight = _mediaQueryData.size.height;
+    pixelRatio = _mediaQueryData.devicePixelRatio;
     buttonSize = (screenWidth / 4) - 12;
     expTextSize = screenHeight - (buttonSize * 5) - (buttonSize);
 

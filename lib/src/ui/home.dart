@@ -52,6 +52,7 @@ class _HomeWidget extends State<HomeWidget> {
     SizeConfig().init(context);
     print(SizeConfig.screenHeight);
     print(SizeConfig.screenWidth);
+    print(SizeConfig.pixelRatio);
     return Scaffold(
       appBar: AppBar(
         title: Text("Calculator", style: TextStyle(fontSize: 26)),
@@ -229,12 +230,12 @@ Widget getContainer(String text) {
     case ResourceType.TEXT:
       return Container(
         child: Center(
-            child: Text(calculator.text, style: TextStyle(fontSize: SizeConfig.screenWidth / 10 ))),
+            child: Text(calculator.text, style: TextStyle(fontSize: SizeConfig.pixelRatio * 12 ))),
       );
       break;
     case ResourceType.IMAGE_SVG:
       return Container(
-        padding: EdgeInsets.all(SizeConfig.screenWidth / 12),
+        padding: EdgeInsets.all(SizeConfig.pixelRatio * 11),
         child: SvgPicture.asset(calculator.text),
       );
       break;
@@ -243,7 +244,7 @@ Widget getContainer(String text) {
         padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
         child: Center(
             child: Text(calculator.text,
-                textAlign: TextAlign.center, style: TextStyle(fontSize: SizeConfig.screenWidth / 10))),
+                textAlign: TextAlign.center, style: TextStyle(fontSize: SizeConfig.pixelRatio * 12))),
       );
       break;
     case ResourceType.BACK_SPACE:
