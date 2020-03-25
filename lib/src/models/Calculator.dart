@@ -14,4 +14,4 @@ class Calculator {
 }
 
 enum TextType { OPERATOR, OPERAND, BACK, EQUAL, CLEAR, BRACKET, PERIOD }
-enum ResourceType { TEXT, IMAGE_SVG, MULTIPLY }
+enum ResourceType { TEXT, IMAGE_SVG, MULTIPLY, BACK_SPACE}

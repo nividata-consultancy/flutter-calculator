@@ -83,7 +83,7 @@ class CalculatorDataProvider {
         break;
       case BACK:
         return Calculator(BACK, "assets/backspace.svg", TextType.BACK,
-            ResourceType.IMAGE_SVG);
+            ResourceType.BACK_SPACE);
         break;
       case EQUAL:
         return Calculator(

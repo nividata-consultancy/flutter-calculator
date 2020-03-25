@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rxdart/rxdart.dart';
-
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'home.dart';
 
 class Splash extends StatefulWidget {
@@ -23,46 +23,52 @@ class _SplashState extends State<Splash> {
 
     return Material(
       color: Color(0xFFEFEFEF),
-      child: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Align(
-            alignment: Alignment.center,
-            child: SvgPicture.asset(
-              "assets/calculator.svg",
-              height: 80,
-              width: 80,
-            ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "The product of...             ",
-                style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Colors.black54,
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w500),
-              ),
-              Row(
+      child: SafeArea(
+        top: false,
+        bottom: true,
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  CircleAvatar(
-                      radius: 20.0,
-                      backgroundImage: AssetImage("assets/icon.png")),
-                  Text("  NiviData\n  Consultancy",
+                  SvgPicture.asset(
+                    "assets/calculator.svg",
+                    height: 144,
+                    width: 144,
+                  ),
+                  SizedBox(width: 10, height: 20),
+                  Text("Calculator",
                       style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          color: Colors.black54,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w700)),
+                          fontSize: 30.0, fontFamily: "Montserrat"))
                 ],
               ),
-            ],
-          )
-        ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CircleAvatar(
+                        radius: 20.0,
+                        backgroundImage: AssetImage("assets/icon.png")),
+                    Text("  NiviData\n  Consultancy",
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Colors.black54,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w700)),
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

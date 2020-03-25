@@ -11,6 +11,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../models/Calculator.dart';
+
 class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -226,12 +228,12 @@ Widget getContainer(String text) {
     case ResourceType.TEXT:
       return Container(
         child: Center(
-            child: Text(calculator.text, style: TextStyle(fontSize: 25))),
+            child: Text(calculator.text, style: TextStyle(fontSize: 40))),
       );
       break;
     case ResourceType.IMAGE_SVG:
       return Container(
-        padding: EdgeInsets.all(25),
+        padding: EdgeInsets.all(30),
         child: SvgPicture.asset(calculator.text),
       );
       break;
@@ -241,6 +243,16 @@ Widget getContainer(String text) {
         child: Center(
             child: Text(calculator.text,
                 textAlign: TextAlign.center, style: TextStyle(fontSize: 40))),
+      );
+      break;
+    case ResourceType.BACK_SPACE:
+      return Container(
+        constraints: BoxConstraints.expand(),
+        child: Icon(
+          Icons.backspace,
+          size: 30,
+          color: Colors.grey[900],
+        ),
       );
       break;
   }
