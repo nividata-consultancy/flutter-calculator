@@ -53,6 +53,8 @@ class _HomeWidget extends State<HomeWidget> {
     print(SizeConfig.screenHeight);
     print(SizeConfig.screenWidth);
     print(SizeConfig.pixelRatio);
+    print(SizeConfig.heightWidthFactor);
+    print((SizeConfig.heightWidthFactor * 2).toInt());
     return Scaffold(
       appBar: AppBar(
         title: Text("Calculator", style: TextStyle(fontSize: 26)),
@@ -72,7 +74,7 @@ class _HomeWidget extends State<HomeWidget> {
           child: Column(
             children: <Widget>[
               Expanded(
-                flex: 3,
+                flex: (SizeConfig.heightWidthFactor * 2).toInt() + 1,
                 child: Container(
                   padding: EdgeInsets.all(5),
                   decoration: BoxDecoration(
@@ -235,7 +237,7 @@ Widget getContainer(String text) {
       break;
     case ResourceType.IMAGE_SVG:
       return Container(
-        padding: EdgeInsets.all(SizeConfig.pixelRatio * 11),
+        padding: EdgeInsets.all(SizeConfig.pixelRatio * 9),
         child: SvgPicture.asset(calculator.text),
       );
       break;
@@ -252,7 +254,7 @@ Widget getContainer(String text) {
         constraints: BoxConstraints.expand(),
         child: Icon(
           Icons.backspace,
-          size: 30,
+          size: SizeConfig.pixelRatio * 10,
           color: Colors.grey[900],
         ),
       );
