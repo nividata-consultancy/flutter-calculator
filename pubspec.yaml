@@ -55,7 +55,6 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - backspace.svg
     - plus.svg
     - minus.svg
     - divide.svg
