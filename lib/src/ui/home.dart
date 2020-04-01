@@ -41,10 +41,20 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidget extends State<HomeWidget> {
+  bool isSelectedCalc = true;
+  bool isSelectedConv = false;
+
   @override
   void initState() {
     bloc.clear.add(CalculatorDataProvider.CLEAR);
     super.initState();
+  }
+
+  _changeChipSelection(bool isSelectedCalc, bool isSelectedConv) {
+    setState(() {
+      this.isSelectedCalc = isSelectedCalc;
+      this.isSelectedConv = isSelectedConv;
+    });
   }
 
   @override
@@ -52,8 +62,48 @@ class _HomeWidget extends State<HomeWidget> {
     SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Calculator", style: TextStyle(fontSize: 26)),
-        centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(0),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ChoiceChip(
+                  selected: true,
+                  pressElevation: 0,
+                  selectedColor: Color(0xff009e8b),
+                  onSelected: (isSelect) {
+                    _changeChipSelection(isSelect, !isSelect);
+                  },
+                  label: Text(
+                    "Calculator",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                        color: isSelectedCalc ? Colors.white : Colors.black),
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                ChoiceChip(
+                    selected: false,
+                    selectedColor: Color(0xff009e8b),
+                    pressElevation: 0,
+                    onSelected: (isSelect) {
+                      _changeChipSelection(!isSelect, isSelect);
+                    },
+                    label: Text(
+                      "Conventer",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: isSelectedConv ? Colors.white : Colors.black),
+                    )),
+              ],
+            ),
+          ),
+        ),
         elevation: 0,
       ),
       body: SafeArea(
