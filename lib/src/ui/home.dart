@@ -1,8 +1,10 @@
 import 'package:calculator/src/blocs/CalcBloc.dart';
+import 'package:calculator/src/blocs/UiHandlerBloc.dart';
 import 'package:calculator/src/models/Calculator.dart';
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/ui/displayExp.dart';
 import 'package:calculator/src/ui/resultValue.dart';
+import 'package:calculator/src/ui/toolbarChip.dart';
 import 'package:calculator/src/utility/SizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,13 +52,6 @@ class _HomeWidget extends State<HomeWidget> {
     super.initState();
   }
 
-  _changeChipSelection(bool isSelectedCalc, bool isSelectedConv) {
-    setState(() {
-      this.isSelectedCalc = isSelectedCalc;
-      this.isSelectedConv = isSelectedConv;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -68,38 +63,53 @@ class _HomeWidget extends State<HomeWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                ChoiceChip(
-                  selected: true,
-                  pressElevation: 0,
-                  selectedColor: Color(0xff009e8b),
-                  onSelected: (isSelect) {
-                    _changeChipSelection(isSelect, !isSelect);
-                  },
-                  label: Text(
-                    "Calculator",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        color: isSelectedCalc ? Colors.white : Colors.black),
-                  ),
-                ),
+                StreamBuilder<bool>(
+                    initialData: true,
+                    stream: uiHandlerBloc.calcUi,
+                    builder: (context, snapshot) {
+                      return ChoiceChip(
+                        selected: snapshot.data,
+                        pressElevation: 0,
+                        selectedColor: Color(0xff009e8b),
+                        onSelected: (isSelect) {
+                          uiHandlerBloc.calcChipSelect.add(isSelect);
+                          uiHandlerBloc.convChipSelect.add(!isSelect);
+                        },
+                        label: Text(
+                          "Calculator",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                              color:
+                                  snapshot.data ? Colors.white : Colors.black),
+                        ),
+                      );
+                    }),
                 SizedBox(
                   width: 10,
                 ),
-                ChoiceChip(
-                    selected: false,
-                    selectedColor: Color(0xff009e8b),
-                    pressElevation: 0,
-                    onSelected: (isSelect) {
-                      _changeChipSelection(!isSelect, isSelect);
-                    },
-                    label: Text(
-                      "Conventer",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: isSelectedConv ? Colors.white : Colors.black),
-                    )),
+                StreamBuilder<bool>(
+                    initialData: false,
+                    stream: uiHandlerBloc.convUi,
+                    builder: (context, snapshot) {
+                      return ChoiceChip(
+                          selected: snapshot.data,
+                          selectedColor: Color(0xff009e8b),
+                          pressElevation: 0,
+                          onSelected: (isSelect) {
+                            uiHandlerBloc.convChipSelect.add(isSelect);
+                            uiHandlerBloc.calcChipSelect.add(!isSelect);
+                          },
+                          label: Text(
+                            "Conventer",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                                color: snapshot.data
+                                    ? Colors.white
+                                    : Colors.black),
+                          ));
+                    }),
               ],
             ),
           ),
@@ -122,30 +132,6 @@ class _HomeWidget extends State<HomeWidget> {
                 flex: (SizeConfig.heightWidthFactor * 2).toInt() + 1,
                 child: Container(
                   padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0xFFEFEFEF), Color(0xfff4f4f4)]),
-                      border: Border(
-                        left: BorderSide(
-                          color: Color(0xFFb6b6b8),
-                          width: 5.0,
-                        ),
-                        top: BorderSide(
-                          color: Color(0xFFb6b6b8),
-                          width: 3.0,
-                        ),
-                        bottom: BorderSide(
-                          color: Color(0xfffafafa),
-                          width: 2.0,
-                        ),
-                        right: BorderSide(
-                          color: Color(0xfffafafa),
-                          width: 1.0,
-                        ),
-                      )),
                   child: Column(
                     children: <Widget>[
                       StreamBuilder<String>(
