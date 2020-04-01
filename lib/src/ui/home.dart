@@ -1,8 +1,10 @@
 import 'package:calculator/src/blocs/CalcBloc.dart';
+import 'package:calculator/src/blocs/UiHandlerBloc.dart';
 import 'package:calculator/src/models/Calculator.dart';
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/ui/displayExp.dart';
 import 'package:calculator/src/ui/resultValue.dart';
+import 'package:calculator/src/ui/toolbarChip.dart';
 import 'package:calculator/src/utility/SizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +43,9 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidget extends State<HomeWidget> {
+  bool isSelectedCalc = true;
+  bool isSelectedConv = false;
+
   @override
   void initState() {
     bloc.clear.add(CalculatorDataProvider.CLEAR);
@@ -52,8 +57,63 @@ class _HomeWidget extends State<HomeWidget> {
     SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Calculator", style: TextStyle(fontSize: 26)),
-        centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(0),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                StreamBuilder<bool>(
+                    initialData: true,
+                    stream: uiHandlerBloc.calcUi,
+                    builder: (context, snapshot) {
+                      return ChoiceChip(
+                        selected: snapshot.data,
+                        pressElevation: 0,
+                        selectedColor: Color(0xff009e8b),
+                        onSelected: (isSelect) {
+                          uiHandlerBloc.calcChipSelect.add(isSelect);
+                          uiHandlerBloc.convChipSelect.add(!isSelect);
+                        },
+                        label: Text(
+                          "Calculator",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                              color:
+                                  snapshot.data ? Colors.white : Colors.black),
+                        ),
+                      );
+                    }),
+                SizedBox(
+                  width: 10,
+                ),
+                StreamBuilder<bool>(
+                    initialData: false,
+                    stream: uiHandlerBloc.convUi,
+                    builder: (context, snapshot) {
+                      return ChoiceChip(
+                          selected: snapshot.data,
+                          selectedColor: Color(0xff009e8b),
+                          pressElevation: 0,
+                          onSelected: (isSelect) {
+                            uiHandlerBloc.convChipSelect.add(isSelect);
+                            uiHandlerBloc.calcChipSelect.add(!isSelect);
+                          },
+                          label: Text(
+                            "Conventer",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                                color: snapshot.data
+                                    ? Colors.white
+                                    : Colors.black),
+                          ));
+                    }),
+              ],
+            ),
+          ),
+        ),
         elevation: 0,
       ),
       body: SafeArea(
@@ -72,30 +132,6 @@ class _HomeWidget extends State<HomeWidget> {
                 flex: (SizeConfig.heightWidthFactor * 2).toInt() + 1,
                 child: Container(
                   padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0xFFEFEFEF), Color(0xfff4f4f4)]),
-                      border: Border(
-                        left: BorderSide(
-                          color: Color(0xFFb6b6b8),
-                          width: 5.0,
-                        ),
-                        top: BorderSide(
-                          color: Color(0xFFb6b6b8),
-                          width: 3.0,
-                        ),
-                        bottom: BorderSide(
-                          color: Color(0xfffafafa),
-                          width: 2.0,
-                        ),
-                        right: BorderSide(
-                          color: Color(0xfffafafa),
-                          width: 1.0,
-                        ),
-                      )),
                   child: Column(
                     children: <Widget>[
                       StreamBuilder<String>(
