@@ -3,35 +3,23 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
 class UiHandlerBloc {
-  final _calcUiController = StreamController<bool>();
-  final _convUiController = StreamController<bool>();
+  final _chipChangeController = StreamController<bool>();
 
-  final _calcUiSubject = BehaviorSubject<bool>();
-  final _convUiSubject = BehaviorSubject<bool>();
+  final _chipChangeSubject = BehaviorSubject<bool>();
 
-  Sink<bool> get calcChipSelect => _calcUiController.sink;
+  Sink<bool> get calcChipSelect => _chipChangeController.sink;
 
-  Sink<bool> get convChipSelect => _convUiController.sink;
-
-  Stream<bool> get calcUi => _calcUiSubject.stream;
-
-  Stream<bool> get convUi => _convUiSubject.stream;
+  Stream<bool> get chipChange => _chipChangeSubject.stream;
 
   UiHandlerBloc() {
-    _calcUiController.stream.listen((isSelected) {
-      _calcUiSubject.add(isSelected);
-    });
-
-    _convUiController.stream.listen((isSelected) {
-      _convUiSubject.add(isSelected);
+    _chipChangeController.stream.listen((isSelected) {
+      _chipChangeSubject.add(isSelected);
     });
   }
 
   dispose() {
-    _calcUiSubject.close();
-    _convUiSubject.close();
-    _calcUiController.close();
-    _convUiController.close();
+    _chipChangeSubject.close();
+    _chipChangeController.close();
   }
 }
 
