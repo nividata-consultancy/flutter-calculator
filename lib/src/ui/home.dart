@@ -1,6 +1,8 @@
 import 'package:calculator/src/blocs/CalcBloc.dart';
 import 'package:calculator/src/blocs/UiHandlerBloc.dart';
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
+import 'package:calculator/src/ui/ButtonViewCalc.dart';
+import 'package:calculator/src/ui/ButtonViewConv.dart';
 import 'package:calculator/src/ui/CalculatorUi.dart';
 import 'package:calculator/src/ui/Converter.dart';
 import 'package:calculator/src/utility/SizeConfig.dart';
@@ -42,9 +44,11 @@ class _HomeWidget extends State<HomeWidget> {
   bool isSelectedCalc = true;
   bool isSelectedConv = false;
   UiHandlerBloc uiHandlerBloc;
+  CalcBloc calcBloc;
 
   @override
   void initState() {
+    calcBloc = CalcBloc();
     uiHandlerBloc = UiHandlerBloc();
     super.initState();
   }
@@ -129,7 +133,180 @@ class _HomeWidget extends State<HomeWidget> {
             builder: (context, snapshot) {
               return Container(
                 padding: EdgeInsets.all(5),
-                child: snapshot.data ? CalculatorUi() : Converter(),
+                child: Column(
+                  children: <Widget>[
+                    snapshot.data ? CalculatorUi(calcBloc) : Converter(),
+                    Visibility(
+                      visible: snapshot.data,
+                      child: Expanded(
+                        flex: 14,
+                        child: Row(
+                          children: <Widget>[
+                            ButtonViewCalc(
+                              text: CalculatorDataProvider.CLEAR_ALl,
+                              calcBloc: calcBloc,
+                              uiHandlerBloc: uiHandlerBloc,
+                            ),
+                            ButtonViewCalc(
+                              text: CalculatorDataProvider.BACK,
+                              calcBloc: calcBloc,
+                              uiHandlerBloc: uiHandlerBloc,
+                            ),
+                            ButtonViewCalc(
+                              text: CalculatorDataProvider.PERCENTAGE,
+                              calcBloc: calcBloc,
+                              uiHandlerBloc: uiHandlerBloc,
+                            ),
+                            ButtonViewCalc(
+                              text: CalculatorDataProvider.DIVIDE,
+                              calcBloc: calcBloc,
+                              uiHandlerBloc: uiHandlerBloc,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 56,
+                      child: Column(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 1,
+                            child: Row(
+                              children: <Widget>[
+                                ButtonViewCalc(
+                                  text: CalculatorDataProvider.SEVEN,
+                                  calcBloc: calcBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                ),
+                                ButtonViewCalc(
+                                  text: CalculatorDataProvider.EIGHT,
+                                  calcBloc: calcBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                ),
+                                ButtonViewCalc(
+                                  text: CalculatorDataProvider.NINE,
+                                  calcBloc: calcBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                ),
+                                snapshot.data
+                                    ? ButtonViewCalc(
+                                        text: CalculatorDataProvider.MULTIPLY,
+                                        calcBloc: calcBloc,
+                                        uiHandlerBloc: uiHandlerBloc,
+                                      )
+                                    : ButtonViewNew(
+                                        text: CalculatorDataProvider.BACK_CONV,
+                                        calcBloc: calcBloc,
+                                        uiHandlerBloc: uiHandlerBloc,
+                                      ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Row(
+                              children: <Widget>[
+                                ButtonViewCalc(
+                                  text: CalculatorDataProvider.FOUR,
+                                  calcBloc: calcBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                ),
+                                ButtonViewCalc(
+                                  text: CalculatorDataProvider.FIVE,
+                                  calcBloc: calcBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                ),
+                                ButtonViewCalc(
+                                  text: CalculatorDataProvider.SIX,
+                                  calcBloc: calcBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                ),
+                                snapshot.data
+                                    ? ButtonViewCalc(
+                                        text: CalculatorDataProvider.SUBTRACT,
+                                        calcBloc: calcBloc,
+                                        uiHandlerBloc: uiHandlerBloc,
+                                      )
+                                    : ButtonViewNew(
+                                        text: CalculatorDataProvider.CLEAR,
+                                        calcBloc: calcBloc,
+                                        uiHandlerBloc: uiHandlerBloc,
+                                      ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Row(
+                              children: <Widget>[
+                                ButtonViewCalc(
+                                  text: CalculatorDataProvider.ONE,
+                                  calcBloc: calcBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                ),
+                                ButtonViewCalc(
+                                  text: CalculatorDataProvider.TWO,
+                                  calcBloc: calcBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                ),
+                                ButtonViewCalc(
+                                  text: CalculatorDataProvider.THREE,
+                                  calcBloc: calcBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                ),
+                                snapshot.data
+                                    ? ButtonViewCalc(
+                                        text: CalculatorDataProvider.ADD,
+                                        calcBloc: calcBloc,
+                                        uiHandlerBloc: uiHandlerBloc,
+                                      )
+                                    : ButtonViewNew(
+                                        text: CalculatorDataProvider.UP,
+                                        calcBloc: calcBloc,
+                                        uiHandlerBloc: uiHandlerBloc,
+                                      ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Row(
+                              children: <Widget>[
+                                ButtonViewCalc(
+                                  text: CalculatorDataProvider.OPEN_BRACKET,
+                                  calcBloc: calcBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                ),
+                                ButtonViewCalc(
+                                  text: CalculatorDataProvider.ZERO,
+                                  calcBloc: calcBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                ),
+                                ButtonViewCalc(
+                                  text: CalculatorDataProvider.PERIOD,
+                                  calcBloc: calcBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                ),
+                                snapshot.data
+                                    ? ButtonViewCalc(
+                                        text: CalculatorDataProvider.EQUAL,
+                                        calcBloc: calcBloc,
+                                        uiHandlerBloc: uiHandlerBloc,
+                                      )
+                                    : ButtonViewNew(
+                                        text: CalculatorDataProvider.DOWN,
+                                        calcBloc: calcBloc,
+                                        uiHandlerBloc: uiHandlerBloc,
+                                      ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               );
             }),
       ),
@@ -139,6 +316,7 @@ class _HomeWidget extends State<HomeWidget> {
   @override
   void dispose() {
     uiHandlerBloc.dispose();
+    calcBloc.dispose();
     super.dispose();
   }
 }

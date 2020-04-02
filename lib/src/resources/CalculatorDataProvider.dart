@@ -19,10 +19,15 @@ class CalculatorDataProvider {
   static const DIVIDE = '/';
   static const PERCENTAGE = '%';
 
-  static const CLEAR = 'CA';
+  static const CLEAR_ALl = 'CA';
   static const BACK = '<=';
   static const EQUAL = '=';
   static const OPEN_BRACKET = '()';
+
+  static const CLEAR = 'C';
+  static const UP = '^';
+  static const DOWN = 'V';
+  static const BACK_CONV = '<';
 
   static Calculator getButtonData(String text) {
     switch (text) {
@@ -88,9 +93,9 @@ class CalculatorDataProvider {
             TextType.OPERATOR, ResourceType.IMAGE_SVG);
         break;
 
-      case CLEAR:
-        return Calculator(
-            CLEAR, CLEAR, ShapeType.DARK_ROUND, TextType.CLEAR, ResourceType.TEXT);
+      case CLEAR_ALl:
+        return Calculator(CLEAR_ALl, CLEAR_ALl, ShapeType.DARK_ROUND,
+            TextType.CLEAR, ResourceType.TEXT);
         break;
       case BACK:
         return Calculator(BACK, "assets/backspace.svg", ShapeType.DARK_ROUND,
@@ -107,6 +112,22 @@ class CalculatorDataProvider {
       case PERIOD:
         return Calculator(
             PERIOD, PERIOD, ShapeType.NAN, TextType.PERIOD, ResourceType.TEXT);
+        break;
+      case CLEAR:
+        return Calculator(
+            CLEAR, CLEAR, ShapeType.ROUND, TextType.PERIOD, ResourceType.TEXT);
+        break;
+      case UP:
+        return Calculator(
+            UP, UP, ShapeType.ROUND, TextType.PERIOD, ResourceType.TEXT);
+        break;
+      case DOWN:
+        return Calculator(
+            DOWN, DOWN, ShapeType.ROUND, TextType.PERIOD, ResourceType.TEXT);
+        break;
+      case BACK_CONV:
+        return Calculator(
+            BACK_CONV, BACK_CONV, ShapeType.ROUND, TextType.PERIOD, ResourceType.TEXT);
         break;
     }
   }
