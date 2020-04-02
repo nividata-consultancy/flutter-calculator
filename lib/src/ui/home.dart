@@ -27,8 +27,9 @@ class _Home extends State<Home> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          primaryColor: Color(0xffebebee),
-          brightness: Brightness.light,
+          primaryColor: Color(0xff273639),
+          accentColor: Color(0xff009e8c),
+          brightness: Brightness.dark,
           fontFamily: 'Montserrat'),
       home: HomeWidget(),
     );
@@ -70,7 +71,9 @@ class _HomeWidget extends State<HomeWidget> {
                       return ChoiceChip(
                         selected: snapshot.data,
                         pressElevation: 0,
-                        selectedColor: Color(0xff009e8b),
+                        elevation: 0,
+                        selectedColor: Colors.white,
+                        backgroundColor: Color(0xff273639),
                         onSelected: (isSelect) {
                           uiHandlerBloc.calcChipSelect.add(isSelect);
                           uiHandlerBloc.convChipSelect.add(!isSelect);
@@ -80,8 +83,9 @@ class _HomeWidget extends State<HomeWidget> {
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
-                              color:
-                                  snapshot.data ? Colors.white : Colors.black),
+                              color: snapshot.data
+                                  ? Color(0xff009e8c)
+                                  : Colors.white54),
                         ),
                       );
                     }),
@@ -93,22 +97,25 @@ class _HomeWidget extends State<HomeWidget> {
                     stream: uiHandlerBloc.convUi,
                     builder: (context, snapshot) {
                       return ChoiceChip(
-                          selected: snapshot.data,
-                          selectedColor: Color(0xff009e8b),
-                          pressElevation: 0,
-                          onSelected: (isSelect) {
-                            uiHandlerBloc.convChipSelect.add(isSelect);
-                            uiHandlerBloc.calcChipSelect.add(!isSelect);
-                          },
-                          label: Text(
-                            "Conventer",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18,
-                                color: snapshot.data
-                                    ? Colors.white
-                                    : Colors.black),
-                          ));
+                        selected: snapshot.data,
+                        selectedColor: Colors.white,
+                        elevation: 0,
+                        backgroundColor: Color(0xff273639),
+                        pressElevation: 0,
+                        onSelected: (isSelect) {
+                          uiHandlerBloc.convChipSelect.add(isSelect);
+                          uiHandlerBloc.calcChipSelect.add(!isSelect);
+                        },
+                        label: Text(
+                          "Conventer",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                              color: snapshot.data
+                                  ? Color(0xff009e8c)
+                                  : Colors.white54),
+                        ),
+                      );
                     }),
               ],
             ),
@@ -116,15 +123,11 @@ class _HomeWidget extends State<HomeWidget> {
         ),
         elevation: 0,
       ),
+      backgroundColor: Color(0xff273639),
       body: SafeArea(
         top: false,
         bottom: true,
         child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.white, Colors.grey[100]])),
           padding: EdgeInsets.all(5),
           child: Column(
             children: <Widget>[
@@ -226,6 +229,7 @@ class _HomeWidget extends State<HomeWidget> {
   @override
   void dispose() {
     bloc.dispose();
+    uiHandlerBloc.dispose();
     super.dispose();
   }
 }
@@ -238,38 +242,81 @@ class ButtonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: Card(
-        margin: EdgeInsets.all(6),
-        color: Color(0xffe8e9eb),
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(6.0)),
-        child: InkWell(
-          onTap: () {
-            bloc.buttonText.add(text);
-          },
-          child: getContainer(text),
-        ),
-      ),
-    );
+    Calculator calculator = CalculatorDataProvider.getButtonData(text);
+    switch (calculator.shapeType) {
+      case ShapeType.ROUND:
+        return Expanded(
+          flex: 1,
+          child: Card(
+            margin: EdgeInsets.all(4),
+            color: Color(0xffe8e9eb),
+            elevation: 2,
+            shape: CircleBorder(),
+            child: InkWell(
+              splashColor: Theme.of(context).primaryColor,
+              customBorder: CircleBorder(),
+              onTap: () {
+                bloc.buttonText.add(text);
+              },
+              child: getContainer(calculator),
+            ),
+          ),
+        );
+        break;
+      case ShapeType.DARK_ROUND:
+        return Expanded(
+          flex: 1,
+          child: Card(
+            margin: EdgeInsets.all(4),
+            color: Color(0xff6a837f),
+            elevation: 2,
+            shape: CircleBorder(),
+            child: InkWell(
+              splashColor: Theme.of(context).primaryColor,
+              customBorder: CircleBorder(),
+              onTap: () {
+                bloc.buttonText.add(text);
+              },
+              child: getContainer(calculator),
+            ),
+          ),
+        );
+        break;
+      case ShapeType.NAN:
+        return Expanded(
+          flex: 1,
+          child: Card(
+            margin: EdgeInsets.all(4),
+            elevation: 0,
+            color: Theme.of(context).primaryColor,
+            child: InkWell(
+              customBorder: CircleBorder(),
+              onTap: () {
+                bloc.buttonText.add(text);
+              },
+              child: getContainer(calculator),
+            ),
+          ),
+        );
+        break;
+    }
   }
 }
 
-Widget getContainer(String text) {
-  Calculator calculator = CalculatorDataProvider.getButtonData(text);
+Widget getContainer(Calculator calculator) {
   switch (calculator.resourceType) {
     case ResourceType.TEXT:
       return Container(
         child: Center(
             child: Text(calculator.text,
-                style: TextStyle(fontSize: SizeConfig.pixelRatio * 12))),
+                style: TextStyle(
+                    fontSize: SizeConfig.pixelRatio * 12,
+                    color: Colors.white))),
       );
       break;
     case ResourceType.IMAGE_SVG:
       return Container(
-        padding: EdgeInsets.all(SizeConfig.pixelRatio * 9),
+        padding: EdgeInsets.all(SizeConfig.pixelRatio * 10),
         child: SvgPicture.asset(calculator.text),
       );
       break;
@@ -279,7 +326,9 @@ Widget getContainer(String text) {
         child: Center(
             child: Text(calculator.text,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: SizeConfig.pixelRatio * 12))),
+                style: TextStyle(
+                    fontSize: SizeConfig.pixelRatio * 20,
+                    color: Color(0xff009e8c)))),
       );
       break;
     case ResourceType.BACK_SPACE:
@@ -288,7 +337,7 @@ Widget getContainer(String text) {
         child: Icon(
           Icons.backspace,
           size: SizeConfig.pixelRatio * 10,
-          color: Colors.grey[900],
+          color: Colors.white,
         ),
       );
       break;

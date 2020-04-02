@@ -34,7 +34,8 @@ class _DisplayExpState extends State<DisplayExp> {
             child: Text(
               widget.exp,
               textAlign: TextAlign.end,
-              style: TextStyle(fontSize: SizeConfig.pixelRatio * 22),
+              style: TextStyle(
+                  fontSize: SizeConfig.pixelRatio * 22, color: Colors.white54),
             ),
           ),
         ),

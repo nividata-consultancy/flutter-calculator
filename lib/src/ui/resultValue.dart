@@ -32,7 +32,10 @@ class _ResultValueState extends State<ResultValue> {
             scrollDirection: Axis.horizontal,
             child: SelectableText(
               widget.result,
-              style: TextStyle(fontSize: SizeConfig.pixelRatio * 22, fontWeight: FontWeight.w700),
+              style: TextStyle(
+                  fontSize: SizeConfig.pixelRatio * 22,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700),
               toolbarOptions: ToolbarOptions(selectAll: true, copy: true),
               showCursor: false,
             ),
