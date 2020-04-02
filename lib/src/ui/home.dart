@@ -132,7 +132,7 @@ class _HomeWidget extends State<HomeWidget> {
           child: Column(
             children: <Widget>[
               Expanded(
-                flex: (SizeConfig.heightWidthFactor * 2).toInt() + 1,
+                flex: (SizeConfig.heightWidthFactor * 2).toInt(),
                 child: Container(
                   padding: EdgeInsets.all(5),
                   child: Column(
@@ -248,7 +248,7 @@ class ButtonView extends StatelessWidget {
         return Expanded(
           flex: 1,
           child: Card(
-            margin: EdgeInsets.all(4),
+            margin: EdgeInsets.all(5),
             color: Color(0xffe8e9eb),
             elevation: 2,
             shape: CircleBorder(),
@@ -267,7 +267,7 @@ class ButtonView extends StatelessWidget {
         return Expanded(
           flex: 1,
           child: Card(
-            margin: EdgeInsets.all(4),
+            margin: EdgeInsets.all(5),
             color: Color(0xff6a837f),
             elevation: 2,
             shape: CircleBorder(),
