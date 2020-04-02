@@ -30,41 +30,35 @@ class _ConverterState extends State<Converter> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Color(0x00131313),
-        appBar: AppBar(
-          backgroundColor: Color(0x00131313),
-          title: Text("Converter"),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: choiceChipWidget(),
         ),
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: choiceChipWidget(),
-            ),
-            Expanded(
-              flex: 3,
-              child: Container(
-                margin: EdgeInsets.fromLTRB(20, 15, 20, 10),
-                decoration: BoxDecoration(
-                    color: Color(0xFF484848),
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Container(
-                  margin: EdgeInsets.fromLTRB(20, 10, 20, 15),
-                  decoration: BoxDecoration(
-                      color: Color(0xFF484848),
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)))),
-            ),
-            Expanded(
-              flex: 10,
-              child: Container(),
-            ),
-          ],
-        ));
+        Expanded(
+          flex: 3,
+          child: Container(
+            margin: EdgeInsets.fromLTRB(20, 15, 20, 10),
+            decoration: BoxDecoration(
+                color: Color(0xFF484848),
+                borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: Container(
+              margin: EdgeInsets.fromLTRB(20, 10, 20, 15),
+              decoration: BoxDecoration(
+                  color: Color(0xFF484848),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0)))),
+        ),
+        Expanded(
+          flex: 10,
+          child: Container(),
+        ),
+      ],
+    );
   }
 
   Widget choiceChipWidget() {
