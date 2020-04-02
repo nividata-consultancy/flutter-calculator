@@ -1,13 +1,12 @@
+import 'dart:async';
+
 import 'package:calculator/src/blocs/CalcBloc.dart';
 import 'package:calculator/src/models/Calculator.dart';
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
-import 'package:calculator/src/ui/resultValue.dart';
 import 'package:calculator/src/utility/SizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import 'displayExp.dart';
 
 class CalculatorUi extends StatefulWidget {
   @override
@@ -15,8 +14,20 @@ class CalculatorUi extends StatefulWidget {
 }
 
 class _CalculatorUiState extends State<CalculatorUi> {
+  ScrollController _controller = ScrollController();
+  CalcBloc calcBloc;
+
+  @override
+  void initState() {
+    calcBloc = CalcBloc();
+    calcBloc.clear.add(CalculatorDataProvider.CLEAR);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    Timer(Duration(milliseconds: 200),
+        () => _controller.jumpTo(_controller.position.maxScrollExtent));
     return Column(
       children: <Widget>[
         Expanded(
@@ -26,16 +37,57 @@ class _CalculatorUiState extends State<CalculatorUi> {
             child: Column(
               children: <Widget>[
                 StreamBuilder<String>(
-                    stream: bloc.exp,
+                    stream: calcBloc.exp,
                     initialData: "0",
                     builder: (context, snapshot) {
-                      return DisplayExp(exp: snapshot.data);
+                      return Flexible(
+                        flex: 1,
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(0, 5, 5, 5),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: SingleChildScrollView(
+                              controller: _controller,
+                              scrollDirection: Axis.horizontal,
+                              child: Text(
+                                snapshot.data,
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    fontSize: SizeConfig.pixelRatio * 22,
+                                    color: Colors.white54),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
                     }),
                 StreamBuilder<String>(
-                    stream: bloc.total,
+                    stream: calcBloc.total,
                     initialData: "0",
                     builder: (context, snapshot) {
-                      return ResultValue(result: snapshot.data);
+                      return Flexible(
+                        flex: 1,
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: SingleChildScrollView(
+                              controller: _controller,
+                              scrollDirection: Axis.horizontal,
+                              child: SelectableText(
+                                snapshot.data,
+                                style: TextStyle(
+                                    fontSize: SizeConfig.pixelRatio * 22,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700),
+                                toolbarOptions:
+                                    ToolbarOptions(selectAll: true, copy: true),
+                                showCursor: false,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
                     }),
               ],
             ),
@@ -53,11 +105,21 @@ class _CalculatorUiState extends State<CalculatorUi> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        ButtonView(text: CalculatorDataProvider.CLEAR),
-                        ButtonView(text: CalculatorDataProvider.SEVEN),
-                        ButtonView(text: CalculatorDataProvider.FOUR),
-                        ButtonView(text: CalculatorDataProvider.ONE),
-                        ButtonView(text: CalculatorDataProvider.OPEN_BRACKET),
+                        ButtonView(
+                            text: CalculatorDataProvider.CLEAR,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.SEVEN,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.FOUR,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.ONE,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.OPEN_BRACKET,
+                            calcBloc: calcBloc),
                       ],
                     ),
                   ),
@@ -66,11 +128,21 @@ class _CalculatorUiState extends State<CalculatorUi> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        ButtonView(text: CalculatorDataProvider.BACK),
-                        ButtonView(text: CalculatorDataProvider.EIGHT),
-                        ButtonView(text: CalculatorDataProvider.FIVE),
-                        ButtonView(text: CalculatorDataProvider.TWO),
-                        ButtonView(text: CalculatorDataProvider.ZERO),
+                        ButtonView(
+                            text: CalculatorDataProvider.BACK,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.EIGHT,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.FIVE,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.TWO,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.ZERO,
+                            calcBloc: calcBloc),
                       ],
                     ),
                   ),
@@ -79,11 +151,21 @@ class _CalculatorUiState extends State<CalculatorUi> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        ButtonView(text: CalculatorDataProvider.PERCENTAGE),
-                        ButtonView(text: CalculatorDataProvider.NINE),
-                        ButtonView(text: CalculatorDataProvider.SIX),
-                        ButtonView(text: CalculatorDataProvider.THREE),
-                        ButtonView(text: CalculatorDataProvider.PERIOD),
+                        ButtonView(
+                            text: CalculatorDataProvider.PERCENTAGE,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.NINE,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.SIX,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.THREE,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.PERIOD,
+                            calcBloc: calcBloc),
                       ],
                     ),
                   ),
@@ -92,11 +174,21 @@ class _CalculatorUiState extends State<CalculatorUi> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        ButtonView(text: CalculatorDataProvider.DIVIDE),
-                        ButtonView(text: CalculatorDataProvider.MULTIPLY),
-                        ButtonView(text: CalculatorDataProvider.SUBTRACT),
-                        ButtonView(text: CalculatorDataProvider.ADD),
-                        ButtonView(text: CalculatorDataProvider.EQUAL),
+                        ButtonView(
+                            text: CalculatorDataProvider.DIVIDE,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.MULTIPLY,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.SUBTRACT,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.ADD,
+                            calcBloc: calcBloc),
+                        ButtonView(
+                            text: CalculatorDataProvider.EQUAL,
+                            calcBloc: calcBloc),
                       ],
                     ),
                   )
@@ -108,13 +200,21 @@ class _CalculatorUiState extends State<CalculatorUi> {
       ],
     );
   }
+
+  @override
+  void dispose() {
+    calcBloc.dispose();
+    super.dispose();
+  }
 }
 
 class ButtonView extends StatelessWidget {
   final String text;
   final Key key;
+  final CalcBloc calcBloc;
 
-  ButtonView({this.key, @required this.text}) : super(key: key);
+  ButtonView({this.key, @required this.text, @required this.calcBloc})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +232,7 @@ class ButtonView extends StatelessWidget {
               splashColor: Theme.of(context).primaryColor,
               customBorder: CircleBorder(),
               onTap: () {
-                bloc.buttonText.add(text);
+                calcBloc.buttonText.add(text);
               },
               child: getContainer(calculator),
             ),
@@ -151,7 +251,7 @@ class ButtonView extends StatelessWidget {
               splashColor: Theme.of(context).primaryColor,
               customBorder: CircleBorder(),
               onTap: () {
-                bloc.buttonText.add(text);
+                calcBloc.buttonText.add(text);
               },
               child: getContainer(calculator),
             ),
@@ -168,7 +268,7 @@ class ButtonView extends StatelessWidget {
             child: InkWell(
               customBorder: CircleBorder(),
               onTap: () {
-                bloc.buttonText.add(text);
+                calcBloc.buttonText.add(text);
               },
               child: getContainer(calculator),
             ),

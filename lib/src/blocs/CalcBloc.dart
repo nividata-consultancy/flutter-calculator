@@ -245,5 +245,3 @@ class CalcBloc {
     _periodController.close();
   }
 }
-
-final bloc = CalcBloc();

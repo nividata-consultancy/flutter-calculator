@@ -45,7 +45,6 @@ class _HomeWidget extends State<HomeWidget> {
 
   @override
   void initState() {
-    bloc.clear.add(CalculatorDataProvider.CLEAR);
     uiHandlerBloc = UiHandlerBloc();
     super.initState();
   }
@@ -139,7 +138,6 @@ class _HomeWidget extends State<HomeWidget> {
 
   @override
   void dispose() {
-    bloc.dispose();
     uiHandlerBloc.dispose();
     super.dispose();
   }
