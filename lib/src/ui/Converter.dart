@@ -40,10 +40,30 @@ class _ConverterState extends State<Converter> {
           Expanded(
             flex: 4,
             child: Container(
+              constraints: BoxConstraints.expand(),
+              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
               margin: EdgeInsets.fromLTRB(20, 15, 20, 10),
               decoration: BoxDecoration(
                   color: Color(0xFF484848),
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              child: Stack(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: DropdownButton<String>(
+                      underline: SizedBox(),
+                      items: <String>["a", "b", "c"].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (_) {},
+                    ),
+                  ),
+                  Align(alignment: Alignment.centerRight, child: Text("123"))
+                ],
+              ),
             ),
           ),
           Expanded(
