@@ -68,39 +68,38 @@ class _ConverterCalcState extends State<ConverterCalc> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: choiceChipWidget(),
-        ),
-        Expanded(
-          flex: 3,
-          child: Container(
-            margin: EdgeInsets.fromLTRB(20, 15, 20, 10),
-            decoration: BoxDecoration(
-                color: Color(0xFF480048),
-                borderRadius: BorderRadius.all(Radius.circular(20.0))),
+    return Expanded(
+      flex: 44,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: choiceChipWidget(),
           ),
-        ),
-        Expanded(
-          flex: 3,
-          child: Container(
-            constraints: BoxConstraints.expand(),
-            margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-            decoration: BoxDecoration(
-                color: Color(0xFF484848),
-                borderRadius: BorderRadius.all(Radius.circular(20.0))),
-            child: Column(
-              children: <Widget>[Text("hello")],
+          Expanded(
+            flex: 3,
+            child: Container(
+              margin: EdgeInsets.fromLTRB(20, 15, 20, 10),
+              decoration: BoxDecoration(
+                  color: Color(0xFF480048),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
             ),
           ),
-        ),
-        Expanded(
-          flex: 10,
-          child: Container(),
-        ),
-      ],
+          Expanded(
+            flex: 3,
+            child: Container(
+              constraints: BoxConstraints.expand(),
+              margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              decoration: BoxDecoration(
+                  color: Color(0xFF484848),
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              child: Column(
+                children: <Widget>[Text("hello")],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

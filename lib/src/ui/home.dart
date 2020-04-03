@@ -4,7 +4,7 @@ import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/ui/ButtonViewCalc.dart';
 import 'package:calculator/src/ui/ButtonViewConv.dart';
 import 'package:calculator/src/ui/CalculatorUi.dart';
-import 'package:calculator/src/ui/Converter.dart';
+import 'package:calculator/src/ui/ConverterCalc.dart';
 import 'package:calculator/src/utility/SizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -135,7 +135,7 @@ class _HomeWidget extends State<HomeWidget> {
                 padding: EdgeInsets.all(5),
                 child: Column(
                   children: <Widget>[
-                    snapshot.data ? CalculatorUi(calcBloc) : Converter(),
+                    snapshot.data ? CalculatorUi(calcBloc) : ConverterCalc(),
                     Visibility(
                       visible: snapshot.data,
                       child: Expanded(
