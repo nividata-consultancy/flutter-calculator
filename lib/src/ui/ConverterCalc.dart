@@ -1,62 +1,70 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-
+import 'package:convert/convert.dart';
+import 'package:calculator/src/models/Category.dart';
+import 'package:calculator/src/models/Unit.dart';
+import 'dart:convert';
 
 class ConverterCalc extends StatefulWidget {
   @override
   _ConverterCalcState createState() => _ConverterCalcState();
 }
 
-class Length {
-  int id;
-  String unit;
-  String abbreviation;
-
-  Length(this.id, this.unit, this.abbreviation);
-
-  static List<Length> getLength() {
-    Length(1, "Millimetre", "mm");
-    Length(2, "Kilometre", "km");
-    Length(3, "Metre", "m");
-    Length(4, "Centimetre", "cm");
-    Length(5, "Micrometre", "mcm");
-    Length(6, "Nanometre", "nm");
-    Length(7, "Mile", "mi");
-    Length(8, "Yard", "yd");
-    Length(9, "Foot", "ft");
-    Length(10, "inch", "in");
-    Length(11, "Nauticle mile", "NM");
-  }
-}
-
 class _ConverterCalcState extends State<ConverterCalc> {
-  int _value = 1;
-  List<String> _choiceChipsVal;
-  int _defaultSelection;
   Color _textColor;
+
+  final _categories = <Category>[];
+  Category _defaultCategory;
+  Category _currentCategory;
+  final _selectedChip = <bool>[];
+
+  @override
+  Future<void> didChangeDependencies() async {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+    if (_categories.isEmpty) {
+      await _retrieveLocalCategories();
+    }
+  }
+
+  Future<void> _retrieveLocalCategories() async {
+    final regularUnitsJson = DefaultAssetBundle.of(context)
+        .loadString('assets/data/regular_units.json');
+    final unitsData = JsonDecoder().convert(await regularUnitsJson);
+    if (unitsData is! Map) {
+      throw ("Date retreived from API is not Map");
+    }
+    var categoryIndex = 0;
+    unitsData.keys.forEach((key) {
+      print(key);
+      final List<Unit> units = unitsData[key]
+          .map<Unit>((dynamic data) => Unit.fromJson(data))
+          .toList();
+      var category = Category(name: key, units: units);
+      setState(() {
+        if (categoryIndex == 0) {
+          _defaultCategory = category;
+        }
+        _categories.add(category);
+        _selectedChip.add(false);
+      });
+      categoryIndex++;
+    });
+    _selectedChip[0] = true;
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _choiceChipsVal = [
-      " Area ",
-      " Length ",
-      " Temperature ",
-      " Volume ",
-      " Mass ",
-      " Data "
-    ];
-    _defaultSelection = 0;
     _textColor = Color(0x00131313);
   }
 
-//  calculateSomething() {
-//    var areaConverter = getConverter(Converter.length);
-//    var val = areaConverter.convert(
-//        value: 200, from: LengthUnit.metre, to: LengthUnit.centiMetre);
-////    print(val);
-//  }
+  void _onCategoryTap(Category category) {
+    print("ouch i was tapped ${category.name}");
+    _currentCategory = category;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,17 +79,22 @@ class _ConverterCalcState extends State<ConverterCalc> {
           child: Container(
             margin: EdgeInsets.fromLTRB(20, 15, 20, 10),
             decoration: BoxDecoration(
-                color: Color(0xFF484848),
+                color: Color(0xFF480048),
                 borderRadius: BorderRadius.all(Radius.circular(20.0))),
           ),
         ),
         Expanded(
           flex: 3,
           child: Container(
-              margin: EdgeInsets.fromLTRB(20, 10, 20, 15),
-              decoration: BoxDecoration(
-                  color: Color(0xFF484848),
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)))),
+            constraints: BoxConstraints.expand(),
+            margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+            decoration: BoxDecoration(
+                color: Color(0xFF484848),
+                borderRadius: BorderRadius.all(Radius.circular(20.0))),
+            child: Column(
+              children: <Widget>[Text("hello")],
+            ),
+          ),
         ),
         Expanded(
           flex: 10,
@@ -94,24 +107,29 @@ class _ConverterCalcState extends State<ConverterCalc> {
   Widget choiceChipWidget() {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: _choiceChipsVal.length,
+      itemCount: _categories.length,
       itemBuilder: (BuildContext context, int index) {
         return Container(
           padding: EdgeInsets.all(6.0),
           child: ChoiceChip(
             padding: EdgeInsets.all(5.0),
-            label: Text(_choiceChipsVal[index],
+            label: Text(_categories[index].name,
                 style: TextStyle(color: Color(0xFF009C88))),
-            selected: _defaultSelection == index,
+            selected: _selectedChip[index],
             onSelected: (bool selected) {
               setState(() {
-//                calculateSomething();
-                _defaultSelection = selected ? index : null;
+                for (var i = 0; i < _selectedChip.length; i++) {
+                  _selectedChip[i] = false;
+                }
+                _selectedChip[index] = true;
+                _currentCategory = selected ? _categories[index] : null;
+                _onCategoryTap(_categories[index]);
               });
             },
-            elevation: 5.0,
-            selectedShadowColor: Colors.white,
-            selectedColor: Colors.white60,
+            pressElevation: 2.0,
+            elevation: 0.0,
+            selectedShadowColor: Colors.white60,
+            selectedColor: Colors.white,
             backgroundColor: Colors.grey[900],
           ),
         );

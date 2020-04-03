@@ -14,7 +14,7 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -28,7 +28,6 @@ dependencies:
   petitparser: ^2.4.0
   flutter_svg: ^0.17.3+1
   flutter_launcher_icons: ^0.7.4
-
   test: any
 
 flutter_icons:
@@ -63,7 +62,7 @@ flutter:
     - percent.svg
     - calculator.svg
     - icon.png
-
+    - assets/data/regular_units.json
   fonts:
     - family: Montserrat
       fonts:
@@ -74,3 +73,4 @@ flutter:
           weight: 700
         - asset: fonts/Montserrat-Black.ttf
           weight: 900
+

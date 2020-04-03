@@ -2,7 +2,7 @@ import 'package:calculator/src/blocs/CalcBloc.dart';
 import 'package:calculator/src/blocs/UiHandlerBloc.dart';
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/ui/CalculatorUi.dart';
-import 'package:calculator/src/ui/Converter.dart';
+import 'package:calculator/src/ui/ConverterCalc.dart';
 import 'package:calculator/src/utility/SizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -129,7 +129,7 @@ class _HomeWidget extends State<HomeWidget> {
             builder: (context, snapshot) {
               return Container(
                 padding: EdgeInsets.all(5),
-                child: snapshot.data ? CalculatorUi() : Converter(),
+                child: snapshot.data ? CalculatorUi() : ConverterCalc(),
               );
             }),
       ),
