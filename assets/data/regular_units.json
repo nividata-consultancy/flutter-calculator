@@ -3,233 +3,286 @@
     {
       "name": "Meter",
       "conversion": 1.0,
+      "short_name": "m",
       "base_unit": true
     },
     {
       "name": "Millimeter",
-      "conversion": 1000.0
+      "conversion": 1000.0,
+      "short_name": "mm"
     },
     {
       "name": "Centimeter",
-      "conversion": 100.0
+      "conversion": 100.0,
+      "short_name": "cm"
     },
     {
       "name": "Kilometer",
-      "conversion": 0.001
+      "conversion": 0.001,
+      "short_name": "km"
     },
     {
       "name": "Inch",
-      "conversion": 39.3701
+      "conversion": 39.3701,
+      "short_name": "in"
     },
     {
       "name": "Foot",
-      "conversion": 3.28084
+      "conversion": 3.28084,
+      "short_name": "ft"
     },
     {
       "name": "Yard",
-      "conversion": 1.09361
+      "conversion": 1.09361,
+      "short_name": "yd"
     },
     {
       "name": "Mile",
-      "conversion": 0.000621371
+      "conversion": 0.000621371,
+      "short_name": "ml"
     }
   ],
   "Area": [
     {
       "name": "Meter squared",
       "conversion": 1.0,
-      "base_unit": true
+      "base_unit": true,
+      "short_name": "ms"
     },
     {
       "name": "Kilometer squared",
-      "conversion": 0.000001
+      "conversion": 0.000001,
+      "short_name": "ks"
     },
     {
       "name": "Square inch",
-      "conversion": 1550.0
+      "conversion": 1550.0,
+      "short_name": "sq in"
     },
     {
       "name": "Square foot",
-      "conversion": 10.7639
+      "conversion": 10.7639,
+      "short_name": "sq ft"
     },
     {
       "name": "Square yard",
-      "conversion": 1.19599
+      "conversion": 1.19599,
+      "short_name": "sq yd"
     },
     {
       "name": "Acre",
-      "conversion": 0.000247105
+      "conversion": 0.000247105,
+      "short_name": "acre"
     },
     {
       "name": "Hectare",
-      "conversion": 0.0001
+      "conversion": 0.0001,
+      "short_name": "hc"
     }
   ],
   "Volume": [
     {
       "name": "Cubic meter",
       "conversion": 1.0,
-      "base_unit": true
+      "base_unit": true,
+      "short_name": "cm"
     },
     {
       "name": "US legal cup",
-      "conversion": 4166.67
+      "conversion": 4166.67,
+      "short_name": "ulc"
     },
     {
       "name": "US fluid ounce",
-      "conversion": 33814.0
+      "conversion": 33814.0,
+      "short_name": "ufo"
     },
     {
       "name": "US tablespoon",
-      "conversion": 67628.0
+      "conversion": 67628.0,
+      "short_name": "utb"
     },
     {
       "name": "US teaspoon",
-      "conversion": 202884.0
+      "conversion": 202884.0,
+      "short_name": "uts"
     },
     {
       "name": "Imperial cup",
-      "conversion": 3519.51
+      "conversion": 3519.51,
+      "short_name": "ic"
     },
     {
       "name": "Imperial fluid ounce",
-      "conversion": 35195.1
+      "conversion": 35195.1,
+      "short_name": "ifo"
     },
     {
       "name": "Imperial tablespoon",
-      "conversion": 56312.13673
+      "conversion": 56312.13673,
+      "short_name": "itb"
     },
     {
       "name": "Imperial teaspoon",
-      "conversion": 168936.41019
+      "conversion": 168936.41019,
+      "short_name": "its"
     }
   ],
   "Mass": [
     {
       "name": "Kilogram",
       "conversion": 1.0,
-      "base_unit": true
+      "base_unit": true,
+      "short_name": "kg"
     },
     {
       "name": "Gram",
-      "conversion": 1000.0
+      "conversion": 1000.0,
+      "short_name": "gm"
     },
     {
       "name": "Ounce",
-      "conversion": 35.274
+      "conversion": 35.274,
+      "short_name": "ounce"
     },
     {
       "name": "Pound",
-      "conversion": 2.20462
+      "conversion": 2.20462,
+      "short_name": "bp"
     },
     {
       "name": "Stone",
-      "conversion": 0.157473
+      "conversion": 0.157473,
+      "short_name": "st"
     },
     {
       "name": "US ton",
-      "conversion": 0.00110231
+      "conversion": 0.00110231,
+      "short_name": "ton"
     },
     {
       "name": "Metric ton",
-      "conversion": 0.001
+      "conversion": 0.001,
+      "short_name": "mton"
     }
   ],
   "Time": [
     {
       "name": "Second",
       "conversion": 1.0,
-      "base_unit": true
+      "base_unit": true,
+      "short_name": "s"
     },
     {
       "name": "Millisecond",
-      "conversion": 1000.0
+      "conversion": 1000.0,
+      "short_name": "ms"
     },
     {
       "name": "Minute",
-      "conversion": 0.0166666666666667
+      "conversion": 0.0166666666666667,
+      "short_name": "m"
     },
     {
       "name": "Hour",
-      "conversion": 0.0002777777777778
+      "conversion": 0.0002777777777778,
+      "short_name": "h"
     },
     {
       "name": "Day",
-      "conversion": 0.00001157407407
+      "conversion": 0.00001157407407,
+      "short_name": "d"
     },
     {
       "name": "Week",
-      "conversion": 0.000001653439153
+      "conversion": 0.000001653439153,
+      "short_name": "w"
     },
     {
       "name": "Fortnight",
-      "conversion": 0.000000826719576
+      "conversion": 0.000000826719576,
+      "short_name": "fn"
     }
   ],
   "Digital Storage": [
     {
       "name": "Megabyte",
       "conversion": 1.0,
-      "base_unit": true
+      "base_unit": true,
+      "short_name": "MB"
     },
     {
       "name": "Megabit",
-      "conversion": 8.0
+      "conversion": 8.0,
+      "short_name": "Mb"
     },
     {
       "name": "Mebibyte",
-      "conversion": 0.953674
+      "conversion": 0.953674,
+      "short_name": "Mebi"
     },
     {
       "name": "Byte",
-      "conversion": 1000000.0
+      "conversion": 1000000.0,
+      "short_name": "B"
     },
     {
       "name": "Kilobyte",
-      "conversion": 1000.0
+      "conversion": 1000.0,
+      "short_name": "KB"
     },
     {
       "name": "Gigabyte",
-      "conversion": 0.001
+      "conversion": 0.001,
+      "short_name": "GB"
     },
     {
       "name": "Terabyte",
-      "conversion": 0.000001
+      "conversion": 0.000001,
+      "short_name": "TB"
     },
     {
       "name": "Petabyte",
-      "conversion": 0.000000001
+      "conversion": 0.000000001,
+      "short_name": "PB"
     }
   ],
   "Energy": [
     {
       "name": "Joule",
       "conversion": 1.0,
-      "base_unit": true
+      "base_unit": true,
+      "short_name": "joule"
     },
     {
       "name": "Kilojoule",
-      "conversion": 0.001
+      "conversion": 0.001,
+      "short_name": "kj"
     },
     {
       "name": "Gram calorie",
-      "conversion": 0.239006
+      "conversion": 0.239006,
+      "short_name": "GC"
     },
     {
       "name": "Kilocalorie (Calorie)",
-      "conversion": 0.000239006
+      "conversion": 0.000239006,
+      "short_name": "Calorie"
     },
     {
       "name": "Watt hour",
-      "conversion": 0.000277778
+      "conversion": 0.000277778,
+      "short_name": "WH"
     },
     {
       "name": "British thermal unit",
-      "conversion": 0.000947817
+      "conversion": 0.000947817,
+      "short_name": "BTU"
     },
     {
       "name": "US therm",
-      "conversion": 0.0000000094804
+      "conversion": 0.0000000094804,
+      "short_name": "Us T"
     }
   ]
 }
