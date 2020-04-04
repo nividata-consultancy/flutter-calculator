@@ -1,4 +1,5 @@
 import 'package:calculator/src/blocs/CalcBloc.dart';
+import 'package:calculator/src/blocs/ConvBloc.dart';
 import 'package:calculator/src/blocs/UiHandlerBloc.dart';
 import 'package:calculator/src/models/Calculator.dart';
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
@@ -10,13 +11,17 @@ class ButtonViewCalc extends StatelessWidget {
   final String text;
   final Key key;
   final CalcBloc calcBloc;
+  final ConvBloc convBloc;
   final UiHandlerBloc uiHandlerBloc;
+  final bool isCalcSelected;
 
   ButtonViewCalc(
       {this.key,
       @required this.text,
       @required this.calcBloc,
-      @required this.uiHandlerBloc})
+      @required this.convBloc,
+      @required this.uiHandlerBloc,
+      @required this.isCalcSelected})
       : super(key: key);
 
   @override
@@ -35,7 +40,10 @@ class ButtonViewCalc extends StatelessWidget {
               splashColor: Theme.of(context).primaryColor,
               customBorder: CircleBorder(),
               onTap: () {
-                calcBloc.buttonText.add(text);
+                if (isCalcSelected)
+                  calcBloc.buttonText.add(text);
+                else
+                  convBloc.convText.add(text);
               },
               child: getContainerForCalc(calculator),
             ),
@@ -54,7 +62,10 @@ class ButtonViewCalc extends StatelessWidget {
               splashColor: Theme.of(context).primaryColor,
               customBorder: CircleBorder(),
               onTap: () {
-                calcBloc.buttonText.add(text);
+                if (isCalcSelected)
+                  calcBloc.buttonText.add(text);
+                else
+                  convBloc.convText.add(text);
               },
               child: getContainerForCalc(calculator),
             ),
@@ -71,7 +82,10 @@ class ButtonViewCalc extends StatelessWidget {
             child: InkWell(
               customBorder: CircleBorder(),
               onTap: () {
-                calcBloc.buttonText.add(text);
+                if (isCalcSelected)
+                  calcBloc.buttonText.add(text);
+                else
+                  convBloc.convText.add(text);
               },
               child: getContainerForCalc(calculator),
             ),

@@ -1,4 +1,5 @@
 import 'package:calculator/src/blocs/CalcBloc.dart';
+import 'package:calculator/src/blocs/ConvBloc.dart';
 import 'package:calculator/src/blocs/UiHandlerBloc.dart';
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/ui/ButtonViewCalc.dart';
@@ -45,10 +46,12 @@ class _HomeWidget extends State<HomeWidget> {
   bool isSelectedConv = false;
   UiHandlerBloc uiHandlerBloc;
   CalcBloc calcBloc;
+  ConvBloc convBloc;
 
   @override
   void initState() {
     calcBloc = CalcBloc();
+    convBloc = ConvBloc();
     uiHandlerBloc = UiHandlerBloc();
     super.initState();
   }
@@ -135,7 +138,7 @@ class _HomeWidget extends State<HomeWidget> {
                 padding: EdgeInsets.all(5),
                 child: Column(
                   children: <Widget>[
-                    snapshot.data ? CalculatorUi(calcBloc) : ConverterCalc(),
+                    snapshot.data ? CalculatorUi(calcBloc) : ConverterCalc(convBloc),
                     Visibility(
                       visible: snapshot.data,
                       child: Expanded(
@@ -145,22 +148,30 @@ class _HomeWidget extends State<HomeWidget> {
                             ButtonViewCalc(
                               text: CalculatorDataProvider.CLEAR_ALl,
                               calcBloc: calcBloc,
+                              convBloc: convBloc,
                               uiHandlerBloc: uiHandlerBloc,
+                              isCalcSelected: snapshot.data,
                             ),
                             ButtonViewCalc(
                               text: CalculatorDataProvider.BACK,
                               calcBloc: calcBloc,
+                              convBloc: convBloc,
                               uiHandlerBloc: uiHandlerBloc,
+                              isCalcSelected: snapshot.data,
                             ),
                             ButtonViewCalc(
                               text: CalculatorDataProvider.PERCENTAGE,
                               calcBloc: calcBloc,
+                              convBloc: convBloc,
                               uiHandlerBloc: uiHandlerBloc,
+                              isCalcSelected: snapshot.data,
                             ),
                             ButtonViewCalc(
                               text: CalculatorDataProvider.DIVIDE,
                               calcBloc: calcBloc,
+                              convBloc: convBloc,
                               uiHandlerBloc: uiHandlerBloc,
+                              isCalcSelected: snapshot.data,
                             ),
                           ],
                         ),
@@ -177,28 +188,38 @@ class _HomeWidget extends State<HomeWidget> {
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.SEVEN,
                                   calcBloc: calcBloc,
+                                  convBloc: convBloc,
                                   uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
                                 ),
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.EIGHT,
                                   calcBloc: calcBloc,
+                                  convBloc: convBloc,
                                   uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
                                 ),
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.NINE,
                                   calcBloc: calcBloc,
+                                  convBloc: convBloc,
                                   uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
                                 ),
                                 snapshot.data
                                     ? ButtonViewCalc(
                                         text: CalculatorDataProvider.MULTIPLY,
                                         calcBloc: calcBloc,
+                                        convBloc: convBloc,
                                         uiHandlerBloc: uiHandlerBloc,
+                                        isCalcSelected: snapshot.data,
                                       )
                                     : ButtonViewNew(
                                         text: CalculatorDataProvider.BACK_CONV,
                                         calcBloc: calcBloc,
+                                        convBloc: convBloc,
                                         uiHandlerBloc: uiHandlerBloc,
+                                        isCalcSelected: snapshot.data,
                                       ),
                               ],
                             ),
@@ -210,28 +231,38 @@ class _HomeWidget extends State<HomeWidget> {
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.FOUR,
                                   calcBloc: calcBloc,
+                                  convBloc: convBloc,
                                   uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
                                 ),
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.FIVE,
                                   calcBloc: calcBloc,
+                                  convBloc: convBloc,
                                   uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
                                 ),
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.SIX,
                                   calcBloc: calcBloc,
+                                  convBloc: convBloc,
                                   uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
                                 ),
                                 snapshot.data
                                     ? ButtonViewCalc(
                                         text: CalculatorDataProvider.SUBTRACT,
                                         calcBloc: calcBloc,
+                                        convBloc: convBloc,
                                         uiHandlerBloc: uiHandlerBloc,
+                                        isCalcSelected: snapshot.data,
                                       )
                                     : ButtonViewNew(
                                         text: CalculatorDataProvider.CLEAR,
                                         calcBloc: calcBloc,
+                                        convBloc: convBloc,
                                         uiHandlerBloc: uiHandlerBloc,
+                                        isCalcSelected: snapshot.data,
                                       ),
                               ],
                             ),
@@ -243,28 +274,38 @@ class _HomeWidget extends State<HomeWidget> {
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.ONE,
                                   calcBloc: calcBloc,
+                                  convBloc: convBloc,
                                   uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
                                 ),
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.TWO,
                                   calcBloc: calcBloc,
+                                  convBloc: convBloc,
                                   uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
                                 ),
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.THREE,
                                   calcBloc: calcBloc,
+                                  convBloc: convBloc,
                                   uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
                                 ),
                                 snapshot.data
                                     ? ButtonViewCalc(
                                         text: CalculatorDataProvider.ADD,
                                         calcBloc: calcBloc,
+                                        convBloc: convBloc,
                                         uiHandlerBloc: uiHandlerBloc,
+                                        isCalcSelected: snapshot.data,
                                       )
                                     : ButtonViewNew(
                                         text: CalculatorDataProvider.UP,
                                         calcBloc: calcBloc,
+                                        convBloc: convBloc,
                                         uiHandlerBloc: uiHandlerBloc,
+                                        isCalcSelected: snapshot.data,
                                       ),
                               ],
                             ),
@@ -276,28 +317,38 @@ class _HomeWidget extends State<HomeWidget> {
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.OPEN_BRACKET,
                                   calcBloc: calcBloc,
+                                  convBloc: convBloc,
                                   uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
                                 ),
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.ZERO,
                                   calcBloc: calcBloc,
+                                  convBloc: convBloc,
                                   uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
                                 ),
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.PERIOD,
                                   calcBloc: calcBloc,
+                                  convBloc: convBloc,
                                   uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
                                 ),
                                 snapshot.data
                                     ? ButtonViewCalc(
                                         text: CalculatorDataProvider.EQUAL,
                                         calcBloc: calcBloc,
+                                        convBloc: convBloc,
                                         uiHandlerBloc: uiHandlerBloc,
+                                        isCalcSelected: snapshot.data,
                                       )
                                     : ButtonViewNew(
                                         text: CalculatorDataProvider.DOWN,
                                         calcBloc: calcBloc,
+                                        convBloc: convBloc,
                                         uiHandlerBloc: uiHandlerBloc,
+                                        isCalcSelected: snapshot.data,
                                       ),
                               ],
                             ),
@@ -317,6 +368,7 @@ class _HomeWidget extends State<HomeWidget> {
   void dispose() {
     uiHandlerBloc.dispose();
     calcBloc.dispose();
+    convBloc.dispose();
     super.dispose();
   }
 }

@@ -16,7 +16,6 @@ class Unit {
   Unit.fromJson(Map jsonMap)
       : assert(jsonMap['name'] != null),
         assert(jsonMap['conversion'] != null),
-        assert(jsonMap['short_name'] != null),
         name = jsonMap['name'],
         conversion = jsonMap['conversion'].toDouble(),
         shortName = jsonMap['short_name'];

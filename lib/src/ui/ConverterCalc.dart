@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'package:calculator/src/blocs/ConvBloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:convert/convert.dart';
 import 'package:calculator/src/models/Category.dart';
 import 'package:calculator/src/models/Unit.dart';
-import 'dart:convert';
 
 class ConverterCalc extends StatefulWidget {
+  final ConvBloc convBloc;
+
+  ConverterCalc(this.convBloc);
+
   @override
   _ConverterCalcState createState() => _ConverterCalcState();
 }
@@ -21,16 +24,6 @@ class _ConverterCalcState extends State<ConverterCalc> {
   Unit _toValue;
   double _inputValue = 1;
   String _convertedValue = '';
-
-  @override
-  Future<void> didChangeDependencies() async {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-
-    if (_categories.isEmpty) {
-      await _retrieveLocalCategories();
-    }
-  }
 
   Future<void> _retrieveLocalCategories() async {
     final regularUnitsJson = DefaultAssetBundle.of(context)
@@ -60,7 +53,6 @@ class _ConverterCalcState extends State<ConverterCalc> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _textColor = Color(0x00131313);
   }
@@ -172,34 +164,67 @@ class _ConverterCalcState extends State<ConverterCalc> {
           Expanded(
             flex: 3,
             child: Container(
+              constraints: BoxConstraints.expand(),
               margin: EdgeInsets.fromLTRB(20, 15, 20, 10),
               decoration: BoxDecoration(
                   color: Color(0xFF484848),
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
               child: Column(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 6,
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(24, 10, 0, 0),
-                          child: Text(
-                            _fromValue.name,
-                            style: TextStyle(fontSize: 22),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Container(
-                            alignment: Alignment.center,
-                            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                            child: _createDropDownButton(
-                                _fromValue.shortName, _updateFromConversion)),
-                      )
-                    ],
-                  ),
+                  StreamBuilder<List<Unit>>(
+                      stream: widget.convBloc.getFirstUnitList,
+                      initialData: <Unit>[
+                        Unit(name: "Meter", conversion: 1.0, shortName: "m")
+                      ],
+                      builder: (context, snapshot) {
+                        return Row(
+                          children: <Widget>[
+                            Expanded(
+                              flex: 6,
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(24, 10, 0, 0),
+                                child: Text(
+                                  snapshot.data[0].name,
+                                  style: TextStyle(fontSize: 22),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Container(
+                                alignment: Alignment.center,
+                                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: DropdownButton(
+                                    onChanged: (_) {},
+                                    value: snapshot.data[0].shortName,
+                                    items: snapshot.data.map((unit) {
+                                      return DropdownMenuItem(
+                                        value: unit.shortName,
+                                        child: Container(
+                                          child: Text(
+                                            unit.shortName,
+                                            softWrap: true,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    style: Theme.of(context).textTheme.title),
+                              ),
+                            )
+                          ],
+                        );
+                      }),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    alignment: Alignment.topLeft,
+                    child: StreamBuilder<String>(
+                        initialData: "0",
+                        stream: widget.convBloc.convResult,
+                        builder: (context, snapshot) {
+                          return Text(snapshot.data,
+                              style: TextStyle(fontSize: 10));
+                        }),
+                  )
                 ],
               ),
             ),
@@ -214,35 +239,57 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
               child: Column(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 6,
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(24, 10, 0, 0),
-                          child: Text(
-                            _toValue.name,
-                            style: TextStyle(fontSize: 22),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Container(
-                            alignment: Alignment.center,
-                            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                            child: _createDropDownButton(
-                                _toValue.shortName, _updateToConversion)),
-                      )
-                    ],
-                  ),
+                  StreamBuilder<List<Unit>>(
+                      initialData: <Unit>[
+                        Unit(
+                            name: "Millimeter",
+                            conversion: 1000.0,
+                            shortName: "mm")
+                      ],
+                      stream: widget.convBloc.getSecondUnitList,
+                      builder: (context, snapshot) {
+                        return Row(
+                          children: <Widget>[
+                            Expanded(
+                              flex: 6,
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(24, 10, 0, 0),
+                                child: Text(
+                                  snapshot.data[0].name,
+                                  style: TextStyle(fontSize: 22),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Container(
+                                alignment: Alignment.center,
+                                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: DropdownButton(
+                                    onChanged: (_) {},
+                                    value: snapshot.data[0].shortName,
+                                    items: snapshot.data.map((unit) {
+                                      return DropdownMenuItem(
+                                        value: unit.shortName,
+                                        child: Container(
+                                          child: Text(
+                                            unit.shortName,
+                                            softWrap: true,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    style: Theme.of(context).textTheme.title),
+                              ),
+                            )
+                          ],
+                        );
+                      }),
                   Container(
                     margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
                     alignment: Alignment.topLeft,
-                    child: Text(_convertedValue,
-                    style: TextStyle(
-                      fontSize: 40
-                    )),
+                    child:
+                        Text(_convertedValue, style: TextStyle(fontSize: 10)),
                   )
                 ],
               ),
@@ -254,35 +301,49 @@ class _ConverterCalcState extends State<ConverterCalc> {
   }
 
   Widget choiceChipWidget() {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: _categories.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          padding: EdgeInsets.all(6.0),
-          child: ChoiceChip(
-            padding: EdgeInsets.all(5.0),
-            label: Text(_categories[index].name,
-                style: TextStyle(color: Color(0xFF009C88))),
-            selected: _selectedChip[index],
-            onSelected: (bool selected) {
-              setState(() {
-                for (var i = 0; i < _selectedChip.length; i++) {
-                  _selectedChip[i] = false;
-                }
-                _selectedChip[index] = true;
-                _currentCategory = selected ? _categories[index] : null;
-                _onCategoryTap(_categories[index]);
-              });
+    return StreamBuilder<List<Category>>(
+        stream: widget.convBloc.getCategoryList,
+        initialData: <Category>[
+          Category(name: "Length", isChipSelected: true, units: [
+            Unit(name: "Meter", conversion: 1.0, shortName: "m"),
+            Unit(name: "Millimeter", conversion: 1000.0, shortName: "mm")
+          ])
+        ],
+        builder: (context, snapshot) {
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: snapshot.data.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                padding: EdgeInsets.all(6.0),
+                child: ChoiceChip(
+                  padding: EdgeInsets.all(5.0),
+                  label: Text(snapshot.data[index].name,
+                      style: TextStyle(color: Color(0xFF009C88))),
+                  selected: snapshot.data[index].isChipSelected,
+                  onSelected: (bool selected) {
+
+                    widget.convBloc.setSelectedCategory
+                        .add(snapshot.data[index]);
+                    /*setState(() {
+                      for (var i = 0; i < _selectedChip.length; i++) {
+                        _selectedChip[i] = false;
+                      }
+                      _selectedChip[index] = true;
+                      _currentCategory = selected ? _categories[index] : null;
+                      _onCategoryTap(_categories[index]);
+
+                    });*/
+                  },
+                  pressElevation: 2.0,
+                  elevation: 0.0,
+                  selectedShadowColor: Colors.white60,
+                  selectedColor: Colors.white,
+                  backgroundColor: Colors.grey[900],
+                ),
+              );
             },
-            pressElevation: 2.0,
-            elevation: 0.0,
-            selectedShadowColor: Colors.white60,
-            selectedColor: Colors.white,
-            backgroundColor: Colors.grey[900],
-          ),
-        );
-      },
-    );
+          );
+        });
   }
 }
