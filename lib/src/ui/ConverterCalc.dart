@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'package:calculator/src/blocs/ConvBloc.dart';
 import 'package:flutter/material.dart';
-import 'package:convert/convert.dart';
 import 'package:calculator/src/models/Category.dart';
 import 'package:calculator/src/models/Unit.dart';
-import 'dart:convert';
 
 class ConverterCalc extends StatefulWidget {
+  final ConvBloc convBloc;
+
+  ConverterCalc(this.convBloc);
+
   @override
   _ConverterCalcState createState() => _ConverterCalcState();
 }
@@ -79,9 +82,16 @@ class _ConverterCalcState extends State<ConverterCalc> {
           Expanded(
             flex: 3,
             child: Container(
+              constraints: BoxConstraints.expand(),
+              child: StreamBuilder<String>(
+                  initialData: "0",
+                  stream: widget.convBloc.convResult,
+                  builder: (context, snapshot) {
+                    return Text(snapshot.data);
+                  }),
               margin: EdgeInsets.fromLTRB(20, 15, 20, 10),
               decoration: BoxDecoration(
-                  color: Color(0xFF480048),
+                  color: Color(0xFF484848),
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
             ),
           ),
