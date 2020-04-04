@@ -43,7 +43,7 @@ class ButtonViewCalc extends StatelessWidget {
                 if (isCalcSelected)
                   calcBloc.buttonText.add(text);
                 else
-                  convBloc.convText.add(text);
+                  convBloc.setConvInput.add(text);
               },
               child: getContainerForCalc(calculator),
             ),
@@ -65,7 +65,7 @@ class ButtonViewCalc extends StatelessWidget {
                 if (isCalcSelected)
                   calcBloc.buttonText.add(text);
                 else
-                  convBloc.convText.add(text);
+                  convBloc.setConvInput.add(text);
               },
               child: getContainerForCalc(calculator),
             ),
@@ -85,7 +85,7 @@ class ButtonViewCalc extends StatelessWidget {
                 if (isCalcSelected)
                   calcBloc.buttonText.add(text);
                 else
-                  convBloc.convText.add(text);
+                  convBloc.setConvInput.add(text);
               },
               child: getContainerForCalc(calculator),
             ),

@@ -10,26 +10,25 @@ class ConvBloc {
   String expTemp = "0";
   List<Category> categoryList;
 
-  final _convController = StreamController<String>();
-  final _convSubject = BehaviorSubject<String>();
+  final _convInputController = StreamController<String>();
+  final _convInputSubject = BehaviorSubject<String>();
 
-  final _categoryListController = StreamController<List<Category>>();
+  final _convResultSubject = BehaviorSubject<String>();
+
   final _categoryListSubject = BehaviorSubject<List<Category>>();
 
   final _selectedCategoryController = StreamController<Category>();
   final _selectedCategorySubject = BehaviorSubject<Category>();
 
-  final _firstDropdownListController = StreamController<List<Unit>>();
-  final _firstDropdownListSubject = BehaviorSubject<List<Unit>>();
+  final _firstSelectedItemMenuController = StreamController<String>();
 
-  final _secondDropdownListController = StreamController<List<Unit>>();
-  final _secondDropdownListSubject = BehaviorSubject<List<Unit>>();
+  final _secondSelectedItemMenuController = StreamController<String>();
 
-  Sink<String> get convText => _convController.sink;
+  Sink<String> get setConvInput => _convInputController.sink;
 
-  Stream<String> get convResult => _convSubject.stream;
+  Stream<String> get getConvInput => _convInputSubject.stream;
 
-  Sink<List<Category>> get setCategoryList => _categoryListController.sink;
+  Stream<String> get getConvResult => _convResultSubject.stream;
 
   Stream<List<Category>> get getCategoryList => _categoryListSubject.stream;
 
@@ -37,49 +36,81 @@ class ConvBloc {
 
   Stream<Category> get getSelectedCategory => _selectedCategorySubject.stream;
 
-  Sink<List<Unit>> get setFirstUnitList => _firstDropdownListController.sink;
+  Sink<String> get setFirstSelectedItemMenu =>
+      _firstSelectedItemMenuController.sink;
 
-  Stream<List<Unit>> get getFirstUnitList => _firstDropdownListSubject.stream;
-
-  Sink<List<Unit>> get setSecondUnitList => _secondDropdownListController.sink;
-
-  Stream<List<Unit>> get getSecondUnitList => _secondDropdownListSubject.stream;
+  Sink<String> get setSecondSelectedItemMenu =>
+      _secondSelectedItemMenuController.sink;
 
   ConvBloc() {
-    _convController.stream.listen((buttonText) {
+    var convInput = _convInputController.stream.share();
+    convInput.listen((buttonText) {
       expTemp = (expTemp == "0") ? buttonText : (expTemp + buttonText);
-      _convSubject.add(expTemp);
+      _convInputSubject.add(expTemp);
     });
+
     Stream.fromFuture(_retrieveLocalCategories()).listen((categoryList) {
       categoryList[0].isChipSelected = true;
       this.categoryList = categoryList;
       _categoryListSubject.add(categoryList);
-      _selectedCategorySubject.add(categoryList[0]);
-      _firstDropdownListSubject.add(categoryList[0].units);
-      var x = categoryList[0].units;
-      x.remove(0);
-      _secondDropdownListSubject.add(x);
+      setSelectedCategory.add(categoryList[0]);
     });
 
-    _selectedCategoryController.stream.listen((category) {
+    var selectedCategory = _selectedCategoryController.stream.share();
+
+    selectedCategory.listen((category) {
       for (var i = 0; i < categoryList.length; i++) {
         categoryList[i].isChipSelected = false;
       }
-      var
-      index = categoryList.indexOf(category);
+      var index = categoryList.indexOf(category);
       categoryList[index].isChipSelected = true;
       _categoryListSubject.add(categoryList);
-
-      _firstDropdownListSubject.add(categoryList[index].units);
-      var x = categoryList[index].units;
-      x.removeAt(index);
-      _secondDropdownListSubject.add(x);
+      _selectedCategorySubject.add(category);
     });
 
-    getFirstUnitList.listen((cate) {
-      cate.forEach((f) {
-        print(f.name);
-      });
+    CombineLatestStream.combine2(
+        _firstSelectedItemMenuController.stream, selectedCategory,
+        (String shortName, Category currentCategory) {
+      Unit unit = _getUnit(shortName, currentCategory);
+      Category category = currentCategory;
+      if (unit != null) {
+        category.firstDropdownShortName = unit.shortName;
+        category.firstDropdownName = unit.name;
+      }
+      return category;
+    }).listen((Category category) {
+      print("1st $category");
+      _selectedCategorySubject.add(category);
+    });
+
+    CombineLatestStream.combine2(
+        _secondSelectedItemMenuController.stream, selectedCategory,
+        (String shortName, Category currentCategory) {
+      print(currentCategory.units.toString());
+      Unit unit = _getUnit(shortName, currentCategory);
+      Category category = currentCategory;
+      if (unit != null) {
+        category.secondDropdownShortName = unit.shortName;
+        category.secondDropdownName = unit.name;
+      }
+      return category;
+    }).listen((category) {
+      print("2st $category");
+      _selectedCategorySubject.add(category);
+    });
+
+    CombineLatestStream.combine2(convInput, selectedCategory,
+        (String input, Category currentCategory) {
+      double toValue =
+          _getUnit(currentCategory.firstDropdownShortName, currentCategory)
+              .conversion;
+      double fromValue =
+          _getUnit(currentCategory.secondDropdownShortName, currentCategory)
+              .conversion;
+      return double.parse(input) * (toValue / fromValue);
+    }).listen((result) {
+      print("rest $result");
+      _convResultSubject.add(result.toString());
     });
   }
 
@@ -102,15 +133,22 @@ class ConvBloc {
     return _categories;
   }
 
+  Unit _getUnit(String unitShortName, Category currentCategory) {
+    return currentCategory.units.firstWhere(
+      (Unit unit) {
+        return unit.shortName == unitShortName;
+      },
+      orElse: null,
+    );
+  }
+
   dispose() {
-    _convController.close();
-    _convSubject.close();
-    _categoryListController.close();
+    _convInputController.close();
+    _convInputSubject.close();
+    _convResultSubject.close();
     _categoryListSubject.close();
-    _firstDropdownListController.close();
-    _firstDropdownListSubject.close();
-    _secondDropdownListController.close();
-    _secondDropdownListSubject.close();
+    _firstSelectedItemMenuController.close();
+    _secondSelectedItemMenuController.close();
     _selectedCategoryController.close();
     _selectedCategorySubject.close();
   }

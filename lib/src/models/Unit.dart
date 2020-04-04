@@ -5,13 +5,18 @@ class Unit {
   final double conversion;
   final String shortName;
 
-  const Unit(
+  Unit(
       {@required this.name,
       @required this.conversion,
       @required this.shortName})
       : assert(name != null),
         assert(conversion != null),
         assert(shortName != null);
+
+  @override
+  String toString() {
+    return 'Unit{name: $name, conversion: $conversion, shortName: $shortName}';
+  }
 
   Unit.fromJson(Map jsonMap)
       : assert(jsonMap['name'] != null),
