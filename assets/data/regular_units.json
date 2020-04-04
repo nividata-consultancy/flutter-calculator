@@ -7,14 +7,19 @@
       "base_unit": true
     },
     {
+      "name": "Centimeter",
+      "conversion": 100.0,
+      "short_name": "cm"
+    },
+    {
       "name": "Millimeter",
       "conversion": 1000.0,
       "short_name": "mm"
     },
     {
-      "name": "Centimeter",
-      "conversion": 100.0,
-      "short_name": "cm"
+      "name": "Decimeter",
+      "conversion": 10.0,
+      "short_name": "dm"
     },
     {
       "name": "Kilometer",
@@ -44,30 +49,40 @@
   ],
   "Area": [
     {
-      "name": "Meter squared",
+      "name": "Square meter",
       "conversion": 1.0,
       "base_unit": true,
-      "short_name": "ms"
+      "short_name": "m²"
     },
     {
-      "name": "Kilometer squared",
+      "name": "Square kilometer",
       "conversion": 0.000001,
-      "short_name": "ks"
+      "short_name": "km²"
+    },
+    {
+      "name": "Square mile",
+      "conversion": 2589988.11,
+      "short_name": "mile²"
     },
     {
       "name": "Square inch",
       "conversion": 1550.0,
-      "short_name": "sq in"
+      "short_name": "in²"
+    },
+    {
+      "name": "Square Centimeter",
+      "conversion": 0.0001,
+      "short_name": "cm²"
     },
     {
       "name": "Square foot",
       "conversion": 10.7639,
-      "short_name": "sq ft"
+      "short_name": "ft²"
     },
     {
       "name": "Square yard",
       "conversion": 1.19599,
-      "short_name": "sq yd"
+      "short_name": "yd²"
     },
     {
       "name": "Acre",
@@ -77,7 +92,7 @@
     {
       "name": "Hectare",
       "conversion": 0.0001,
-      "short_name": "hc"
+      "short_name": "ha"
     }
   ],
   "Volume": [
@@ -85,47 +100,62 @@
       "name": "Cubic meter",
       "conversion": 1.0,
       "base_unit": true,
-      "short_name": "cm"
+      "short_name": "m³"
     },
     {
-      "name": "US legal cup",
-      "conversion": 4166.67,
-      "short_name": "ulc"
+      "name": "Cubic decimeter",
+      "conversion": 1000.0,
+      "short_name": "dm³"
     },
     {
-      "name": "US fluid ounce",
-      "conversion": 33814.0,
-      "short_name": "ufo"
+      "name": "Liter",
+      "conversion": 1000.0,
+      "short_name": "l"
     },
     {
-      "name": "US tablespoon",
-      "conversion": 67628.0,
-      "short_name": "utb"
+      "name": "Deciliter",
+      "conversion": 10000.0,
+      "short_name": "dl"
     },
     {
-      "name": "US teaspoon",
-      "conversion": 202884.0,
-      "short_name": "uts"
+      "name": "Centiliter",
+      "conversion": 100000.0,
+      "short_name": "cl"
     },
     {
-      "name": "Imperial cup",
-      "conversion": 3519.51,
-      "short_name": "ic"
+      "name": "Milliliter",
+      "conversion": 1000000.0,
+      "short_name": "ml"
     },
     {
-      "name": "Imperial fluid ounce",
-      "conversion": 35195.1,
-      "short_name": "ifo"
+      "name": "Fluid ounce(UK)",
+      "conversion": 35195.079,
+      "short_name": "fl oz(UK)"
     },
     {
-      "name": "Imperial tablespoon",
-      "conversion": 56312.13673,
-      "short_name": "itb"
+      "name": "Fluid ounce(US)",
+      "conversion": 33814.022,
+      "short_name": "fl oz(US)"
     },
     {
-      "name": "Imperial teaspoon",
-      "conversion": 168936.41019,
-      "short_name": "its"
+      "name": "Cubic inch",
+      "conversion": 61023.74,
+      "short_name": "inch³"
+    },
+    {
+      "name": "Cubic feet",
+      "conversion": 35.314,
+      "short_name": "ft³"
+    },
+    {
+      "name": "Gallon(UK)",
+      "conversion": 219.969,
+      "short_name": "gal(UK)"
+    },
+    {
+      "name": "Gallon(US)",
+      "conversion": 264.17,
+      "short_name": "gal(US)"
     }
   ],
   "Mass": [
@@ -143,12 +173,47 @@
     {
       "name": "Ounce",
       "conversion": 35.274,
-      "short_name": "ounce"
+      "short_name": "oz"
     },
     {
       "name": "Pound",
       "conversion": 2.20462,
-      "short_name": "bp"
+      "short_name": "lb"
+    },
+    {
+      "name": "Hectogram",
+      "conversion": 10.0,
+      "short_name": "hg"
+    },
+    {
+      "name": "Decigram",
+      "conversion": 10000.0,
+      "short_name": "dg"
+    },
+    {
+      "name": "Centigram",
+      "conversion": 100000.0,
+      "short_name": "cg"
+    },
+    {
+      "name": "Milligram",
+      "conversion": 1000000.0,
+      "short_name": "mg"
+    },
+    {
+      "name": "Microgram",
+      "conversion": 1000000000.0,
+      "short_name": "µg"
+    },
+    {
+      "name": "Carat",
+      "conversion": 5000.0,
+      "short_name": "carat"
+    },
+    {
+      "name": "Grain",
+      "conversion": 15432.358,
+      "short_name": "grain"
     },
     {
       "name": "Stone",
@@ -156,9 +221,14 @@
       "short_name": "st"
     },
     {
-      "name": "US ton",
+      "name": "Short ton",
       "conversion": 0.00110231,
-      "short_name": "ton"
+      "short_name": "ton(US)"
+    },
+    {
+      "name": "Long ton",
+      "conversion": 0.0009842,
+      "short_name": "ton(UK)"
     },
     {
       "name": "Metric ton",
@@ -168,40 +238,55 @@
   ],
   "Time": [
     {
-      "name": "Second",
+      "name": "second",
       "conversion": 1.0,
       "base_unit": true,
       "short_name": "s"
     },
     {
-      "name": "Millisecond",
-      "conversion": 1000.0,
-      "short_name": "ms"
-    },
-    {
-      "name": "Minute",
+      "name": "minute",
       "conversion": 0.0166666666666667,
-      "short_name": "m"
+      "short_name": "minute"
     },
     {
-      "name": "Hour",
+      "name": "hour",
       "conversion": 0.0002777777777778,
-      "short_name": "h"
+      "short_name": "hour"
+    },
+    {
+      "name": "millisecond",
+      "conversion": 1000.0,
+      "short_name": "milli"
+    },
+    {
+      "name": "microsecond",
+      "conversion": 1000000.0,
+      "short_name": "micro"
+    },
+    {
+      "name": "nanosecond",
+      "conversion": 1000000000.0,
+      "short_name": "nano"
     },
     {
       "name": "Day",
       "conversion": 0.00001157407407,
-      "short_name": "d"
+      "short_name": "day"
     },
     {
       "name": "Week",
       "conversion": 0.000001653439153,
-      "short_name": "w"
+      "short_name": "week"
     },
     {
       "name": "Fortnight",
       "conversion": 0.000000826719576,
-      "short_name": "fn"
+      "short_name": "fortnight"
+    },
+    {
+      "name": "year",
+      "conversion": 0.000000031709792,
+      "short_name": "year"
     }
   ],
   "Digital Storage": [
@@ -212,38 +297,28 @@
       "short_name": "MB"
     },
     {
-      "name": "Megabit",
-      "conversion": 8.0,
-      "short_name": "Mb"
-    },
-    {
-      "name": "Mebibyte",
-      "conversion": 0.953674,
-      "short_name": "Mebi"
-    },
-    {
       "name": "Byte",
-      "conversion": 1000000.0,
-      "short_name": "B"
+      "conversion": 1048576.0,
+      "short_name": "Byte"
     },
     {
       "name": "Kilobyte",
-      "conversion": 1000.0,
+      "conversion": 1024.0,
       "short_name": "KB"
     },
     {
       "name": "Gigabyte",
-      "conversion": 0.001,
+      "conversion": 0.0009765625,
       "short_name": "GB"
     },
     {
       "name": "Terabyte",
-      "conversion": 0.000001,
+      "conversion": 0.000000953674316,
       "short_name": "TB"
     },
     {
       "name": "Petabyte",
-      "conversion": 0.000000001,
+      "conversion": 0.000000000931323,
       "short_name": "PB"
     }
   ],
