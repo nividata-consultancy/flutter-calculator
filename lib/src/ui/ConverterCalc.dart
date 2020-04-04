@@ -16,6 +16,12 @@ class ConverterCalc extends StatefulWidget {
 
 class _ConverterCalcState extends State<ConverterCalc> {
   Color _textColor;
+  Category _initialCategory =
+      Category(name: "Length", isChipSelected: true, units: [
+    Unit(name: "Meter", conversion: 1.0, shortName: "m"),
+    Unit(name: "Millimeter", conversion: 1000.0, shortName: "mm")
+  ]);
+
   final _categories = <Category>[];
   Category _currentCategory;
   final _selectedChip = <bool>[];
@@ -38,6 +44,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
           .map<Unit>((dynamic data) => Unit.fromJson(data))
           .toList();
       var category = Category(name: key, units: units);
+
       setState(() {
         if (categoryIndex == 0) {
           _currentCategory = category;
@@ -171,11 +178,9 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
               child: Column(
                 children: <Widget>[
-                  StreamBuilder<List<Unit>>(
-                      stream: widget.convBloc.getFirstUnitList,
-                      initialData: <Unit>[
-                        Unit(name: "Meter", conversion: 1.0, shortName: "m")
-                      ],
+                  StreamBuilder<Category>(
+                      stream: widget.convBloc.getSelectedCategory,
+                      initialData: _initialCategory,
                       builder: (context, snapshot) {
                         return Row(
                           children: <Widget>[
@@ -184,7 +189,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(24, 10, 0, 0),
                                 child: Text(
-                                  snapshot.data[0].name,
+                                  snapshot.data.firstDropdownName,
                                   style: TextStyle(fontSize: 22),
                                 ),
                               ),
@@ -195,9 +200,12 @@ class _ConverterCalcState extends State<ConverterCalc> {
                                 alignment: Alignment.center,
                                 margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                                 child: DropdownButton(
-                                    onChanged: (_) {},
-                                    value: snapshot.data[0].shortName,
-                                    items: snapshot.data.map((unit) {
+                                    onChanged: (unit) {
+                                      widget.convBloc.setFirstSelectedItemMenu
+                                          .add(unit);
+                                    },
+                                    value: snapshot.data.firstDropdownShortName,
+                                    items: snapshot.data.units.map((unit) {
                                       return DropdownMenuItem(
                                         value: unit.shortName,
                                         child: Container(
@@ -219,7 +227,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                     alignment: Alignment.topLeft,
                     child: StreamBuilder<String>(
                         initialData: "0",
-                        stream: widget.convBloc.convResult,
+                        stream: widget.convBloc.getConvInput,
                         builder: (context, snapshot) {
                           return Text(snapshot.data,
                               style: TextStyle(fontSize: 10));
@@ -239,14 +247,9 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
               child: Column(
                 children: <Widget>[
-                  StreamBuilder<List<Unit>>(
-                      initialData: <Unit>[
-                        Unit(
-                            name: "Millimeter",
-                            conversion: 1000.0,
-                            shortName: "mm")
-                      ],
-                      stream: widget.convBloc.getSecondUnitList,
+                  StreamBuilder<Category>(
+                      initialData: _initialCategory,
+                      stream: widget.convBloc.getSelectedCategory,
                       builder: (context, snapshot) {
                         return Row(
                           children: <Widget>[
@@ -255,7 +258,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(24, 10, 0, 0),
                                 child: Text(
-                                  snapshot.data[0].name,
+                                  snapshot.data.secondDropdownName,
                                   style: TextStyle(fontSize: 22),
                                 ),
                               ),
@@ -266,9 +269,13 @@ class _ConverterCalcState extends State<ConverterCalc> {
                                 alignment: Alignment.center,
                                 margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                                 child: DropdownButton(
-                                    onChanged: (_) {},
-                                    value: snapshot.data[0].shortName,
-                                    items: snapshot.data.map((unit) {
+                                    onChanged: (unit) {
+                                      widget.convBloc.setSecondSelectedItemMenu
+                                          .add(unit);
+                                    },
+                                    value:
+                                        snapshot.data.secondDropdownShortName,
+                                    items: snapshot.data.units.map((unit) {
                                       return DropdownMenuItem(
                                         value: unit.shortName,
                                         child: Container(
@@ -288,8 +295,13 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   Container(
                     margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
                     alignment: Alignment.topLeft,
-                    child:
-                        Text(_convertedValue, style: TextStyle(fontSize: 10)),
+                    child: StreamBuilder<String>(
+                        initialData: "0",
+                        stream: widget.convBloc.getConvResult,
+                        builder: (context, snapshot) {
+                          return Text(snapshot.data,
+                              style: TextStyle(fontSize: 10));
+                        }),
                   )
                 ],
               ),
@@ -303,12 +315,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
   Widget choiceChipWidget() {
     return StreamBuilder<List<Category>>(
         stream: widget.convBloc.getCategoryList,
-        initialData: <Category>[
-          Category(name: "Length", isChipSelected: true, units: [
-            Unit(name: "Meter", conversion: 1.0, shortName: "m"),
-            Unit(name: "Millimeter", conversion: 1000.0, shortName: "mm")
-          ])
-        ],
+        initialData: <Category>[_initialCategory],
         builder: (context, snapshot) {
           return ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -322,7 +329,6 @@ class _ConverterCalcState extends State<ConverterCalc> {
                       style: TextStyle(color: Color(0xFF009C88))),
                   selected: snapshot.data[index].isChipSelected,
                   onSelected: (bool selected) {
-
                     widget.convBloc.setSelectedCategory
                         .add(snapshot.data[index]);
                     /*setState(() {
