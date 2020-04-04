@@ -159,48 +159,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: StreamBuilder<List<Category>>(
-                stream: widget.convBloc.getCategoryList,
-                initialData: <Category>[
-                  Category(name: "Length", units: [
-                    Unit(name: "Meter", conversion: 1.0, shortName: "m"),
-                    Unit(
-                        name: "Millimeter", conversion: 1000.0, shortName: "mm")
-                  ])
-                ],
-                builder: (context, snapshot) {
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        padding: EdgeInsets.all(6.0),
-                        child: ChoiceChip(
-                          padding: EdgeInsets.all(5.0),
-                          label: Text(snapshot.data[index].name,
-                              style: TextStyle(color: Color(0xFF009C88))),
-                          selected: false,
-                          onSelected: (bool selected) {
-                            setState(() {
-                              for (var i = 0; i < _selectedChip.length; i++) {
-                                _selectedChip[i] = false;
-                              }
-                              _selectedChip[index] = true;
-                              _currentCategory =
-                                  selected ? _categories[index] : null;
-                              _onCategoryTap(_categories[index]);
-                            });
-                          },
-                          pressElevation: 2.0,
-                          elevation: 0.0,
-                          selectedShadowColor: Colors.white60,
-                          selectedColor: Colors.white,
-                          backgroundColor: Colors.grey[900],
-                        ),
-                      );
-                    },
-                  );
-                }),
+            child: choiceChipWidget(),
           ),
           Expanded(
             flex: 3,
@@ -344,7 +303,12 @@ class _ConverterCalcState extends State<ConverterCalc> {
   Widget choiceChipWidget() {
     return StreamBuilder<List<Category>>(
         stream: widget.convBloc.getCategoryList,
-        initialData: <Category>[],
+        initialData: <Category>[
+          Category(name: "Length", isChipSelected: true, units: [
+            Unit(name: "Meter", conversion: 1.0, shortName: "m"),
+            Unit(name: "Millimeter", conversion: 1000.0, shortName: "mm")
+          ])
+        ],
         builder: (context, snapshot) {
           return ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -356,16 +320,20 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   padding: EdgeInsets.all(5.0),
                   label: Text(snapshot.data[index].name,
                       style: TextStyle(color: Color(0xFF009C88))),
-                  selected: false,
+                  selected: snapshot.data[index].isChipSelected,
                   onSelected: (bool selected) {
-                    setState(() {
+
+                    widget.convBloc.setSelectedCategory
+                        .add(snapshot.data[index]);
+                    /*setState(() {
                       for (var i = 0; i < _selectedChip.length; i++) {
                         _selectedChip[i] = false;
                       }
                       _selectedChip[index] = true;
                       _currentCategory = selected ? _categories[index] : null;
                       _onCategoryTap(_categories[index]);
-                    });
+
+                    });*/
                   },
                   pressElevation: 2.0,
                   elevation: 0.0,

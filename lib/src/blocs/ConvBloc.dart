@@ -8,6 +8,8 @@ import 'package:rxdart/rxdart.dart';
 
 class ConvBloc {
   String expTemp = "0";
+  List<Category> categoryList;
+
   final _convController = StreamController<String>();
   final _convSubject = BehaviorSubject<String>();
 
@@ -31,11 +33,9 @@ class ConvBloc {
 
   Stream<List<Category>> get getCategoryList => _categoryListSubject.stream;
 
-  Sink<Category> get setSelectedCategoryList =>
-      _selectedCategoryController.sink;
+  Sink<Category> get setSelectedCategory => _selectedCategoryController.sink;
 
-  Stream<Category> get getSelectedCategoryList =>
-      _selectedCategorySubject.stream;
+  Stream<Category> get getSelectedCategory => _selectedCategorySubject.stream;
 
   Sink<List<Unit>> get setFirstUnitList => _firstDropdownListController.sink;
 
@@ -51,7 +51,8 @@ class ConvBloc {
       _convSubject.add(expTemp);
     });
     Stream.fromFuture(_retrieveLocalCategories()).listen((categoryList) {
-      print(categoryList.length);
+      categoryList[0].isChipSelected = true;
+      this.categoryList = categoryList;
       _categoryListSubject.add(categoryList);
       _selectedCategorySubject.add(categoryList[0]);
       _firstDropdownListSubject.add(categoryList[0].units);
@@ -59,6 +60,22 @@ class ConvBloc {
       x.remove(0);
       _secondDropdownListSubject.add(x);
     });
+
+    _selectedCategoryController.stream.listen((category) {
+      for (var i = 0; i < categoryList.length; i++) {
+        categoryList[i].isChipSelected = false;
+      }
+      var
+      index = categoryList.indexOf(category);
+      categoryList[index].isChipSelected = true;
+      _categoryListSubject.add(categoryList);
+
+      _firstDropdownListSubject.add(categoryList[index].units);
+      var x = categoryList[index].units;
+      x.removeAt(index);
+      _secondDropdownListSubject.add(x);
+    });
+
     getFirstUnitList.listen((cate) {
       cate.forEach((f) {
         print(f.name);
@@ -79,7 +96,7 @@ class ConvBloc {
       final List<Unit> units = unitsData[key]
           .map<Unit>((dynamic data) => Unit.fromJson(data))
           .toList();
-      var category = Category(name: key, units: units);
+      var category = Category(name: key, units: units, isChipSelected: false);
       _categories.add(category);
     });
     return _categories;

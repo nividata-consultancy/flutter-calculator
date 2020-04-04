@@ -1,11 +1,11 @@
-
 import 'Unit.dart';
 
 class Category {
   final String name;
   final List<Unit> units;
+   bool isChipSelected;
 
-  const Category({this.name, this.units})
+   Category({this.name, this.units, this.isChipSelected})
       : assert(name != null),
         assert(units != null);
 }
