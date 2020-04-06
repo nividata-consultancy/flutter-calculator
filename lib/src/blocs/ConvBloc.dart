@@ -70,7 +70,6 @@ class ConvBloc {
       } else {
         resultText =
             (resultText == "0") ? buttonText : (resultText + buttonText);
-        print(resultText);
         _convResultSubject.add(resultText);
       }
     });
@@ -113,7 +112,6 @@ class ConvBloc {
     }).share();
 
     firstSelectedItemMenu.listen((Category category) {
-      print("1st $category");
       _selectedCategorySubject.add(category);
     });
 
@@ -133,8 +131,6 @@ class ConvBloc {
         double fromValue =
             _getUnit(currentCategory.secondDropdownShortName, currentCategory)
                 .conversion;
-        print("rest2 $input $toValue $fromValue");
-
         return double.parse(inputText) * (toValue * fromValue);
       } else {
         double fromValue;
@@ -150,24 +146,22 @@ class ConvBloc {
         double toValue =
             _getUnit(currentCategory.firstDropdownShortName, currentCategory)
                 .conversion;
-        print("rest2 $input $toValue $fromValue");
         return double.parse(resultText) * (toValue * fromValue);
       }
     }).listen((result) {
       print("rest1 $result");
       if (isUp) {
-        resultText = result.toString();
-        _convResultSubject.add(result.toString());
+        resultText = _format(result);
+        _convResultSubject.add(resultText.toString());
       } else {
-        inputText = result.toString();
-        _convInputSubject.add(result.toString());
+        inputText = _format(result);
+        _convInputSubject.add(resultText.toString());
       }
     });
 
     var secondSelectedItemMenu = CombineLatestStream.combine2(
         _secondSelectedItemMenuController.stream, selectedCategory,
         (String shortName, Category currentCategory) {
-      print(currentCategory.units.toString());
       Unit unit = _getUnit(shortName, currentCategory);
       Category category = currentCategory;
       if (unit != null) {
@@ -198,8 +192,6 @@ class ConvBloc {
         double fromValue =
             _getUnit(currentCategory.secondDropdownShortName, currentCategory)
                 .conversion;
-        print("rest2 $input $toValue $fromValue");
-
         return double.parse(inputText) * (toValue * fromValue);
       } else {
         double fromValue;
@@ -215,17 +207,16 @@ class ConvBloc {
         double toValue =
             _getUnit(currentCategory.firstDropdownShortName, currentCategory)
                 .conversion;
-        print("rest2 $input $toValue $fromValue");
         return double.parse(resultText) * (toValue * fromValue);
       }
     }).listen((result) {
       print("rest2 $result");
       if (isUp) {
-        resultText = result.toString();
-        _convResultSubject.add(result.toString());
+        resultText = _format(result);
+        _convResultSubject.add(resultText.toString());
       } else {
-        inputText = result.toString();
-        _convInputSubject.add(result.toString());
+        inputText = _format(result);
+        _convInputSubject.add(resultText.toString());
       }
     });
 
@@ -237,18 +228,17 @@ class ConvBloc {
       double fromValue =
           _getUnit(currentCategory.secondDropdownShortName, currentCategory)
               .conversion;
-      print("rest2 $input $toValue $fromValue");
       if (isUp)
         return double.parse(inputText) * (toValue * fromValue);
       else
         return double.parse(resultText) * toValue / (fromValue);
     }).listen((result) {
       if (isUp) {
-        resultText = result.toString();
-        _convResultSubject.add(result.toString());
+        resultText = _format(result);
+        _convResultSubject.add(resultText.toString());
       } else {
-        inputText = result.toString();
-        _convInputSubject.add(result.toString());
+        inputText = _format(result);
+        _convInputSubject.add(resultText.toString());
       }
     });
   }
@@ -328,6 +318,25 @@ class ConvBloc {
       },
       orElse: null,
     );
+  }
+
+  String _format(double conversion) {
+    var outputNum = conversion.toStringAsPrecision(7);
+
+    if (outputNum.contains('.') && outputNum.endsWith('0')) {
+      var i = outputNum.length - 1;
+
+      while (outputNum[i] == '0') {
+        i -= 1;
+      }
+      outputNum = outputNum.substring(0, i + 1);
+    }
+
+    if (outputNum.endsWith('.')) {
+      return outputNum.substring(0, outputNum.length - 1);
+    }
+
+    return outputNum;
   }
 
   _processButtonText({String buttonText}) {

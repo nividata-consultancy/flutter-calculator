@@ -138,7 +138,9 @@ class _HomeWidget extends State<HomeWidget> {
                 padding: EdgeInsets.all(5),
                 child: Column(
                   children: <Widget>[
-                    snapshot.data ? CalculatorUi(calcBloc) : ConverterCalc(convBloc),
+                    snapshot.data
+                        ? CalculatorUi(calcBloc)
+                        : ConverterCalc(convBloc),
                     Visibility(
                       visible: snapshot.data,
                       child: Expanded(
@@ -314,13 +316,23 @@ class _HomeWidget extends State<HomeWidget> {
                             flex: 1,
                             child: Row(
                               children: <Widget>[
-                                ButtonViewCalc(
-                                  text: CalculatorDataProvider.OPEN_BRACKET,
-                                  calcBloc: calcBloc,
-                                  convBloc: convBloc,
-                                  uiHandlerBloc: uiHandlerBloc,
-                                  isCalcSelected: snapshot.data,
-                                ),
+                                snapshot.data
+                                    ? ButtonViewCalc(
+                                        text:
+                                            CalculatorDataProvider.OPEN_BRACKET,
+                                        calcBloc: calcBloc,
+                                        convBloc: convBloc,
+                                        uiHandlerBloc: uiHandlerBloc,
+                                        isCalcSelected: snapshot.data,
+                                      )
+                                    : ButtonViewNew(
+                                        text:
+                                            CalculatorDataProvider.OPEN_BRACKET,
+                                        calcBloc: calcBloc,
+                                        convBloc: convBloc,
+                                        uiHandlerBloc: uiHandlerBloc,
+                                        isCalcSelected: snapshot.data,
+                                      ),
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.ZERO,
                                   calcBloc: calcBloc,

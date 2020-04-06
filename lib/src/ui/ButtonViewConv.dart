@@ -5,6 +5,7 @@ import 'package:calculator/src/models/Calculator.dart';
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:calculator/src/utility/SizeConfig.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ButtonViewNew extends StatelessWidget {
   final String text;
@@ -52,6 +53,15 @@ class ButtonViewNew extends StatelessWidget {
       case ShapeType.DARK_ROUND:
         break;
       case ShapeType.NAN:
+        return Expanded(
+          flex: 1,
+          child: Card(
+            margin: EdgeInsets.all(4),
+            elevation: 0,
+            color: Theme.of(context).primaryColor,
+            child: getContainerForConverter(calculator),
+          ),
+        );
         break;
     }
   }
@@ -95,6 +105,15 @@ Widget getContainerForConverter(Calculator calculator) {
           Icons.arrow_downward,
           size: SizeConfig.pixelRatio * 15,
           color: Color(0xff009e8c),
+        ),
+      );
+      break;
+    case CalculatorDataProvider.OPEN_BRACKET:
+      return Container(
+        padding: EdgeInsets.all(SizeConfig.pixelRatio * 10),
+        child: SvgPicture.asset(
+          calculator.text,
+          color: Colors.grey[700],
         ),
       );
       break;
