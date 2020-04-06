@@ -22,7 +22,7 @@ class _SplashState extends State<Splash> {
     });
 
     return Material(
-      color: Color(0xFFEFEFEF),
+      color: Color(0xff273639),
       child: SafeArea(
         top: false,
         bottom: true,
@@ -43,7 +43,9 @@ class _SplashState extends State<Splash> {
                   SizedBox(width: 10, height: 20),
                   Text("Calculator",
                       style: TextStyle(
-                          fontSize: 30.0, fontFamily: "Montserrat"))
+                          fontSize: 30.0,
+                          color: Color(0xff009e8c),
+                          fontFamily: "Montserrat"))
                 ],
               ),
             ),
@@ -60,7 +62,7 @@ class _SplashState extends State<Splash> {
                     Text("  NiviData\n  Consultancy",
                         style: TextStyle(
                             fontFamily: 'Montserrat',
-                            color: Colors.black54,
+                            color: Colors.white70,
                             fontSize: 18.0,
                             fontWeight: FontWeight.w700)),
                   ],
