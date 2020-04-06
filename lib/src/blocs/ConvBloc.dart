@@ -5,6 +5,7 @@ import 'package:calculator/src/models/Calculator.dart';
 import 'package:calculator/src/models/Category.dart';
 import 'package:calculator/src/models/Unit.dart';
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
+import 'package:calculator/src/utility/Process.dart';
 import 'package:flutter/services.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -21,6 +22,7 @@ class ConvBloc {
   final _operandController = StreamController<String>();
   final _clearController = StreamController<String>();
   final _backController = StreamController<String>();
+  final _periodController = StreamController<String>();
 
   final _convResultSubject = BehaviorSubject<String>();
 
@@ -42,6 +44,8 @@ class ConvBloc {
   Sink<String> get clear => _clearController.sink;
 
   Sink<String> get back => _backController.sink;
+
+  Sink<String> get period => _periodController.sink;
 
   Stream<String> get getConvResult => _convResultSubject.stream;
 
@@ -65,11 +69,14 @@ class ConvBloc {
 
     operandController.listen((buttonText) {
       if (isUp) {
-        inputText = (inputText == "0") ? buttonText : (inputText + buttonText);
+        inputText = (inputText == "0")
+            ? (buttonText == "." ? "0." : buttonText)
+            : (inputText + buttonText);
         _convInputSubject.add(inputText);
       } else {
-        resultText =
-            (resultText == "0") ? buttonText : (resultText + buttonText);
+        resultText = (resultText == "0")
+            ? (buttonText == "." ? "0." : buttonText)
+            : (resultText + buttonText);
         _convResultSubject.add(resultText);
       }
     });
@@ -77,6 +84,16 @@ class ConvBloc {
     _clearController.stream.listen(_clear);
 
     _backController.stream.listen(_back);
+
+    _periodController.stream
+        .map((_) {
+          if (isUp)
+            return inputText;
+          else
+            return resultText;
+        })
+        .where((buttonText) => !Process.isListDigitContainDot(buttonText))
+        .listen(_period);
 
     Stream.fromFuture(_retrieveLocalCategories()).listen((categoryList) {
       categoryList[0].isChipSelected = true;
@@ -294,6 +311,10 @@ class ConvBloc {
     }
   }
 
+  void _period(String buttonText) {
+    operand.add(".");
+  }
+
   Future<List<Category>> _retrieveLocalCategories() async {
     final regularUnitsJson =
         rootBundle.loadString('assets/data/regular_units.json');
@@ -361,6 +382,7 @@ class ConvBloc {
       case TextType.BRACKET:
         break;
       case TextType.PERIOD:
+        period.add(buttonText);
         break;
     }
   }
@@ -371,6 +393,7 @@ class ConvBloc {
     _operandController.close();
     _clearController.close();
     _backController.close();
+    _periodController.close();
     _convResultSubject.close();
     _categoryListSubject.close();
     _firstSelectedItemMenuController.close();

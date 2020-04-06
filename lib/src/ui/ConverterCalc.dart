@@ -44,7 +44,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   color: Color(0xFF484848),
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 5, 0, 5),
+                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Column(
                   children: <Widget>[
                     StreamBuilder<Category>(
@@ -116,7 +116,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   color: Color(0xFF484848),
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 5, 0, 5),
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Column(
                   children: <Widget>[
                     StreamBuilder<Category>(
