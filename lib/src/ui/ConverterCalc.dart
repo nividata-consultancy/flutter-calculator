@@ -58,6 +58,8 @@ class _ConverterCalcState extends State<ConverterCalc> {
                                 child: Container(
                                   child: Text(
                                     snapshot.data.firstDropdownName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: SizeConfig.pixelRatio * 12),
                                   ),
@@ -130,6 +132,8 @@ class _ConverterCalcState extends State<ConverterCalc> {
                                 child: Container(
                                   child: Text(
                                     snapshot.data.secondDropdownName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: SizeConfig.pixelRatio * 12),
                                   ),
