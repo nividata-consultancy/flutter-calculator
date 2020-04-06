@@ -115,19 +115,19 @@ class CalculatorDataProvider {
         break;
       case CLEAR:
         return Calculator(
-            CLEAR, CLEAR, ShapeType.ROUND, TextType.PERIOD, ResourceType.TEXT);
+            CLEAR, CLEAR, ShapeType.ROUND, TextType.CLEAR, ResourceType.TEXT);
         break;
       case UP:
         return Calculator(
-            UP, UP, ShapeType.ROUND, TextType.PERIOD, ResourceType.TEXT);
+            UP, UP, ShapeType.ROUND, TextType.UP, ResourceType.TEXT);
         break;
       case DOWN:
         return Calculator(
-            DOWN, DOWN, ShapeType.ROUND, TextType.PERIOD, ResourceType.TEXT);
+            DOWN, DOWN, ShapeType.ROUND, TextType.DOWN, ResourceType.TEXT);
         break;
       case BACK_CONV:
-        return Calculator(
-            BACK_CONV, BACK_CONV, ShapeType.ROUND, TextType.PERIOD, ResourceType.TEXT);
+        return Calculator(BACK_CONV, BACK_CONV, ShapeType.ROUND, TextType.BACK,
+            ResourceType.TEXT);
         break;
     }
   }

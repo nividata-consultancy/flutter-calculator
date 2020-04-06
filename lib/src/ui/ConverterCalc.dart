@@ -18,8 +18,12 @@ class _ConverterCalcState extends State<ConverterCalc> {
   Color _textColor;
   Category _initialCategory =
       Category(name: "Length", isChipSelected: true, units: [
-    Unit(name: "Meter", conversion: 1.0, shortName: "m"),
-    Unit(name: "Millimeter", conversion: 1000.0, shortName: "mm")
+    Unit(name: "Meter", conversion: 1.0, shortName: "m", baseUnit: true),
+    Unit(
+        name: "Millimeter",
+        conversion: 1000.0,
+        shortName: "mm",
+        baseUnit: false)
   ]);
 
   final _categories = <Category>[];
@@ -331,15 +335,6 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   onSelected: (bool selected) {
                     widget.convBloc.setSelectedCategory
                         .add(snapshot.data[index]);
-                    /*setState(() {
-                      for (var i = 0; i < _selectedChip.length; i++) {
-                        _selectedChip[i] = false;
-                      }
-                      _selectedChip[index] = true;
-                      _currentCategory = selected ? _categories[index] : null;
-                      _onCategoryTap(_categories[index]);
-
-                    });*/
                   },
                   pressElevation: 2.0,
                   elevation: 0.0,

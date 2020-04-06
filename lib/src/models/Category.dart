@@ -21,4 +21,9 @@ class Category {
     this.secondDropdownName = units[1].name;
     this.secondDropdownShortName = units[1].shortName;
   }
+
+  @override
+  String toString() {
+    return 'Category{name: $name, isChipSelected: $isChipSelected, firstDropdownShortName: $firstDropdownShortName, secondDropdownShortName: $secondDropdownShortName}';
+  }
 }

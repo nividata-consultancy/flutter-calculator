@@ -1,17 +1,26 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:calculator/src/models/Calculator.dart';
 import 'package:calculator/src/models/Category.dart';
 import 'package:calculator/src/models/Unit.dart';
+import 'package:calculator/src/resources/CalculatorDataProvider.dart';
 import 'package:flutter/services.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ConvBloc {
   String expTemp = "0";
   List<Category> categoryList;
+  Category selectedCategory1;
 
   final _convInputController = StreamController<String>();
   final _convInputSubject = BehaviorSubject<String>();
+
+  final _operandController = StreamController<String>();
+  final _clearController = StreamController<String>();
+  final _upController = StreamController<String>();
+  final _downController = StreamController<String>();
+  final _backController = StreamController<String>();
 
   final _convResultSubject = BehaviorSubject<String>();
 
@@ -28,6 +37,16 @@ class ConvBloc {
 
   Stream<String> get getConvInput => _convInputSubject.stream;
 
+  Sink<String> get operand => _operandController.sink;
+
+  Sink<String> get clear => _clearController.sink;
+
+  Sink<String> get up => _upController.sink;
+
+  Sink<String> get down => _downController.sink;
+
+  Sink<String> get back => _backController.sink;
+
   Stream<String> get getConvResult => _convResultSubject.stream;
 
   Stream<List<Category>> get getCategoryList => _categoryListSubject.stream;
@@ -43,16 +62,25 @@ class ConvBloc {
       _secondSelectedItemMenuController.sink;
 
   ConvBloc() {
-    var convInput = _convInputController.stream.share();
-    convInput.listen((buttonText) {
+    _convInputController.stream
+        .listen((buttonText) => _processButtonText(buttonText: buttonText));
+
+    var operandController = _operandController.stream.share();
+
+    operandController.listen((buttonText) {
       expTemp = (expTemp == "0") ? buttonText : (expTemp + buttonText);
       _convInputSubject.add(expTemp);
     });
+
+    _clearController.stream.listen(_clear);
+
+    _backController.stream.listen(_back);
 
     Stream.fromFuture(_retrieveLocalCategories()).listen((categoryList) {
       categoryList[0].isChipSelected = true;
       this.categoryList = categoryList;
       _categoryListSubject.add(categoryList);
+      selectedCategory1 = categoryList[0];
       setSelectedCategory.add(categoryList[0]);
     });
 
@@ -64,11 +92,12 @@ class ConvBloc {
       }
       var index = categoryList.indexOf(category);
       categoryList[index].isChipSelected = true;
+      selectedCategory1 = category;
       _categoryListSubject.add(categoryList);
       _selectedCategorySubject.add(category);
     });
 
-    CombineLatestStream.combine2(
+    var firstSelectedItemMenu = CombineLatestStream.combine2(
         _firstSelectedItemMenuController.stream, selectedCategory,
         (String shortName, Category currentCategory) {
       Unit unit = _getUnit(shortName, currentCategory);
@@ -78,12 +107,36 @@ class ConvBloc {
         category.firstDropdownName = unit.name;
       }
       return category;
-    }).listen((Category category) {
+    }).share();
+
+    firstSelectedItemMenu.listen((Category category) {
       print("1st $category");
       _selectedCategorySubject.add(category);
     });
 
-    CombineLatestStream.combine2(
+    CombineLatestStream.combine2(operandController, firstSelectedItemMenu,
+        (String input, Category currentCategory) {
+      double toValue;
+      Unit toValueUnit =
+          _getUnit(currentCategory.firstDropdownShortName, currentCategory);
+
+      if (toValueUnit.baseUnit)
+        toValue = toValueUnit.conversion;
+      else {
+        toValue =
+            selectedCategory1.units[0].conversion / toValueUnit.conversion;
+      }
+      double fromValue =
+          _getUnit(currentCategory.secondDropdownShortName, currentCategory)
+              .conversion;
+      print("rest1 $input $toValue $fromValue");
+      return double.parse(expTemp) * (toValue * fromValue);
+    }).listen((result) {
+      print("rest1 $result");
+      _convResultSubject.add(result.toString());
+    });
+
+    var secondSelectedItemMenu = CombineLatestStream.combine2(
         _secondSelectedItemMenuController.stream, selectedCategory,
         (String shortName, Category currentCategory) {
       print(currentCategory.units.toString());
@@ -94,12 +147,36 @@ class ConvBloc {
         category.secondDropdownName = unit.name;
       }
       return category;
-    }).listen((category) {
+    }).share();
+
+    secondSelectedItemMenu.listen((category) {
       print("2st $category");
       _selectedCategorySubject.add(category);
     });
 
-    CombineLatestStream.combine2(convInput, selectedCategory,
+    CombineLatestStream.combine2(operandController, secondSelectedItemMenu,
+        (String input, Category currentCategory) {
+      double toValue;
+      Unit toValueUnit =
+          _getUnit(currentCategory.firstDropdownShortName, currentCategory);
+
+      if (toValueUnit.baseUnit)
+        toValue = toValueUnit.conversion;
+      else {
+        toValue =
+            selectedCategory1.units[0].conversion / toValueUnit.conversion;
+      }
+      double fromValue =
+          _getUnit(currentCategory.secondDropdownShortName, currentCategory)
+              .conversion;
+      print("rest2 $input $toValue $fromValue");
+      return double.parse(expTemp) * (toValue * fromValue);
+    }).listen((result) {
+      print("rest2 $result");
+      _convResultSubject.add(result.toString());
+    });
+
+    CombineLatestStream.combine2(operandController, selectedCategory,
         (String input, Category currentCategory) {
       double toValue =
           _getUnit(currentCategory.firstDropdownShortName, currentCategory)
@@ -107,11 +184,31 @@ class ConvBloc {
       double fromValue =
           _getUnit(currentCategory.secondDropdownShortName, currentCategory)
               .conversion;
-      return double.parse(input) * (toValue / fromValue);
+      return double.parse(expTemp) * (toValue * fromValue);
     }).listen((result) {
       print("rest $result");
       _convResultSubject.add(result.toString());
     });
+  }
+
+  void _clear(String buttonText) {
+    expTemp = "0";
+    _convInputSubject.add(expTemp);
+  }
+
+  void _back(String buttonText) {
+    if (expTemp != "0") {
+      if (expTemp
+          .replaceRange(expTemp.length - 1, expTemp.length, "")
+          .isEmpty) {
+        expTemp = "0";
+      } else {
+        expTemp = expTemp.replaceRange(expTemp.length - 1, expTemp.length, "");
+      }
+    } else {
+      expTemp = "0";
+    }
+    _convInputSubject.add(expTemp);
   }
 
   Future<List<Category>> _retrieveLocalCategories() async {
@@ -142,9 +239,42 @@ class ConvBloc {
     );
   }
 
+  _processButtonText({String buttonText}) {
+    switch (CalculatorDataProvider.getButtonData(buttonText).textType) {
+      case TextType.CLEAR:
+        clear.add(buttonText);
+        break;
+      case TextType.BACK:
+        back.add(buttonText);
+        break;
+      case TextType.UP:
+        up.add(buttonText);
+        break;
+      case TextType.DOWN:
+        down.add(buttonText);
+        break;
+      case TextType.OPERAND:
+        operand.add(buttonText);
+        break;
+      case TextType.OPERATOR:
+        break;
+      case TextType.EQUAL:
+        break;
+      case TextType.BRACKET:
+        break;
+      case TextType.PERIOD:
+        break;
+    }
+  }
+
   dispose() {
     _convInputController.close();
     _convInputSubject.close();
+    _operandController.close();
+    _clearController.close();
+    _upController.close();
+    _downController.close();
+    _backController.close();
     _convResultSubject.close();
     _categoryListSubject.close();
     _firstSelectedItemMenuController.close();

@@ -229,6 +229,10 @@ class CalcBloc {
       case TextType.PERIOD:
         period.add(buttonText);
         break;
+      case TextType.UP:
+        break;
+      case TextType.DOWN:
+        break;
     }
   }
 

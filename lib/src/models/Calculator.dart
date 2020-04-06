@@ -15,6 +15,16 @@ class Calculator {
   }
 }
 
-enum TextType { OPERATOR, OPERAND, BACK, EQUAL, CLEAR, BRACKET, PERIOD }
+enum TextType {
+  OPERATOR,
+  OPERAND,
+  BACK,
+  EQUAL,
+  CLEAR,
+  BRACKET,
+  PERIOD,
+  UP,
+  DOWN
+}
 enum ResourceType { TEXT, IMAGE_SVG, MULTIPLY, BACK_SPACE }
-enum ShapeType { ROUND,DARK_ROUND, NAN }
+enum ShapeType { ROUND, DARK_ROUND, NAN }
