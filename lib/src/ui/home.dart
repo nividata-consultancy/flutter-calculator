@@ -53,6 +53,7 @@ class _HomeWidget extends State<HomeWidget> {
     calcBloc = CalcBloc();
     convBloc = ConvBloc();
     uiHandlerBloc = UiHandlerBloc();
+    print("${SizeConfig.pixelRatio}");
     super.initState();
   }
 
@@ -144,7 +145,7 @@ class _HomeWidget extends State<HomeWidget> {
                     Visibility(
                       visible: snapshot.data,
                       child: Expanded(
-                        flex: 14,
+                        flex: (SizeConfig.heightWidthFactor * 14).toInt(),
                         child: Row(
                           children: <Widget>[
                             ButtonViewCalc(
@@ -180,7 +181,7 @@ class _HomeWidget extends State<HomeWidget> {
                       ),
                     ),
                     Expanded(
-                      flex: 56,
+                      flex: (SizeConfig.heightWidthFactor * 56).toInt(),
                       child: Column(
                         children: <Widget>[
                           Expanded(
