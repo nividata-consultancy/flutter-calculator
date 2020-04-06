@@ -155,10 +155,13 @@ class ConvBloc {
       }
     }).listen((result) {
       print("rest1 $result");
-      if (isUp)
+      if (isUp) {
+        resultText = result.toString();
         _convResultSubject.add(result.toString());
-      else
+      } else {
+        inputText = result.toString();
         _convInputSubject.add(result.toString());
+      }
     });
 
     var secondSelectedItemMenu = CombineLatestStream.combine2(
@@ -217,10 +220,13 @@ class ConvBloc {
       }
     }).listen((result) {
       print("rest2 $result");
-      if (isUp)
+      if (isUp) {
+        resultText = result.toString();
         _convResultSubject.add(result.toString());
-      else
+      } else {
+        inputText = result.toString();
         _convInputSubject.add(result.toString());
+      }
     });
 
     CombineLatestStream.combine2(operandController, selectedCategory,
@@ -237,32 +243,63 @@ class ConvBloc {
       else
         return double.parse(resultText) * toValue / (fromValue);
     }).listen((result) {
-      if (isUp)
+      if (isUp) {
+        resultText = result.toString();
         _convResultSubject.add(result.toString());
-      else
+      } else {
+        inputText = result.toString();
         _convInputSubject.add(result.toString());
+      }
     });
   }
 
   void _clear(String buttonText) {
     inputText = "0";
-    _convInputSubject.add(inputText);
+    resultText = "0";
+    operand.add("0");
   }
 
   void _back(String buttonText) {
-    if (inputText != "0") {
-      if (inputText
-          .replaceRange(inputText.length - 1, inputText.length, "")
-          .isEmpty) {
-        inputText = "0";
+    if (isUp) {
+      if (inputText != "0") {
+        if (inputText
+            .replaceRange(inputText.length - 1, inputText.length, "")
+            .isEmpty) {
+          inputText = "0";
+        } else {
+          inputText = inputText.replaceRange(
+              inputText.length - 1, inputText.length, "");
+        }
       } else {
-        inputText =
-            inputText.replaceRange(inputText.length - 1, inputText.length, "");
+        inputText = "0";
       }
     } else {
-      inputText = "0";
+      if (resultText != "0") {
+        if (resultText
+            .replaceRange(resultText.length - 1, resultText.length, "")
+            .isEmpty) {
+          resultText = "0";
+        } else {
+          resultText = resultText.replaceRange(
+              resultText.length - 1, resultText.length, "");
+        }
+      } else {
+        resultText = "0";
+      }
     }
-    _convInputSubject.add(inputText);
+    if (isUp) {
+      if (inputText == "0") {
+        operand.add("0");
+      } else {
+        operand.add("");
+      }
+    } else {
+      if (resultText == "0") {
+        operand.add("0");
+      } else {
+        operand.add("");
+      }
+    }
   }
 
   Future<List<Category>> _retrieveLocalCategories() async {
