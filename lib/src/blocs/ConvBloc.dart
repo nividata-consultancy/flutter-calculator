@@ -155,7 +155,7 @@ class ConvBloc {
         _convResultSubject.add(resultText.toString());
       } else {
         inputText = _format(result);
-        _convInputSubject.add(resultText.toString());
+        _convInputSubject.add(inputText.toString());
       }
     });
 
@@ -216,7 +216,7 @@ class ConvBloc {
         _convResultSubject.add(resultText.toString());
       } else {
         inputText = _format(result);
-        _convInputSubject.add(resultText.toString());
+        _convInputSubject.add(inputText.toString());
       }
     });
 
@@ -233,12 +233,14 @@ class ConvBloc {
       else
         return double.parse(resultText) * toValue / (fromValue);
     }).listen((result) {
+      print(result);
+
       if (isUp) {
         resultText = _format(result);
         _convResultSubject.add(resultText.toString());
       } else {
         inputText = _format(result);
-        _convInputSubject.add(resultText.toString());
+        _convInputSubject.add(inputText.toString());
       }
     });
   }
@@ -322,20 +324,16 @@ class ConvBloc {
 
   String _format(double conversion) {
     var outputNum = conversion.toStringAsPrecision(7);
-
     if (outputNum.contains('.') && outputNum.endsWith('0')) {
       var i = outputNum.length - 1;
-
       while (outputNum[i] == '0') {
         i -= 1;
       }
       outputNum = outputNum.substring(0, i + 1);
     }
-
     if (outputNum.endsWith('.')) {
       return outputNum.substring(0, outputNum.length - 1);
     }
-
     return outputNum;
   }
 
