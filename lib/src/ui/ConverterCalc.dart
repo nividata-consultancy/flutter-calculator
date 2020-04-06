@@ -1,4 +1,5 @@
 import 'package:calculator/src/blocs/ConvBloc.dart';
+import 'package:calculator/src/models/ConvData.dart';
 import 'package:calculator/src/utility/SizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,12 +96,15 @@ class _ConverterCalcState extends State<ConverterCalc> {
                         }),
                     Container(
                       alignment: Alignment.topLeft,
-                      child: StreamBuilder<String>(
-                          initialData: "0",
+                      child: StreamBuilder<ConvData>(
+                          initialData: ConvData("0", true),
                           stream: widget.convBloc.getConvInput,
                           builder: (context, snapshot) {
-                            return Text(snapshot.data,
+                            return Text(snapshot.data.value,
                                 style: TextStyle(
+                                    color: snapshot.data.isUp
+                                        ? Colors.white
+                                        : Colors.grey,
                                     fontSize: SizeConfig.pixelRatio * 10));
                           }),
                     )
@@ -170,12 +174,15 @@ class _ConverterCalcState extends State<ConverterCalc> {
                         }),
                     Container(
                       alignment: Alignment.topLeft,
-                      child: StreamBuilder<String>(
-                          initialData: "0",
+                      child: StreamBuilder<ConvData>(
+                          initialData: ConvData("0", true),
                           stream: widget.convBloc.getConvResult,
                           builder: (context, snapshot) {
-                            return Text(snapshot.data,
+                            return Text(snapshot.data.value,
                                 style: TextStyle(
+                                    color: snapshot.data.isUp
+                                        ? Colors.grey
+                                        : Colors.white,
                                     fontSize: SizeConfig.pixelRatio * 10));
                           }),
                     )
