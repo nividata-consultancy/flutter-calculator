@@ -39,7 +39,6 @@ class ButtonViewNew extends StatelessWidget {
               splashColor: Theme.of(context).primaryColor,
               customBorder: CircleBorder(),
               onTap: () {
-                print("ok1234 $isCalcSelected");
                 if (isCalcSelected)
                   calcBloc.buttonText.add(text);
                 else

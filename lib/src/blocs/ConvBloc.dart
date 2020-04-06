@@ -9,7 +9,9 @@ import 'package:flutter/services.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ConvBloc {
-  String expTemp = "0";
+  String inputText = "0";
+  String resultText = "0";
+  bool isUp = true;
   List<Category> categoryList;
   Category selectedCategory1;
 
@@ -18,8 +20,6 @@ class ConvBloc {
 
   final _operandController = StreamController<String>();
   final _clearController = StreamController<String>();
-  final _upController = StreamController<String>();
-  final _downController = StreamController<String>();
   final _backController = StreamController<String>();
 
   final _convResultSubject = BehaviorSubject<String>();
@@ -40,10 +40,6 @@ class ConvBloc {
   Sink<String> get operand => _operandController.sink;
 
   Sink<String> get clear => _clearController.sink;
-
-  Sink<String> get up => _upController.sink;
-
-  Sink<String> get down => _downController.sink;
 
   Sink<String> get back => _backController.sink;
 
@@ -68,8 +64,15 @@ class ConvBloc {
     var operandController = _operandController.stream.share();
 
     operandController.listen((buttonText) {
-      expTemp = (expTemp == "0") ? buttonText : (expTemp + buttonText);
-      _convInputSubject.add(expTemp);
+      if (isUp) {
+        inputText = (inputText == "0") ? buttonText : (inputText + buttonText);
+        _convInputSubject.add(inputText);
+      } else {
+        resultText =
+            (resultText == "0") ? buttonText : (resultText + buttonText);
+        print(resultText);
+        _convResultSubject.add(resultText);
+      }
     });
 
     _clearController.stream.listen(_clear);
@@ -116,24 +119,46 @@ class ConvBloc {
 
     CombineLatestStream.combine2(operandController, firstSelectedItemMenu,
         (String input, Category currentCategory) {
-      double toValue;
-      Unit toValueUnit =
-          _getUnit(currentCategory.firstDropdownShortName, currentCategory);
+      if (isUp) {
+        double toValue;
+        Unit toValueUnit =
+            _getUnit(currentCategory.firstDropdownShortName, currentCategory);
 
-      if (toValueUnit.baseUnit)
-        toValue = toValueUnit.conversion;
-      else {
-        toValue =
-            selectedCategory1.units[0].conversion / toValueUnit.conversion;
+        if (toValueUnit.baseUnit)
+          toValue = toValueUnit.conversion;
+        else {
+          toValue =
+              selectedCategory1.units[0].conversion / toValueUnit.conversion;
+        }
+        double fromValue =
+            _getUnit(currentCategory.secondDropdownShortName, currentCategory)
+                .conversion;
+        print("rest2 $input $toValue $fromValue");
+
+        return double.parse(inputText) * (toValue * fromValue);
+      } else {
+        double fromValue;
+        Unit fromValueUnit =
+            _getUnit(currentCategory.secondDropdownShortName, currentCategory);
+
+        if (fromValueUnit.baseUnit)
+          fromValue = fromValueUnit.conversion;
+        else {
+          fromValue =
+              selectedCategory1.units[0].conversion / fromValueUnit.conversion;
+        }
+        double toValue =
+            _getUnit(currentCategory.firstDropdownShortName, currentCategory)
+                .conversion;
+        print("rest2 $input $toValue $fromValue");
+        return double.parse(resultText) * (toValue * fromValue);
       }
-      double fromValue =
-          _getUnit(currentCategory.secondDropdownShortName, currentCategory)
-              .conversion;
-      print("rest1 $input $toValue $fromValue");
-      return double.parse(expTemp) * (toValue * fromValue);
     }).listen((result) {
       print("rest1 $result");
-      _convResultSubject.add(result.toString());
+      if (isUp)
+        _convResultSubject.add(result.toString());
+      else
+        _convInputSubject.add(result.toString());
     });
 
     var secondSelectedItemMenu = CombineLatestStream.combine2(
@@ -156,24 +181,46 @@ class ConvBloc {
 
     CombineLatestStream.combine2(operandController, secondSelectedItemMenu,
         (String input, Category currentCategory) {
-      double toValue;
-      Unit toValueUnit =
-          _getUnit(currentCategory.firstDropdownShortName, currentCategory);
+      if (isUp) {
+        double toValue;
+        Unit toValueUnit =
+            _getUnit(currentCategory.firstDropdownShortName, currentCategory);
 
-      if (toValueUnit.baseUnit)
-        toValue = toValueUnit.conversion;
-      else {
-        toValue =
-            selectedCategory1.units[0].conversion / toValueUnit.conversion;
+        if (toValueUnit.baseUnit)
+          toValue = toValueUnit.conversion;
+        else {
+          toValue =
+              selectedCategory1.units[0].conversion / toValueUnit.conversion;
+        }
+        double fromValue =
+            _getUnit(currentCategory.secondDropdownShortName, currentCategory)
+                .conversion;
+        print("rest2 $input $toValue $fromValue");
+
+        return double.parse(inputText) * (toValue * fromValue);
+      } else {
+        double fromValue;
+        Unit fromValueUnit =
+            _getUnit(currentCategory.secondDropdownShortName, currentCategory);
+
+        if (fromValueUnit.baseUnit)
+          fromValue = fromValueUnit.conversion;
+        else {
+          fromValue =
+              selectedCategory1.units[0].conversion / fromValueUnit.conversion;
+        }
+        double toValue =
+            _getUnit(currentCategory.firstDropdownShortName, currentCategory)
+                .conversion;
+        print("rest2 $input $toValue $fromValue");
+        return double.parse(resultText) * (toValue * fromValue);
       }
-      double fromValue =
-          _getUnit(currentCategory.secondDropdownShortName, currentCategory)
-              .conversion;
-      print("rest2 $input $toValue $fromValue");
-      return double.parse(expTemp) * (toValue * fromValue);
     }).listen((result) {
       print("rest2 $result");
-      _convResultSubject.add(result.toString());
+      if (isUp)
+        _convResultSubject.add(result.toString());
+      else
+        _convInputSubject.add(result.toString());
     });
 
     CombineLatestStream.combine2(operandController, selectedCategory,
@@ -184,31 +231,38 @@ class ConvBloc {
       double fromValue =
           _getUnit(currentCategory.secondDropdownShortName, currentCategory)
               .conversion;
-      return double.parse(expTemp) * (toValue * fromValue);
+      print("rest2 $input $toValue $fromValue");
+      if (isUp)
+        return double.parse(inputText) * (toValue * fromValue);
+      else
+        return double.parse(resultText) * toValue / (fromValue);
     }).listen((result) {
-      print("rest $result");
-      _convResultSubject.add(result.toString());
+      if (isUp)
+        _convResultSubject.add(result.toString());
+      else
+        _convInputSubject.add(result.toString());
     });
   }
 
   void _clear(String buttonText) {
-    expTemp = "0";
-    _convInputSubject.add(expTemp);
+    inputText = "0";
+    _convInputSubject.add(inputText);
   }
 
   void _back(String buttonText) {
-    if (expTemp != "0") {
-      if (expTemp
-          .replaceRange(expTemp.length - 1, expTemp.length, "")
+    if (inputText != "0") {
+      if (inputText
+          .replaceRange(inputText.length - 1, inputText.length, "")
           .isEmpty) {
-        expTemp = "0";
+        inputText = "0";
       } else {
-        expTemp = expTemp.replaceRange(expTemp.length - 1, expTemp.length, "");
+        inputText =
+            inputText.replaceRange(inputText.length - 1, inputText.length, "");
       }
     } else {
-      expTemp = "0";
+      inputText = "0";
     }
-    _convInputSubject.add(expTemp);
+    _convInputSubject.add(inputText);
   }
 
   Future<List<Category>> _retrieveLocalCategories() async {
@@ -248,10 +302,10 @@ class ConvBloc {
         back.add(buttonText);
         break;
       case TextType.UP:
-        up.add(buttonText);
+        isUp = true;
         break;
       case TextType.DOWN:
-        down.add(buttonText);
+        isUp = false;
         break;
       case TextType.OPERAND:
         operand.add(buttonText);
@@ -272,8 +326,6 @@ class ConvBloc {
     _convInputSubject.close();
     _operandController.close();
     _clearController.close();
-    _upController.close();
-    _downController.close();
     _backController.close();
     _convResultSubject.close();
     _categoryListSubject.close();
