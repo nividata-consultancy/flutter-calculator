@@ -110,7 +110,7 @@ Widget getContainerForConverter(Calculator calculator) {
       break;
     case CalculatorDataProvider.OPEN_BRACKET:
       return Container(
-        padding: EdgeInsets.all(SizeConfig.pixelRatio * 10),
+        padding: EdgeInsets.all(SizeConfig.pixelRatio * 8),
         child: SvgPicture.asset(
           calculator.text,
           color: Colors.grey[700],

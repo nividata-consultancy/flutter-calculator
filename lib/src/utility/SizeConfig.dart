@@ -10,7 +10,7 @@ class SizeConfig {
 
   static double pixelRatio;
   static double heightWidthFactor;
-
+  static double textScaleFactor;
 
 
   void init(BuildContext context) {
@@ -21,7 +21,7 @@ class SizeConfig {
     buttonSize = (screenWidth / 4) - 12;
     heightWidthFactor = screenHeight / screenWidth;
     expTextSize = screenHeight - (buttonSize * 5) - (buttonSize);
-
+    textScaleFactor = _mediaQueryData.textScaleFactor;
 
   }
 }

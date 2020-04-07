@@ -81,24 +81,24 @@ class CalculatorDataProvider {
             TextType.OPERATOR, ResourceType.IMAGE_SVG);
         break;
       case MULTIPLY:
-        return Calculator(MULTIPLY, MULTIPLY, ShapeType.ROUND,
-            TextType.OPERATOR, ResourceType.MULTIPLY);
+        return Calculator(MULTIPLY, "assets/multiply.svg", ShapeType.ROUND,
+            TextType.OPERATOR, ResourceType.IMAGE_SVG);
         break;
       case DIVIDE:
         return Calculator(DIVIDE, "assets/divide.svg", ShapeType.ROUND,
             TextType.OPERATOR, ResourceType.IMAGE_SVG);
         break;
       case PERCENTAGE:
-        return Calculator(PERCENTAGE, "assets/percent.svg", ShapeType.ROUND,
+        return Calculator(PERCENTAGE, "assets/percent.svg", ShapeType.NAN,
             TextType.OPERATOR, ResourceType.IMAGE_SVG);
         break;
 
       case CLEAR_ALl:
-        return Calculator(CLEAR_ALl, CLEAR_ALl, ShapeType.DARK_ROUND,
+        return Calculator(CLEAR_ALl, CLEAR_ALl, ShapeType.NAN,
             TextType.CLEAR, ResourceType.TEXT);
         break;
       case BACK:
-        return Calculator(BACK, "assets/backspace.svg", ShapeType.DARK_ROUND,
+        return Calculator(BACK, "assets/backspace.svg", ShapeType.NAN,
             TextType.BACK, ResourceType.BACK_SPACE);
         break;
       case EQUAL:

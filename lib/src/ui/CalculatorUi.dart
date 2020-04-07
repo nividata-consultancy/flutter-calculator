@@ -50,7 +50,7 @@ class _CalculatorUiState extends State<CalculatorUi> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: (SizeConfig.heightWidthFactor * 38).toInt(),
+      flex: (SizeConfig.heightWidthFactor * 38 * 10).toInt(),
       child: Column(
         children: <Widget>[
           Expanded(
@@ -76,7 +76,7 @@ class _CalculatorUiState extends State<CalculatorUi> {
                                   snapshot.data,
                                   textAlign: TextAlign.end,
                                   style: TextStyle(
-                                      fontSize: SizeConfig.pixelRatio * 22,
+                                      fontSize: SizeConfig.heightWidthFactor * 22,
                                       color: Colors.white54),
                                 ),
                               ),
@@ -100,7 +100,7 @@ class _CalculatorUiState extends State<CalculatorUi> {
                                 child: SelectableText(
                                   snapshot.data,
                                   style: TextStyle(
-                                      fontSize: SizeConfig.pixelRatio * 22,
+                                      fontSize: SizeConfig.heightWidthFactor * 30,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w700),
                                   toolbarOptions: ToolbarOptions(

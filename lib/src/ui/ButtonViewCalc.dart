@@ -110,7 +110,7 @@ Widget getContainerForCalc(Calculator calculator) {
       break;
     case ResourceType.IMAGE_SVG:
       return Container(
-        padding: EdgeInsets.all(SizeConfig.pixelRatio * 10),
+        padding: EdgeInsets.all(SizeConfig.pixelRatio * 8),
         child: SvgPicture.asset(calculator.text),
       );
       break;

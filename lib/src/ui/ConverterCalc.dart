@@ -28,12 +28,13 @@ class _ConverterCalcState extends State<ConverterCalc> {
 
   @override
   Widget build(BuildContext context) {
-    print(" upper block ${(SizeConfig.heightWidthFactor * 50).toInt()}");
-    print(" chip choic block ${(SizeConfig.heightWidthFactor * 3).toInt()}");
-    print(" container first ${(SizeConfig.heightWidthFactor * 8).toInt()}");
-    print(" container second  ${(SizeConfig.heightWidthFactor * 8).toInt()}");
+    print(" upper block ${(SizeConfig.heightWidthFactor * 100).toInt()}");
+    print(" chip choic block ${(SizeConfig.heightWidthFactor * 76).toInt()}");
+    print(" chip choic block ${(SizeConfig.heightWidthFactor * 96).toInt()}");
+    print(" chip choic block ${(SizeConfig.heightWidthFactor * 24).toInt()}");
+
     return Expanded(
-      flex: (SizeConfig.heightWidthFactor * 50).toInt(),
+      flex: (SizeConfig.heightWidthFactor * 50 * 10).toInt(),
       child: Column(
         children: <Widget>[
           Expanded(
@@ -49,7 +50,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   color: Color(0xFF484848),
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
                 child: Column(
                   children: <Widget>[
                     StreamBuilder<Category>(
@@ -66,7 +67,8 @@ class _ConverterCalcState extends State<ConverterCalc> {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        fontSize: SizeConfig.heightWidthFactor * 12),
+                                        fontSize:
+                                            SizeConfig.heightWidthFactor * 12),
                                   ),
                                 ),
                               ),
@@ -99,7 +101,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                           );
                         }),
                     Container(
-                      alignment: Alignment.topLeft,
+                      alignment: Alignment.centerLeft,
                       child: StreamBuilder<ConvData>(
                           initialData: ConvData("0", true),
                           stream: widget.convBloc.getConvInput,
@@ -109,7 +111,8 @@ class _ConverterCalcState extends State<ConverterCalc> {
                                     color: snapshot.data.isUp
                                         ? Colors.white
                                         : Colors.grey,
-                                    fontSize: SizeConfig.pixelRatio * 10));
+                                    fontSize:
+                                        SizeConfig.heightWidthFactor * 20));
                           }),
                     )
                   ],
@@ -126,7 +129,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   color: Color(0xFF484848),
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
                 child: Column(
                   children: <Widget>[
                     StreamBuilder<Category>(
@@ -143,7 +146,8 @@ class _ConverterCalcState extends State<ConverterCalc> {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        fontSize: SizeConfig.heightWidthFactor * 12),
+                                        fontSize:
+                                            SizeConfig.heightWidthFactor * 12),
                                   ),
                                 ),
                               ),
@@ -187,7 +191,8 @@ class _ConverterCalcState extends State<ConverterCalc> {
                                     color: snapshot.data.isUp
                                         ? Colors.grey
                                         : Colors.white,
-                                    fontSize: SizeConfig.pixelRatio * 10));
+                                    fontSize:
+                                        SizeConfig.heightWidthFactor * 20));
                           }),
                     )
                   ],
@@ -215,7 +220,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   label: Text(snapshot.data[index].name,
                       style: TextStyle(
                           color: Color(0xFF009C88),
-                          fontSize: SizeConfig.pixelRatio * 6)),
+                          fontSize: SizeConfig.heightWidthFactor * 7)),
                   selected: snapshot.data[index].isChipSelected,
                   onSelected: (bool selected) {
                     widget.convBloc.setSelectedCategory

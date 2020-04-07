@@ -126,8 +126,7 @@ class _HomeWidget extends State<HomeWidget> {
         ),
         elevation: 0,
       ),
-//      backgroundColor: Color(0xff273639),
-      backgroundColor: Colors.red,
+      backgroundColor: Color(0xff273639),
       body: SafeArea(
         top: false,
         bottom: true,
@@ -145,7 +144,7 @@ class _HomeWidget extends State<HomeWidget> {
                     Visibility(
                       visible: snapshot.data,
                       child: Expanded(
-                        flex: (SizeConfig.heightWidthFactor * 12).toInt(),
+                        flex: (SizeConfig.heightWidthFactor * 12 * 10).toInt(),
                         child: Row(
                           children: <Widget>[
                             ButtonViewCalc(
@@ -181,7 +180,7 @@ class _HomeWidget extends State<HomeWidget> {
                       ),
                     ),
                     Expanded(
-                      flex: (SizeConfig.heightWidthFactor * 50).toInt(),
+                      flex: (SizeConfig.heightWidthFactor * 48 * 10).toInt(),
                       child: Column(
                         children: <Widget>[
                           Expanded(
