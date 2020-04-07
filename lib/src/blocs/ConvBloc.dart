@@ -3,8 +3,10 @@ import 'dart:convert';
 
 import 'package:calculator/src/models/Calculator.dart';
 import 'package:calculator/src/models/Category.dart';
+import 'package:calculator/src/models/ConvData.dart';
 import 'package:calculator/src/models/Unit.dart';
 import 'package:calculator/src/resources/CalculatorDataProvider.dart';
+import 'package:calculator/src/utility/Process.dart';
 import 'package:flutter/services.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -16,13 +18,14 @@ class ConvBloc {
   Category selectedCategory1;
 
   final _convInputController = StreamController<String>();
-  final _convInputSubject = BehaviorSubject<String>();
+  final _convInputSubject = BehaviorSubject<ConvData>();
 
   final _operandController = StreamController<String>();
   final _clearController = StreamController<String>();
   final _backController = StreamController<String>();
+  final _periodController = StreamController<String>();
 
-  final _convResultSubject = BehaviorSubject<String>();
+  final _convResultSubject = BehaviorSubject<ConvData>();
 
   final _categoryListSubject = BehaviorSubject<List<Category>>();
 
@@ -35,7 +38,7 @@ class ConvBloc {
 
   Sink<String> get setConvInput => _convInputController.sink;
 
-  Stream<String> get getConvInput => _convInputSubject.stream;
+  Stream<ConvData> get getConvInput => _convInputSubject.stream;
 
   Sink<String> get operand => _operandController.sink;
 
@@ -43,7 +46,9 @@ class ConvBloc {
 
   Sink<String> get back => _backController.sink;
 
-  Stream<String> get getConvResult => _convResultSubject.stream;
+  Sink<String> get period => _periodController.sink;
+
+  Stream<ConvData> get getConvResult => _convResultSubject.stream;
 
   Stream<List<Category>> get getCategoryList => _categoryListSubject.stream;
 
@@ -65,18 +70,31 @@ class ConvBloc {
 
     operandController.listen((buttonText) {
       if (isUp) {
-        inputText = (inputText == "0") ? buttonText : (inputText + buttonText);
-        _convInputSubject.add(inputText);
+        inputText = (inputText == "0")
+            ? (buttonText == "." ? "0." : buttonText)
+            : (inputText + buttonText);
+        _convInputSubject.add(ConvData(inputText, isUp));
       } else {
-        resultText =
-            (resultText == "0") ? buttonText : (resultText + buttonText);
-        _convResultSubject.add(resultText);
+        resultText = (resultText == "0")
+            ? (buttonText == "." ? "0." : buttonText)
+            : (resultText + buttonText);
+        _convResultSubject.add(ConvData(resultText, isUp));
       }
     });
 
     _clearController.stream.listen(_clear);
 
     _backController.stream.listen(_back);
+
+    _periodController.stream
+        .map((_) {
+          if (isUp)
+            return inputText;
+          else
+            return resultText;
+        })
+        .where((buttonText) => !Process.isListDigitContainDot(buttonText))
+        .listen(_period);
 
     Stream.fromFuture(_retrieveLocalCategories()).listen((categoryList) {
       categoryList[0].isChipSelected = true;
@@ -152,10 +170,10 @@ class ConvBloc {
       print("rest1 $result");
       if (isUp) {
         resultText = _format(result);
-        _convResultSubject.add(resultText.toString());
+        _convResultSubject.add(ConvData(resultText, isUp));
       } else {
         inputText = _format(result);
-        _convInputSubject.add(inputText.toString());
+        _convInputSubject.add(ConvData(inputText, isUp));
       }
     });
 
@@ -213,10 +231,10 @@ class ConvBloc {
       print("rest2 $result");
       if (isUp) {
         resultText = _format(result);
-        _convResultSubject.add(resultText.toString());
+        _convResultSubject.add(ConvData(resultText, isUp));
       } else {
         inputText = _format(result);
-        _convInputSubject.add(inputText.toString());
+        _convInputSubject.add(ConvData(inputText, isUp));
       }
     });
 
@@ -237,10 +255,10 @@ class ConvBloc {
 
       if (isUp) {
         resultText = _format(result);
-        _convResultSubject.add(resultText.toString());
+        _convResultSubject.add(ConvData(resultText, isUp));
       } else {
         inputText = _format(result);
-        _convInputSubject.add(inputText.toString());
+        _convInputSubject.add(ConvData(inputText, isUp));
       }
     });
   }
@@ -292,6 +310,10 @@ class ConvBloc {
         operand.add("");
       }
     }
+  }
+
+  void _period(String buttonText) {
+    operand.add(".");
   }
 
   Future<List<Category>> _retrieveLocalCategories() async {
@@ -347,9 +369,19 @@ class ConvBloc {
         break;
       case TextType.UP:
         isUp = true;
+        if (inputText == "0") {
+          operand.add("0");
+        } else {
+          operand.add("");
+        }
         break;
       case TextType.DOWN:
         isUp = false;
+        if (resultText == "0") {
+          operand.add("0");
+        } else {
+          operand.add("");
+        }
         break;
       case TextType.OPERAND:
         operand.add(buttonText);
@@ -361,6 +393,7 @@ class ConvBloc {
       case TextType.BRACKET:
         break;
       case TextType.PERIOD:
+        period.add(buttonText);
         break;
     }
   }
@@ -371,6 +404,7 @@ class ConvBloc {
     _operandController.close();
     _clearController.close();
     _backController.close();
+    _periodController.close();
     _convResultSubject.close();
     _categoryListSubject.close();
     _firstSelectedItemMenuController.close();

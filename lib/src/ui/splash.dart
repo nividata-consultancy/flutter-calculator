@@ -22,7 +22,7 @@ class _SplashState extends State<Splash> {
     });
 
     return Material(
-      color: Color(0xFFEFEFEF),
+      color: Color(0xff273639),
       child: SafeArea(
         top: false,
         bottom: true,
@@ -43,7 +43,9 @@ class _SplashState extends State<Splash> {
                   SizedBox(width: 10, height: 20),
                   Text("Calculator",
                       style: TextStyle(
-                          fontSize: 30.0, fontFamily: "Montserrat"))
+                          fontSize: 30.0,
+                          color: Color(0xff009e8c),
+                          fontFamily: "Montserrat"))
                 ],
               ),
             ),
@@ -51,19 +53,22 @@ class _SplashState extends State<Splash> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    CircleAvatar(
-                        radius: 20.0,
-                        backgroundImage: AssetImage("assets/icon.png")),
-                    Text("  NiviData\n  Consultancy",
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Colors.black54,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w700)),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircleAvatar(
+                          radius: 20.0,
+                          backgroundImage: AssetImage("assets/icon.png")),
+                      Text("  NiviData\n  Consultancy",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Colors.white70,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w700)),
+                    ],
+                  ),
                 ),
               ],
             )

@@ -16,18 +16,39 @@ class CalculatorUi extends StatefulWidget {
 }
 
 class _CalculatorUiState extends State<CalculatorUi> {
-  ScrollController _controller = ScrollController();
+  ScrollController _controller1;
+  ScrollController _controller2;
 
   @override
   void initState() {
+    _controller1 = ScrollController();
+    _controller2 = ScrollController();
+    WidgetsBinding.instance.addPostFrameCallback(scroll);
     widget.calcBloc.clear.add(CalculatorDataProvider.CLEAR_ALl);
     super.initState();
   }
 
+  void scroll(_) async {
+    while (_controller1.hasClients) {
+      await Future.delayed(Duration(milliseconds: 200));
+      if (_controller1.hasClients)
+        await _controller1.animateTo(_controller1.position.maxScrollExtent,
+            duration: Duration(milliseconds: 10), curve: Curves.ease);
+      if (_controller2.hasClients)
+        await _controller2.animateTo(_controller2.position.maxScrollExtent,
+            duration: Duration(milliseconds: 10), curve: Curves.ease);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller1.dispose();
+    _controller2.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(milliseconds: 200),
-        () => _controller.jumpTo(_controller.position.maxScrollExtent));
     return Expanded(
       flex: (SizeConfig.heightWidthFactor * 38).toInt(),
       child: Column(
@@ -49,7 +70,7 @@ class _CalculatorUiState extends State<CalculatorUi> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: SingleChildScrollView(
-                                controller: _controller,
+                                controller: _controller1,
                                 scrollDirection: Axis.horizontal,
                                 child: Text(
                                   snapshot.data,
@@ -74,7 +95,7 @@ class _CalculatorUiState extends State<CalculatorUi> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: SingleChildScrollView(
-                                controller: _controller,
+                                controller: _controller2,
                                 scrollDirection: Axis.horizontal,
                                 child: SelectableText(
                                   snapshot.data,

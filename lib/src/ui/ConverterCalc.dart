@@ -1,4 +1,5 @@
 import 'package:calculator/src/blocs/ConvBloc.dart';
+import 'package:calculator/src/models/ConvData.dart';
 import 'package:calculator/src/utility/SizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   color: Color(0xFF484848),
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 5, 0, 5),
+                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Column(
                   children: <Widget>[
                     StreamBuilder<Category>(
@@ -62,6 +63,8 @@ class _ConverterCalcState extends State<ConverterCalc> {
                                 child: Container(
                                   child: Text(
                                     snapshot.data.firstDropdownName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: SizeConfig.heightWidthFactor * 12),
                                   ),
@@ -97,12 +100,15 @@ class _ConverterCalcState extends State<ConverterCalc> {
                         }),
                     Container(
                       alignment: Alignment.topLeft,
-                      child: StreamBuilder<String>(
-                          initialData: "0",
+                      child: StreamBuilder<ConvData>(
+                          initialData: ConvData("0", true),
                           stream: widget.convBloc.getConvInput,
                           builder: (context, snapshot) {
-                            return Text(snapshot.data,
+                            return Text(snapshot.data.value,
                                 style: TextStyle(
+                                    color: snapshot.data.isUp
+                                        ? Colors.white
+                                        : Colors.grey,
                                     fontSize: SizeConfig.pixelRatio * 10));
                           }),
                     )
@@ -120,7 +126,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                   color: Color(0xFF484848),
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 5, 0, 5),
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Column(
                   children: <Widget>[
                     StreamBuilder<Category>(
@@ -134,6 +140,8 @@ class _ConverterCalcState extends State<ConverterCalc> {
                                 child: Container(
                                   child: Text(
                                     snapshot.data.secondDropdownName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: SizeConfig.heightWidthFactor * 12),
                                   ),
@@ -170,12 +178,15 @@ class _ConverterCalcState extends State<ConverterCalc> {
                         }),
                     Container(
                       alignment: Alignment.topLeft,
-                      child: StreamBuilder<String>(
-                          initialData: "0",
+                      child: StreamBuilder<ConvData>(
+                          initialData: ConvData("0", true),
                           stream: widget.convBloc.getConvResult,
                           builder: (context, snapshot) {
-                            return Text(snapshot.data,
+                            return Text(snapshot.data.value,
                                 style: TextStyle(
+                                    color: snapshot.data.isUp
+                                        ? Colors.grey
+                                        : Colors.white,
                                     fontSize: SizeConfig.pixelRatio * 10));
                           }),
                     )
