@@ -53,19 +53,22 @@ class _SplashState extends State<Splash> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    CircleAvatar(
-                        radius: 20.0,
-                        backgroundImage: AssetImage("assets/icon.png")),
-                    Text("  NiviData\n  Consultancy",
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Colors.white70,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w700)),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircleAvatar(
+                          radius: 20.0,
+                          backgroundImage: AssetImage("assets/icon.png")),
+                      Text("  NiviData\n  Consultancy",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Colors.white70,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w700)),
+                    ],
+                  ),
                 ),
               ],
             )
