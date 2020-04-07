@@ -49,38 +49,38 @@
   ],
   "Area": [
     {
-      "name": "Square meter",
+      "name": "meter²",
       "conversion": 1.0,
       "base_unit": true,
       "short_name": "m²"
     },
     {
-      "name": "Square kilometer",
+      "name": "kilometer²",
       "conversion": 0.000001,
       "short_name": "km²"
     },
     {
-      "name": "Square mile",
+      "name": "mile²",
       "conversion": 2589988.11,
       "short_name": "mile²"
     },
     {
-      "name": "Square inch",
+      "name": "inch²",
       "conversion": 1550.0,
       "short_name": "in²"
     },
     {
-      "name": "Square Centimeter",
+      "name": "Centimeter²",
       "conversion": 0.0001,
       "short_name": "cm²"
     },
     {
-      "name": "Square foot",
+      "name": "foot²",
       "conversion": 10.7639,
       "short_name": "ft²"
     },
     {
-      "name": "Square yard",
+      "name": "yard²",
       "conversion": 1.19599,
       "short_name": "yd²"
     },
@@ -97,13 +97,13 @@
   ],
   "Volume": [
     {
-      "name": "Cubic meter",
+      "name": "meter³",
       "conversion": 1.0,
       "base_unit": true,
       "short_name": "m³"
     },
     {
-      "name": "Cubic decimeter",
+      "name": "decimeter³",
       "conversion": 1000.0,
       "short_name": "dm³"
     },

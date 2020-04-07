@@ -28,19 +28,23 @@ class _ConverterCalcState extends State<ConverterCalc> {
 
   @override
   Widget build(BuildContext context) {
+    print(" upper block ${(SizeConfig.heightWidthFactor * 50).toInt()}");
+    print(" chip choic block ${(SizeConfig.heightWidthFactor * 3).toInt()}");
+    print(" container first ${(SizeConfig.heightWidthFactor * 8).toInt()}");
+    print(" container second  ${(SizeConfig.heightWidthFactor * 8).toInt()}");
     return Expanded(
-      flex: (SizeConfig.heightWidthFactor * 44).toInt(),
+      flex: (SizeConfig.heightWidthFactor * 50).toInt(),
       child: Column(
         children: <Widget>[
           Expanded(
-            flex: (SizeConfig.heightWidthFactor * 4).toInt(),
+            flex: (SizeConfig.heightWidthFactor * 3).toInt(),
             child: choiceChipWidget(),
           ),
           Expanded(
             flex: (SizeConfig.heightWidthFactor * 8).toInt(),
             child: Container(
               constraints: BoxConstraints.expand(),
-              margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              margin: EdgeInsets.fromLTRB(15, 5, 15, 10),
               decoration: BoxDecoration(
                   color: Color(0xFF484848),
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
@@ -62,7 +66,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        fontSize: SizeConfig.pixelRatio * 12),
+                                        fontSize: SizeConfig.heightWidthFactor * 12),
                                   ),
                                 ),
                               ),
@@ -118,7 +122,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
             flex: (SizeConfig.heightWidthFactor * 8).toInt(),
             child: Container(
               constraints: BoxConstraints.expand(),
-              margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
               decoration: BoxDecoration(
                   color: Color(0xFF484848),
                   borderRadius: BorderRadius.all(Radius.circular(20.0))),
@@ -140,7 +144,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        fontSize: SizeConfig.pixelRatio * 12),
+                                        fontSize: SizeConfig.heightWidthFactor * 12),
                                   ),
                                 ),
                               ),

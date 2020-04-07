@@ -50,7 +50,7 @@ class _CalculatorUiState extends State<CalculatorUi> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: (SizeConfig.heightWidthFactor * 30).toInt(),
+      flex: (SizeConfig.heightWidthFactor * 38).toInt(),
       child: Column(
         children: <Widget>[
           Expanded(
