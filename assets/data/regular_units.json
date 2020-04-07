@@ -359,5 +359,66 @@
       "conversion": 0.0000000094804,
       "short_name": "Us T"
     }
+  ],
+  "Pressure": [
+    {
+      "name": "Atmosphere",
+      "conversion": 1.0,
+      "base_unit": true,
+      "short_name": "atm"
+    },
+    {
+      "name": "Bar",
+      "conversion": 1.01325,
+      "short_name": "bar"
+    },
+    {
+      "name": "Millibar",
+      "conversion": 1013.25,
+      "short_name": "mbar"
+    },
+    {
+      "name": "Pascal",
+      "conversion": 101325,
+      "short_name": "Pa"
+    },
+    {
+      "name": "HectoPascal",
+      "conversion": 1013.25,
+      "short_name": "hPa"
+    },
+    {
+      "name": "Pounds/inch²",
+      "conversion": 14.6959,
+      "short_name": "Psi"
+    },
+    {
+      "name": "Torr",
+      "conversion": 760,
+      "short_name": "Torr"
+    }
+  ],
+  "Frequency": [
+    {
+      "name": "Hertz",
+      "conversion": 1.0,
+      "base_unit": true,
+      "short_name": "Hz"
+    },
+    {
+      "name": "KiloHertz",
+      "conversion": 0.001,
+      "short_name": "KHz"
+    },
+    {
+      "name": "MegaHertz",
+      "conversion": 0.000001,
+      "short_name": "MHz"
+    },
+    {
+      "name": "GigaHertz",
+      "conversion": 0.000000001,
+      "short_name": "GHz"
+    }
   ]
 }
