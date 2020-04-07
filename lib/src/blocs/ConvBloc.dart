@@ -69,12 +69,12 @@ class ConvBloc {
     var operandController = _operandController.stream.share();
 
     operandController.listen((buttonText) {
-      if (isUp && inputText.length < 15) {
+      if (isUp && inputText.length < 12) {
         inputText = (inputText == "0")
             ? (buttonText == "." ? "0." : buttonText)
             : (inputText + buttonText);
         _convInputSubject.add(ConvData(inputText, isUp));
-      } else if (!isUp && resultText.length < 15) {
+      } else if (!isUp && resultText.length < 12) {
         resultText = (resultText == "0")
             ? (buttonText == "." ? "0." : buttonText)
             : (resultText + buttonText);
