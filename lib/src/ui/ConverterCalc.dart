@@ -101,6 +101,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                           stream: widget.convBloc.getConvInput,
                           builder: (context, snapshot) {
                             return Text(snapshot.data.value,
+                                maxLines: 1,
                                 style: TextStyle(
                                     color: snapshot.data.isUp
                                         ? Colors.white
@@ -179,6 +180,7 @@ class _ConverterCalcState extends State<ConverterCalc> {
                           stream: widget.convBloc.getConvResult,
                           builder: (context, snapshot) {
                             return Text(snapshot.data.value,
+                                maxLines: 1,
                                 style: TextStyle(
                                     color: snapshot.data.isUp
                                         ? Colors.grey
