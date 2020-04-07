@@ -86,7 +86,7 @@ class _HomeWidget extends State<HomeWidget> {
                           "Calculator",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: 18,
+                              fontSize: 16,
                               color: snapshot.data
                                   ? Color(0xff009e8c)
                                   : Colors.white54),
@@ -114,7 +114,7 @@ class _HomeWidget extends State<HomeWidget> {
                           "Conventer",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: 18,
+                              fontSize: 16,
                               color: !snapshot.data
                                   ? Color(0xff009e8c)
                                   : Colors.white54),
@@ -127,7 +127,8 @@ class _HomeWidget extends State<HomeWidget> {
         ),
         elevation: 0,
       ),
-      backgroundColor: Color(0xff273639),
+//      backgroundColor: Color(0xff273639),
+      backgroundColor: Colors.red,
       body: SafeArea(
         top: false,
         bottom: true,
@@ -145,7 +146,7 @@ class _HomeWidget extends State<HomeWidget> {
                     Visibility(
                       visible: snapshot.data,
                       child: Expanded(
-                        flex: (SizeConfig.heightWidthFactor * 14).toInt(),
+                        flex: (SizeConfig.heightWidthFactor * 12).toInt(),
                         child: Row(
                           children: <Widget>[
                             ButtonViewCalc(
@@ -181,7 +182,7 @@ class _HomeWidget extends State<HomeWidget> {
                       ),
                     ),
                     Expanded(
-                      flex: (SizeConfig.heightWidthFactor * 56).toInt(),
+                      flex: (SizeConfig.heightWidthFactor * 50).toInt(),
                       child: Column(
                         children: <Widget>[
                           Expanded(
@@ -211,19 +212,19 @@ class _HomeWidget extends State<HomeWidget> {
                                 ),
                                 snapshot.data
                                     ? ButtonViewCalc(
-                                        text: CalculatorDataProvider.MULTIPLY,
-                                        calcBloc: calcBloc,
-                                        convBloc: convBloc,
-                                        uiHandlerBloc: uiHandlerBloc,
-                                        isCalcSelected: snapshot.data,
-                                      )
+                                  text: CalculatorDataProvider.MULTIPLY,
+                                  calcBloc: calcBloc,
+                                  convBloc: convBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
+                                )
                                     : ButtonViewNew(
-                                        text: CalculatorDataProvider.BACK_CONV,
-                                        calcBloc: calcBloc,
-                                        convBloc: convBloc,
-                                        uiHandlerBloc: uiHandlerBloc,
-                                        isCalcSelected: snapshot.data,
-                                      ),
+                                  text: CalculatorDataProvider.BACK_CONV,
+                                  calcBloc: calcBloc,
+                                  convBloc: convBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
+                                ),
                               ],
                             ),
                           ),
@@ -254,19 +255,19 @@ class _HomeWidget extends State<HomeWidget> {
                                 ),
                                 snapshot.data
                                     ? ButtonViewCalc(
-                                        text: CalculatorDataProvider.SUBTRACT,
-                                        calcBloc: calcBloc,
-                                        convBloc: convBloc,
-                                        uiHandlerBloc: uiHandlerBloc,
-                                        isCalcSelected: snapshot.data,
-                                      )
+                                  text: CalculatorDataProvider.SUBTRACT,
+                                  calcBloc: calcBloc,
+                                  convBloc: convBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
+                                )
                                     : ButtonViewNew(
-                                        text: CalculatorDataProvider.CLEAR,
-                                        calcBloc: calcBloc,
-                                        convBloc: convBloc,
-                                        uiHandlerBloc: uiHandlerBloc,
-                                        isCalcSelected: snapshot.data,
-                                      ),
+                                  text: CalculatorDataProvider.CLEAR,
+                                  calcBloc: calcBloc,
+                                  convBloc: convBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
+                                ),
                               ],
                             ),
                           ),
@@ -297,19 +298,19 @@ class _HomeWidget extends State<HomeWidget> {
                                 ),
                                 snapshot.data
                                     ? ButtonViewCalc(
-                                        text: CalculatorDataProvider.ADD,
-                                        calcBloc: calcBloc,
-                                        convBloc: convBloc,
-                                        uiHandlerBloc: uiHandlerBloc,
-                                        isCalcSelected: snapshot.data,
-                                      )
+                                  text: CalculatorDataProvider.ADD,
+                                  calcBloc: calcBloc,
+                                  convBloc: convBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
+                                )
                                     : ButtonViewNew(
-                                        text: CalculatorDataProvider.UP,
-                                        calcBloc: calcBloc,
-                                        convBloc: convBloc,
-                                        uiHandlerBloc: uiHandlerBloc,
-                                        isCalcSelected: snapshot.data,
-                                      ),
+                                  text: CalculatorDataProvider.UP,
+                                  calcBloc: calcBloc,
+                                  convBloc: convBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
+                                ),
                               ],
                             ),
                           ),
@@ -319,21 +320,21 @@ class _HomeWidget extends State<HomeWidget> {
                               children: <Widget>[
                                 snapshot.data
                                     ? ButtonViewCalc(
-                                        text:
-                                            CalculatorDataProvider.OPEN_BRACKET,
-                                        calcBloc: calcBloc,
-                                        convBloc: convBloc,
-                                        uiHandlerBloc: uiHandlerBloc,
-                                        isCalcSelected: snapshot.data,
-                                      )
+                                  text:
+                                  CalculatorDataProvider.OPEN_BRACKET,
+                                  calcBloc: calcBloc,
+                                  convBloc: convBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
+                                )
                                     : ButtonViewNew(
-                                        text:
-                                            CalculatorDataProvider.OPEN_BRACKET,
-                                        calcBloc: calcBloc,
-                                        convBloc: convBloc,
-                                        uiHandlerBloc: uiHandlerBloc,
-                                        isCalcSelected: snapshot.data,
-                                      ),
+                                  text:
+                                  CalculatorDataProvider.OPEN_BRACKET,
+                                  calcBloc: calcBloc,
+                                  convBloc: convBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
+                                ),
                                 ButtonViewCalc(
                                   text: CalculatorDataProvider.ZERO,
                                   calcBloc: calcBloc,
@@ -350,19 +351,19 @@ class _HomeWidget extends State<HomeWidget> {
                                 ),
                                 snapshot.data
                                     ? ButtonViewCalc(
-                                        text: CalculatorDataProvider.EQUAL,
-                                        calcBloc: calcBloc,
-                                        convBloc: convBloc,
-                                        uiHandlerBloc: uiHandlerBloc,
-                                        isCalcSelected: snapshot.data,
-                                      )
+                                  text: CalculatorDataProvider.EQUAL,
+                                  calcBloc: calcBloc,
+                                  convBloc: convBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
+                                )
                                     : ButtonViewNew(
-                                        text: CalculatorDataProvider.DOWN,
-                                        calcBloc: calcBloc,
-                                        convBloc: convBloc,
-                                        uiHandlerBloc: uiHandlerBloc,
-                                        isCalcSelected: snapshot.data,
-                                      ),
+                                  text: CalculatorDataProvider.DOWN,
+                                  calcBloc: calcBloc,
+                                  convBloc: convBloc,
+                                  uiHandlerBloc: uiHandlerBloc,
+                                  isCalcSelected: snapshot.data,
+                                ),
                               ],
                             ),
                           )

@@ -29,7 +29,7 @@ class _CalculatorUiState extends State<CalculatorUi> {
     Timer(Duration(milliseconds: 200),
         () => _controller.jumpTo(_controller.position.maxScrollExtent));
     return Expanded(
-      flex: (SizeConfig.heightWidthFactor * 30).toInt(),
+      flex: (SizeConfig.heightWidthFactor * 38).toInt(),
       child: Column(
         children: <Widget>[
           Expanded(
