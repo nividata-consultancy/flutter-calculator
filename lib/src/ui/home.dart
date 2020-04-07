@@ -53,7 +53,6 @@ class _HomeWidget extends State<HomeWidget> {
     calcBloc = CalcBloc();
     convBloc = ConvBloc();
     uiHandlerBloc = UiHandlerBloc();
-    print("${SizeConfig.pixelRatio}");
     super.initState();
   }
 
