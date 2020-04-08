@@ -116,7 +116,7 @@ class _HomeWidget extends State<HomeWidget> {
                             uiHandlerBloc.calcChipSelect.add(false);
                         },
                         label: Text(
-                          "Conventer",
+                          "Converter",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
