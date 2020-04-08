@@ -24,12 +24,18 @@ class _Home extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-          primaryColor: Color(0xff273639),
-          accentColor: Color(0xff009e8c),
-          brightness: Brightness.dark,
-          fontFamily: 'Montserrat'),
-      home: HomeWidget(),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+        primaryColor: Color(0xff273639),
+    accentColor: Color(0xff009e8c),
+    brightness: Brightness.dark,
+    fontFamily: 'Montserrat'),
+    home
+    :
+    HomeWidget
+    (
+    )
+    ,
     );
   }
 }
@@ -126,7 +132,9 @@ class _HomeWidget extends State<HomeWidget> {
         ),
         elevation: 0,
       ),
-      backgroundColor: Color(0xff273639),
+      backgroundColor: Theme
+          .of(context)
+          .primaryColor,
       body: SafeArea(
         top: false,
         bottom: true,
