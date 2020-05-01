@@ -66,6 +66,22 @@ class ConvBloc {
     _convInputController.stream
         .listen((buttonText) => _processButtonText(buttonText: buttonText));
 
+    var operandController = _operandController.stream.share();
+
+    operandController.listen((buttonText) {
+      if (isUp && inputText.length < 12) {
+        inputText = (inputText == "0")
+            ? (buttonText == "." ? "0." : buttonText)
+            : (inputText + buttonText);
+        _convInputSubject.add(ConvData(inputText, isUp));
+      } else if (!isUp && resultText.length < 12) {
+        resultText = (resultText == "0")
+            ? (buttonText == "." ? "0." : buttonText)
+            : (resultText + buttonText);
+        _convResultSubject.add(ConvData(resultText, isUp));
+      }
+    });
+
     _clearController.stream.listen(_clear);
 
     _backController.stream.listen(_back);
@@ -86,20 +102,70 @@ class ConvBloc {
       _categoryListSubject.add(categoryList);
       selectedCategory1 = categoryList[0];
       setSelectedCategory.add(categoryList[0]);
-      print("init");
     });
 
-    _firstSelectedItemMenuController.stream.map((String shortName) {
-      Unit unit = _getUnit(shortName, selectedCategory1);
-      selectedCategory1.firstDropdownShortName = unit.shortName;
-      selectedCategory1.firstDropdownName = unit.name;
+    var selectedCategory = _selectedCategoryController.stream.share();
 
-      print("menu 1 item");
-      return selectedCategory1;
-    }).map((Category category) {
-      print("1st  $category");
+    selectedCategory.listen((category) {
+      for (var i = 0; i < categoryList.length; i++) {
+        categoryList[i].isChipSelected = false;
+      }
+      var index = categoryList.indexOf(category);
+      categoryList[index].isChipSelected = true;
+      selectedCategory1 = category;
+      _categoryListSubject.add(categoryList);
       _selectedCategorySubject.add(category);
-      return getResult(selectedCategory1);
+    });
+
+    var firstSelectedItemMenu = CombineLatestStream.combine2(
+        _firstSelectedItemMenuController.stream, selectedCategory,
+        (String shortName, Category currentCategory) {
+      Unit unit = _getUnit(shortName, currentCategory);
+      Category category = currentCategory;
+      if (unit != null) {
+        category.firstDropdownShortName = unit.shortName;
+        category.firstDropdownName = unit.name;
+      }
+      return category;
+    }).share();
+
+    firstSelectedItemMenu.listen((Category category) {
+      _selectedCategorySubject.add(category);
+    });
+
+    CombineLatestStream.combine2(operandController, firstSelectedItemMenu,
+        (String input, Category currentCategory) {
+      if (isUp) {
+        double toValue;
+        Unit toValueUnit =
+            _getUnit(currentCategory.firstDropdownShortName, currentCategory);
+
+        if (toValueUnit.baseUnit)
+          toValue = toValueUnit.conversion;
+        else {
+          toValue =
+              selectedCategory1.units[0].conversion / toValueUnit.conversion;
+        }
+        double fromValue =
+            _getUnit(currentCategory.secondDropdownShortName, currentCategory)
+                .conversion;
+        return double.parse(inputText) * (toValue * fromValue);
+      } else {
+        double fromValue;
+        Unit fromValueUnit =
+            _getUnit(currentCategory.secondDropdownShortName, currentCategory);
+
+        if (fromValueUnit.baseUnit)
+          fromValue = fromValueUnit.conversion;
+        else {
+          fromValue =
+              selectedCategory1.units[0].conversion / fromValueUnit.conversion;
+        }
+        double toValue =
+            _getUnit(currentCategory.firstDropdownShortName, currentCategory)
+                .conversion;
+        return double.parse(resultText) * (toValue * fromValue);
+      }
     }).listen((result) {
       print("rest1 $result");
       if (isUp) {
@@ -111,17 +177,56 @@ class ConvBloc {
       }
     });
 
-    _secondSelectedItemMenuController.stream.map((String shortName) {
-      Unit unit = _getUnit(shortName, selectedCategory1);
-      selectedCategory1.secondDropdownShortName = unit.shortName;
-      selectedCategory1.secondDropdownName = unit.name;
+    var secondSelectedItemMenu = CombineLatestStream.combine2(
+        _secondSelectedItemMenuController.stream, selectedCategory,
+        (String shortName, Category currentCategory) {
+      Unit unit = _getUnit(shortName, currentCategory);
+      Category category = currentCategory;
+      if (unit != null) {
+        category.secondDropdownShortName = unit.shortName;
+        category.secondDropdownName = unit.name;
+      }
+      return category;
+    }).share();
 
-      print("menu 2 item");
-      return selectedCategory1;
-    }).map((Category category) {
-      print("2nd $category");
+    secondSelectedItemMenu.listen((category) {
+      print("2st $category");
       _selectedCategorySubject.add(category);
-      return getResult(selectedCategory1);
+    });
+
+    CombineLatestStream.combine2(operandController, secondSelectedItemMenu,
+        (String input, Category currentCategory) {
+      if (isUp) {
+        double toValue;
+        Unit toValueUnit =
+            _getUnit(currentCategory.firstDropdownShortName, currentCategory);
+
+        if (toValueUnit.baseUnit)
+          toValue = toValueUnit.conversion;
+        else {
+          toValue =
+              selectedCategory1.units[0].conversion / toValueUnit.conversion;
+        }
+        double fromValue =
+            _getUnit(currentCategory.secondDropdownShortName, currentCategory)
+                .conversion;
+        return double.parse(inputText) * (toValue * fromValue);
+      } else {
+        double fromValue;
+        Unit fromValueUnit =
+            _getUnit(currentCategory.secondDropdownShortName, currentCategory);
+
+        if (fromValueUnit.baseUnit)
+          fromValue = fromValueUnit.conversion;
+        else {
+          fromValue =
+              selectedCategory1.units[0].conversion / fromValueUnit.conversion;
+        }
+        double toValue =
+            _getUnit(currentCategory.firstDropdownShortName, currentCategory)
+                .conversion;
+        return double.parse(resultText) * (toValue * fromValue);
+      }
     }).listen((result) {
       print("rest2 $result");
       if (isUp) {
@@ -133,48 +238,21 @@ class ConvBloc {
       }
     });
 
-    _operandController.stream.map((buttonText) {
-      if (isUp && inputText.length < 12) {
-        inputText = (inputText == "0")
-            ? (buttonText == "." ? "0." : buttonText)
-            : (inputText + buttonText);
-        _convInputSubject.add(ConvData(inputText, isUp));
-      } else if (!isUp && resultText.length < 12) {
-        resultText = (resultText == "0")
-            ? (buttonText == "." ? "0." : buttonText)
-            : (resultText + buttonText);
-        _convResultSubject.add(ConvData(resultText, isUp));
-      }
+    CombineLatestStream.combine2(operandController, selectedCategory,
+        (String input, Category currentCategory) {
+      double toValue =
+          _getUnit(currentCategory.firstDropdownShortName, currentCategory)
+              .conversion;
+      double fromValue =
+          _getUnit(currentCategory.secondDropdownShortName, currentCategory)
+              .conversion;
       if (isUp)
-        return inputText;
+        return double.parse(inputText) * (toValue * fromValue);
       else
-        return resultText;
-    }).map((text) {
-      return getResult(selectedCategory1);
-    }).listen((text) {
-      print("input ${text}");
-      if (isUp) {
-        resultText = _format(text);
-        _convResultSubject.add(ConvData(resultText, isUp));
-      } else {
-        inputText = _format(text);
-        _convInputSubject.add(ConvData(inputText, isUp));
-      }
-    });
-
-    _selectedCategoryController.stream.map((Category currentCategory) {
-      for (var i = 0; i < categoryList.length; i++) {
-        categoryList[i].isChipSelected = false;
-      }
-      var index = categoryList.indexOf(currentCategory);
-      categoryList[index].isChipSelected = true;
-      selectedCategory1 = currentCategory;
-      _categoryListSubject.add(categoryList);
-      _selectedCategorySubject.add(currentCategory);
-
-      print("select cat change");
-      return getResult(currentCategory);
+        return double.parse(resultText) * toValue / (fromValue);
     }).listen((result) {
+      print(result);
+
       if (isUp) {
         resultText = _format(result);
         _convResultSubject.add(ConvData(resultText, isUp));
@@ -333,38 +411,5 @@ class ConvBloc {
     _secondSelectedItemMenuController.close();
     _selectedCategoryController.close();
     _selectedCategorySubject.close();
-  }
-
-  double getResult(Category currentCategory) {
-    if (isUp) {
-      double toValue;
-      Unit toValueUnit =
-          _getUnit(currentCategory.firstDropdownShortName, currentCategory);
-
-      if (toValueUnit.baseUnit)
-        toValue = toValueUnit.conversion;
-      else {
-        toValue = currentCategory.units[0].conversion / toValueUnit.conversion;
-      }
-      double fromValue =
-          _getUnit(currentCategory.secondDropdownShortName, currentCategory)
-              .conversion;
-      return double.parse(inputText) * (toValue * fromValue);
-    } else {
-      double fromValue;
-      Unit fromValueUnit =
-          _getUnit(currentCategory.secondDropdownShortName, currentCategory);
-
-      if (fromValueUnit.baseUnit)
-        fromValue = fromValueUnit.conversion;
-      else {
-        fromValue =
-            currentCategory.units[0].conversion / fromValueUnit.conversion;
-      }
-      double toValue =
-          _getUnit(currentCategory.firstDropdownShortName, currentCategory)
-              .conversion;
-      return double.parse(resultText) * (toValue * fromValue);
-    }
   }
 }

@@ -28,11 +28,6 @@ class _ConverterCalcState extends State<ConverterCalc> {
 
   @override
   Widget build(BuildContext context) {
-    print(" upper block ${(SizeConfig.heightWidthFactor * 100).toInt()}");
-    print(" chip choic block ${(SizeConfig.heightWidthFactor * 76).toInt()}");
-    print(" chip choic block ${(SizeConfig.heightWidthFactor * 96).toInt()}");
-    print(" chip choic block ${(SizeConfig.heightWidthFactor * 24).toInt()}");
-
     return Expanded(
       flex: (SizeConfig.heightWidthFactor * 50 * 10).toInt(),
       child: Column(
