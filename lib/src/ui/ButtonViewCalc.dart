@@ -26,6 +26,7 @@ class ButtonViewCalc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     Calculator calculator = CalculatorDataProvider.getButtonData(text);
     switch (calculator.shapeType) {
       case ShapeType.ROUND:
@@ -45,7 +46,7 @@ class ButtonViewCalc extends StatelessWidget {
                 else
                   convBloc.setConvInput.add(text);
               },
-              child: getContainerForCalc(calculator),
+              child: getContainerForCalc(calculator, context),
             ),
           ),
         );
@@ -67,7 +68,7 @@ class ButtonViewCalc extends StatelessWidget {
                 else
                   convBloc.setConvInput.add(text);
               },
-              child: getContainerForCalc(calculator),
+              child: getContainerForCalc(calculator, context),
             ),
           ),
         );
@@ -87,7 +88,7 @@ class ButtonViewCalc extends StatelessWidget {
                 else
                   convBloc.setConvInput.add(text);
               },
-              child: getContainerForCalc(calculator),
+              child: getContainerForCalc(calculator, context),
             ),
           ),
         );
@@ -97,40 +98,29 @@ class ButtonViewCalc extends StatelessWidget {
 }
 
 // ignore: missing_return
-Widget getContainerForCalc(Calculator calculator) {
+Widget getContainerForCalc(Calculator calculator, BuildContext context) {
   switch (calculator.resourceType) {
     case ResourceType.TEXT:
       return Container(
         child: Center(
             child: Text(calculator.text,
-                style: TextStyle(
-                    fontSize: SizeConfig.pixelRatio * 12,
-                    color: Colors.white))),
+                style: Theme.of(context).textTheme.display1)),
       );
       break;
     case ResourceType.IMAGE_SVG:
-      return Container(
-        padding: EdgeInsets.all(SizeConfig.pixelRatio * 8),
-        child: SvgPicture.asset(calculator.text),
-      );
-      break;
-    case ResourceType.MULTIPLY:
-      return Container(
-        padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-        child: Center(
-            child: Text(calculator.text,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: SizeConfig.pixelRatio * 20,
-                    color: Color(0xff009e8c)))),
-      );
+      print("horizontal block ${SizeConfig.blockSizeVertical}");
+      return Padding(
+        padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 3),
+          child: SvgPicture.asset(
+        calculator.text,
+      ));
       break;
     case ResourceType.BACK_SPACE:
       return Container(
         constraints: BoxConstraints.expand(),
         child: Icon(
           Icons.backspace,
-          size: SizeConfig.pixelRatio * 10,
+          size: SizeConfig.blockSizeVertical * 3,
           color: Colors.white,
         ),
       );

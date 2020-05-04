@@ -21,9 +21,8 @@ class _SplashState extends State<Splash> {
           context, MaterialPageRoute(builder: (context) => Home()));
     });
 
-    return Material(
-      color: Color(0xff273639),
-      child: SafeArea(
+    return Scaffold(
+      body: SafeArea(
         top: false,
         bottom: true,
         child: Stack(

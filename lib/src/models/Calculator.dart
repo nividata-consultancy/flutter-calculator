@@ -26,5 +26,5 @@ enum TextType {
   UP,
   DOWN
 }
-enum ResourceType { TEXT, IMAGE_SVG, MULTIPLY, BACK_SPACE }
+enum ResourceType { TEXT, IMAGE_SVG, BACK_SPACE }
 enum ShapeType { ROUND, DARK_ROUND, NAN }

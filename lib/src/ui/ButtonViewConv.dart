@@ -45,7 +45,7 @@ class ButtonViewNew extends StatelessWidget {
                 else
                   convBloc.setConvInput.add(text);
               },
-              child: getContainerForConverter(calculator),
+              child: getContainerForConverter(calculator, context),
             ),
           ),
         );
@@ -59,7 +59,7 @@ class ButtonViewNew extends StatelessWidget {
             margin: EdgeInsets.all(4),
             elevation: 0,
             color: Theme.of(context).primaryColor,
-            child: getContainerForConverter(calculator),
+            child: getContainerForConverter(calculator, context),
           ),
         );
         break;
@@ -68,14 +68,14 @@ class ButtonViewNew extends StatelessWidget {
 }
 
 // ignore: missing_return
-Widget getContainerForConverter(Calculator calculator) {
+Widget getContainerForConverter(Calculator calculator, BuildContext context) {
   switch (calculator.key) {
     case CalculatorDataProvider.BACK_CONV:
       return Container(
         constraints: BoxConstraints.expand(),
         child: Icon(
           Icons.backspace,
-          size: SizeConfig.pixelRatio * 10,
+          size: SizeConfig.blockSizeVertical * 3.5,
           color: Color(0xff009e8c),
         ),
       );
@@ -85,7 +85,7 @@ Widget getContainerForConverter(Calculator calculator) {
         child: Center(
             child: Text(calculator.text,
                 style: TextStyle(
-                    fontSize: SizeConfig.pixelRatio * 12, color: Colors.red))),
+                    fontSize: SizeConfig.blockSizeVertical * 4, color: Colors.red))),
       );
       break;
     case CalculatorDataProvider.UP:
@@ -93,8 +93,8 @@ Widget getContainerForConverter(Calculator calculator) {
         constraints: BoxConstraints.expand(),
         child: Icon(
           Icons.arrow_upward,
-          size: SizeConfig.pixelRatio * 15,
-          color: Color(0xff009e8c),
+          size: SizeConfig.blockSizeVertical * 4,
+          color: Theme.of(context).accentColor,
         ),
       );
       break;
@@ -103,14 +103,14 @@ Widget getContainerForConverter(Calculator calculator) {
         constraints: BoxConstraints.expand(),
         child: Icon(
           Icons.arrow_downward,
-          size: SizeConfig.pixelRatio * 15,
-          color: Color(0xff009e8c),
+          size: SizeConfig.blockSizeVertical * 4,
+          color:  Theme.of(context).accentColor,
         ),
       );
       break;
     case CalculatorDataProvider.OPEN_BRACKET:
       return Container(
-        padding: EdgeInsets.all(SizeConfig.pixelRatio * 8),
+        padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 3),
         child: SvgPicture.asset(
           calculator.text,
           color: Colors.grey[700],

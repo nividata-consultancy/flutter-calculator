@@ -23,15 +23,7 @@ class Home extends StatefulWidget {
 class _Home extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primaryColor: Color(0xff273639),
-          accentColor: Color(0xff009e8c),
-          brightness: Brightness.dark,
-          fontFamily: 'Montserrat'),
-      home: HomeWidget(),
-    );
+    return HomeWidget();
   }
 }
 
@@ -77,7 +69,7 @@ class _HomeWidget extends State<HomeWidget> {
                         pressElevation: 0,
                         elevation: 0,
                         selectedColor: Colors.white,
-                        backgroundColor: Color(0xff273639),
+                        backgroundColor: Theme.of(context).primaryColor,
                         onSelected: (isSelect) {
                           if (!snapshot.data)
                             uiHandlerBloc.calcChipSelect.add(true);
@@ -88,7 +80,7 @@ class _HomeWidget extends State<HomeWidget> {
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
                               color: snapshot.data
-                                  ? Color(0xff009e8c)
+                                  ? Theme.of(context).accentColor
                                   : Colors.white54),
                         ),
                       );
