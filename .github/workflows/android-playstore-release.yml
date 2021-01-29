@@ -95,4 +95,4 @@ jobs:
         packageName: com.nividata.calculator
         releaseFiles: app-release.aab
         track: internal
-        whatsNewDirectory: distribution/whatsnew
+        whatsNewDirectory: android/distribution/whatsnew
