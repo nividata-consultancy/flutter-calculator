@@ -94,5 +94,5 @@ jobs:
         serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_ACCOUNT_KEY }}
         packageName: com.nividata.calculator
         releaseFiles: app-release.aab
-        track: internal
+        track: alpha-internal
         whatsNewDirectory: android/distribution/whatsnew
