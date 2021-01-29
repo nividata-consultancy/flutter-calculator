@@ -22,12 +22,12 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  rxdart: ^0.23.1
-  rational: ^0.3.7
-  petitparser: ^2.4.0
-  flutter_svg: ^0.17.3+1
-  flutter_launcher_icons: ^0.7.4
+  cupertino_icons: ^1.0.0
+  rxdart: ^0.25.0
+  rational: ^0.3.8
+  petitparser: ^3.1.0
+  flutter_svg: ^0.19.1
+  flutter_launcher_icons: ^0.8.1
   test: any
 
 flutter_icons:
