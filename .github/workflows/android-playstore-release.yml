@@ -23,10 +23,14 @@ jobs:
     - name: Use GitVersion
       id: gitversion
       uses: gittools/actions/gitversion/execute@v0.9.3
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     - name: Create version.txt with nuGetVersion
       run: echo ${{ steps.gitversion.outputs.nuGetVersion  }} > version.txt
     - name: Upload version.txt
       uses: actions/upload-artifact@v2
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       with:
         name: gitversion
         path: version.txt
