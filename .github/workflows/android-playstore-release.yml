@@ -16,6 +16,8 @@ jobs:
         git fetch --prune --depth=10000
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.3
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       with:
           versionSpec: '5.2.x'
     - name: Use GitVersion
